@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product — KRSH</title>
+<meta name="description" content="Shop premium streetwear sneakers at KRSH. Limited drops, underground brands, no hype tax.">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<link rel="canonical" href="https://krsh.store/product.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
+<script type="application/ld+json" id="productSchema">{}</script>
+<link rel="stylesheet" href="style.css?v=17">
+</head>
+<body>
+
+<div class="cursor-drop" id="cursorDrop"></div>
+<div class="cursor-splatter" id="cursorSplatter"></div>
+<div class="grain-overlay"></div>
+
+<!-- Header -->
+<header class="header scrolled" id="header">
+  <a href="/" class="logo">KRSH</a>
+  <nav class="nav">
+    <a href="/#lookbook">Lookbook</a>
+    <a href="/catalog.html">Shop</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <div class="header-right">
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart, 2 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cartBadge" aria-hidden="true">2</span>
+    </button>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- Mobile Nav Overlay -->
+<div class="mobile-nav" id="mobileNav">
+  <nav class="mobile-nav-links">
+    <a href="/#lookbook">Lookbook</a>
+    <a href="/catalog.html">Shop</a>
+    <a href="/about.html">About</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+  <div class="mobile-nav-footer">
+    <a href="/catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
+    <div class="mobile-nav-socials">
+      <a href="#">Instagram</a><a href="#">Twitter</a><a href="#">TikTok</a>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="cart-drawer-header">
+    <h3>Your Bag <span id="cartCount">(2)</span></h3>
+    <button class="cart-close" id="cartClose" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-item" data-price="310">
+      <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=160&h=160&fit=crop" alt="KRSH Venom">
+      <div class="cart-item-info">
+        <span class="cart-item-name">KRSH Venom</span>
+        <span class="cart-item-meta">Size 8.5 &middot; White</span>
+        <span class="cart-item-price">$310</span>
+      </div>
+      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
+    </div>
+    <div class="cart-item" data-price="220">
+      <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=160&h=160&fit=crop" alt="Street Phantom">
+      <div class="cart-item-info">
+        <span class="cart-item-name">Street Phantom</span>
+        <span class="cart-item-meta">Size 9 &middot; Black</span>
+        <span class="cart-item-price">$220</span>
+      </div>
+      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
+    </div>
+  </div>
+  <div class="cart-drawer-empty" id="cartEmpty" hidden>
+    <p>Your bag is empty.</p>
+    <a href="/catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
+  </div>
+  <div class="cart-drawer-footer" id="cartFooter">
+    <div class="cart-promo">
+      <input type="text" placeholder="Promo code">
+      <button type="button">Apply</button>
+    </div>
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">$530</span>
+    </div>
+    <a href="checkout.html" class="btn-primary cart-checkout-btn">Checkout &rarr;</a>
+  </div>
+</aside>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<!-- Breadcrumb -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  <span>/</span>
+  <a href="/catalog.html">Shop</a>
+  <span>/</span>
+  <span class="current" id="breadcrumbName">Product</span>
+</nav>
+
+<!-- Product -->
+<section class="pdp">
+  <div class="pdp-gallery">
+    <div class="pdp-main-img" id="mainImg">
+      <img src="" alt="" id="mainPhoto">
+    </div>
+    <div class="pdp-thumbs" id="thumbs"></div>
+  </div>
+
+  <div class="pdp-info">
+    <span class="p-card-badge badge-ltd" id="pdpBadge" style="display:none"></span>
+    <h1 class="pdp-name" id="pdpName"></h1>
+    <a href="#reviews" class="pdp-rating" id="pdpRating">
+      <span class="pdp-stars" id="pdpStars"></span>
+      <span class="pdp-rating-text" id="pdpRatingText"></span>
+    </a>
+    <div class="pdp-price-row">
+      <span class="pdp-price" id="pdpPrice"></span>
+      <span class="pdp-stock" id="pdpStock"></span>
+    </div>
+
+    <p class="pdp-desc" id="pdpDesc"></p>
+
+    <!-- Sizes -->
+    <div class="pdp-option">
+      <label class="pdp-label">Size <span class="size-guide-link">Size Guide</span></label>
+      <div class="size-grid" id="sizeGrid">
+        <button class="size-btn" data-size="7">7</button>
+        <button class="size-btn" data-size="7.5">7.5</button>
+        <button class="size-btn" data-size="8">8</button>
+        <button class="size-btn active" data-size="8.5">8.5</button>
+        <button class="size-btn" data-size="9">9</button>
+        <button class="size-btn" data-size="9.5">9.5</button>
+        <button class="size-btn" data-size="10">10</button>
+        <button class="size-btn" data-size="10.5">10.5</button>
+        <button class="size-btn" data-size="11">11</button>
+        <button class="size-btn disabled" data-size="11.5" disabled>11.5</button>
+        <button class="size-btn" data-size="12">12</button>
+        <button class="size-btn disabled" data-size="13" disabled>13</button>
+      </div>
+    </div>
+
+    <!-- Add to bag -->
+    <button class="add-to-bag" id="addToBag">Add to Bag</button>
+
+    <div class="pdp-trust-mini">
+      <span>&#9989; Free shipping over $200</span>
+      <span>&#9989; 14-day returns</span>
+      <span>&#9989; Authenticity guaranteed</span>
+    </div>
+
+    <!-- Details accordion -->
+    <div class="pdp-details">
+      <details class="pdp-accordion" open>
+        <summary>Description</summary>
+        <div class="accordion-body" id="pdpDescFull"></div>
+      </details>
+      <details class="pdp-accordion">
+        <summary>Materials & Care</summary>
+        <div class="accordion-body" id="pdpMaterials"></div>
+      </details>
+      <details class="pdp-accordion">
+        <summary>Shipping & Returns</summary>
+        <div class="accordion-body">
+          <p>Free shipping on orders over $200. Standard delivery 3-5 business days. Express delivery 1-2 business days ($15).</p>
+          <p>Returns accepted within 14 days of delivery. Items must be unworn and in original packaging.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section class="reviews-section" id="reviews">
+  <div class="reviews-header">
+    <h2 class="section-title">Reviews</h2>
+  </div>
+  <div class="reviews-layout" id="reviewsLayout"></div>
+</section>
+
+<!-- You Might Also Like -->
+<section class="products-section">
+  <div class="section-header">
+    <h2 class="section-title">You Might Also Like</h2>
+    <a href="/catalog.html" class="section-link">View all &rarr;</a>
+  </div>
+  <div class="products-grid" id="relatedGrid"></div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="trust-strip">
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="14" height="11"/><path d="M15 9h4l3 3.5V17h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
+      <span>Free shipping over $200</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V5.5z"/><path d="M8.5 12l2.3 2.3L16 9.5"/></svg>
+      <span>Secure checkout</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+      <span>14-day returns</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span>Authenticity guaranteed</span>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">KRSH</div>
+      <p class="footer-tagline">Your feet. Your rules.</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <h3>Shop</h3>
+        <a href="/catalog.html">All Products</a>
+        <a href="#">Sneakers</a>
+        <a href="#">Clothing</a>
+      </div>
+      <div class="footer-col">
+        <h3>Brand</h3>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <h3>Join the crew</h3>
+      <div class="nl-form">
+        <input type="email" placeholder="your@email.com">
+        <button>Subscribe</button>
+      </div>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 KRSH. All rights reserved.</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="script.js?v=16"></script>
+<script src="products-data.js?v=2"></script>
+<script>
+(function() {
+  const PRODUCTS = window.KRSH_PRODUCTS;
+  if (!PRODUCTS) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id'), 10);
+  const product = PRODUCTS.find(p => p.id === id) || PRODUCTS[2];
+
+  document.title = product.name + ' — KRSH';
+  document.querySelector('meta[name="description"]').content = product.desc;
+  document.getElementById('breadcrumbName').textContent = product.name;
+
+  // Main image + thumbnails
+  const mainPhoto = document.getElementById('mainPhoto');
+  const baseImg = product.img.replace(/w=\d+&h=\d+/, 'w=800&h=800');
+  mainPhoto.src = baseImg;
+  mainPhoto.alt = product.name + ' — main view';
+
+  const thumbsEl = document.getElementById('thumbs');
+  thumbsEl.style.display = 'none';
+
+  // Badge
+  const badgeEl = document.getElementById('pdpBadge');
+  if (product.badge && product.badge !== 'sold') {
+    const cls = { new: 'badge-new', limited: 'badge-limited', sale: 'badge-sale' }[product.badge] || 'badge-new';
+    badgeEl.className = 'p-card-badge ' + cls;
+    badgeEl.textContent = product.badge === 'sale'
+      ? '-' + Math.round((1 - product.price / product.oldPrice) * 100) + '%'
+      : product.badge.charAt(0).toUpperCase() + product.badge.slice(1);
+    badgeEl.style.display = '';
+  }
+
+  // Name, price, desc
+  document.getElementById('pdpName').textContent = product.name;
+  const priceEl = document.getElementById('pdpPrice');
+  if (product.oldPrice) {
+    priceEl.innerHTML = '<span class="price-old">$' + product.oldPrice + '</span> $' + product.price;
+  } else {
+    priceEl.textContent = '$' + product.price;
+  }
+  const stockEl = document.getElementById('pdpStock');
+  if (product.stock) {
+    stockEl.textContent = 'Only ' + product.stock + ' left';
+  } else if (product.badge === 'sold') {
+    stockEl.textContent = 'Sold Out';
+    stockEl.style.color = '#ff4444';
+    document.getElementById('addToBag').disabled = true;
+    document.getElementById('addToBag').textContent = 'Sold Out';
+    document.getElementById('addToBag').style.opacity = '0.5';
+  } else {
+    stockEl.textContent = 'In Stock';
+  }
+  document.getElementById('pdpDesc').textContent = product.desc;
+
+  // Rating
+  const fullStars = Math.floor(product.rating);
+  const hasHalf = product.rating - fullStars >= 0.3;
+  let starsHTML = '';
+  for (let i = 0; i < fullStars; i++) starsHTML += '&#9733;';
+  if (hasHalf) starsHTML += '&#9733;';
+  for (let i = fullStars + (hasHalf ? 1 : 0); i < 5; i++) starsHTML += '&#9734;';
+  document.getElementById('pdpStars').innerHTML = starsHTML;
+  document.getElementById('pdpRatingText').innerHTML = product.rating + ' &middot; ' + product.reviewCount + ' reviews';
+
+  // Description accordion
+  document.getElementById('pdpDescFull').innerHTML = '<p>' + product.desc + '</p>';
+
+  // Materials
+  const matEl = document.getElementById('pdpMaterials');
+  matEl.innerHTML = '<ul>' + product.materials.map(m => '<li>' + m + '</li>').join('') +
+    '</ul><p>Clean with a soft cloth. Avoid prolonged exposure to water. Store in a cool, dry place.</p>';
+
+  // Reviews section
+  const bars = [0, 0, 0, 0, 0];
+  product.reviews.forEach(r => { if (r.stars >= 1 && r.stars <= 5) bars[5 - r.stars]++; });
+  const total = product.reviews.length;
+
+  const reviewsLayout = document.getElementById('reviewsLayout');
+  reviewsLayout.innerHTML =
+    '<div class="reviews-summary">' +
+      '<span class="reviews-score">' + product.rating + '</span>' +
+      '<div class="reviews-stars">' + starsHTML + '</div>' +
+      '<span class="reviews-count">Based on ' + product.reviewCount + ' reviews</span>' +
+      '<div class="reviews-bars">' +
+        [5, 4, 3, 2, 1].map((n, i) => {
+          const pct = total > 0 ? Math.round((bars[i] / total) * 100) : 0;
+          return '<div class="review-bar-row"><span>' + n + '</span><div class="bar"><div class="bar-fill" style="width:' + pct + '%"></div></div><span>' + bars[i] + '</span></div>';
+        }).join('') +
+      '</div>' +
+    '</div>' +
+    '<div class="reviews-list">' +
+      product.reviews.map(r => {
+        let rs = '';
+        for (let i = 0; i < r.stars; i++) rs += '&#9733;';
+        for (let i = r.stars; i < 5; i++) rs += '&#9734;';
+        return '<div class="review-card"><div class="review-card-head"><div class="review-stars">' + rs + '</div>' +
+          '<span class="review-author">' + r.author + '</span><span class="review-verified">Verified Buyer</span></div>' +
+          '<p class="review-text">' + r.text + '</p><span class="review-date">' + r.date + '</span></div>';
+      }).join('') +
+    '</div>';
+
+  // Related products (4 random, excluding current)
+  const related = PRODUCTS.filter(p => p.id !== product.id).sort(() => Math.random() - 0.5).slice(0, 4);
+  const relatedGrid = document.getElementById('relatedGrid');
+  relatedGrid.innerHTML = related.map(p => {
+    const badgeCls = { new: 'badge-new', limited: 'badge-limited', sold: 'badge-sold', sale: 'badge-sale' }[p.badge] || '';
+    const badgeText = p.badge ? (p.badge === 'sale' ? '-' + Math.round((1 - p.price / p.oldPrice) * 100) + '%' : p.badge.charAt(0).toUpperCase() + p.badge.slice(1)) : '';
+    return '<a href="product.html?id=' + p.id + '" class="p-card">' +
+      (p.badge ? '<span class="p-card-badge ' + badgeCls + '">' + badgeText + '</span>' : '') +
+      '<div class="p-card-img"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy"></div>' +
+      '<div class="p-card-info"><span class="p-card-name">' + p.name + '</span>' +
+      '<span class="p-card-price">' + (p.oldPrice ? '<span class="price-old">$' + p.oldPrice + '</span> $' + p.price : '$' + p.price) + '</span></div></a>';
+  }).join('');
+
+  // JSON-LD
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.name,
+    "description": product.desc,
+    "image": product.img.replace(/w=\d+&h=\d+/, 'w=800'),
+    "brand": { "@type": "Brand", "name": product.brand === 'krsh' ? 'KRSH' : product.brand.charAt(0).toUpperCase() + product.brand.slice(1) },
+    "offers": {
+      "@type": "Offer",
+      "price": String(product.price),
+      "priceCurrency": "USD",
+      "availability": product.badge === 'sold' ? "https://schema.org/OutOfStock" : (product.badge === 'limited' ? "https://schema.org/LimitedAvailability" : "https://schema.org/InStock"),
+      "itemCondition": "https://schema.org/NewCondition"
+    },
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": String(product.rating), "reviewCount": String(product.reviewCount) }
+  };
+  document.getElementById('productSchema').textContent = JSON.stringify(schema);
+
+  // Size selection
+  const sizeBtns = document.querySelectorAll('.size-btn:not(.disabled)');
+  sizeBtns.forEach(b => {
+    b.addEventListener('click', () => {
+      sizeBtns.forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+    });
+  });
+
+  // Add to bag
+  const addBtn = document.getElementById('addToBag');
+  const cartItemsList = document.getElementById('cartItems');
+  if (addBtn && !addBtn.disabled) {
+    addBtn.addEventListener('click', () => {
+      const size = document.querySelector('.size-btn.active');
+      addBtn.textContent = 'Added!';
+      addBtn.style.background = 'var(--yellow)';
+      setTimeout(() => { addBtn.textContent = 'Add to Bag'; addBtn.style.background = ''; }, 1500);
+
+      if (cartItemsList) {
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        row.dataset.price = String(product.price);
+        row.innerHTML =
+          '<img src="' + product.img.replace(/w=\d+&h=\d+/, 'w=160&h=160') + '" alt="' + product.name + '">' +
+          '<div class="cart-item-info">' +
+          '<span class="cart-item-name">' + product.name + '</span>' +
+          '<span class="cart-item-meta">Size ' + (size ? size.dataset.size : '8.5') + ' &middot; ' + product.color + '</span>' +
+          '<span class="cart-item-price">$' + product.price + '</span></div>' +
+          '<button class="cart-item-remove" aria-label="Remove item">&times;</button>';
+        cartItemsList.appendChild(row);
+        cartItemsList.dispatchEvent(new Event('cart:updated'));
+        if (window.gsap) gsap.from(row, { opacity: 0, x: 20, duration: 0.3 });
+      }
+
+      if (window.showToast) window.showToast(product.name + ' added to your bag');
+      if (window.krshOpenCart) setTimeout(window.krshOpenCart, 300);
+
+      const items = cartItemsList ? cartItemsList.querySelectorAll('.cart-item') : [];
+      const cartTotal = [...items].reduce((sum, el) => sum + Number(el.dataset.price || 0), 0);
+      const badge = document.getElementById('cartBadge');
+      const count = document.getElementById('cartCount');
+      const subtotal = document.getElementById('cartSubtotal');
+      if (badge) badge.textContent = items.length;
+      if (count) count.textContent = '(' + items.length + ')';
+      if (subtotal) subtotal.textContent = '$' + cartTotal;
+    });
+  }
+})();
+</script>
+<script src="graffiti.js?v=2"></script>
+</body>
+</html>

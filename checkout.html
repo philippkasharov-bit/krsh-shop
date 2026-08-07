@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — KRSH</title>
+<meta name="description" content="Complete your KRSH order — secure checkout with fast shipping and easy returns.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://krsh.store/checkout.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=17">
+</head>
+<body>
+
+<div class="cursor-drop" id="cursorDrop"></div>
+<div class="cursor-splatter" id="cursorSplatter"></div>
+<div class="grain-overlay"></div>
+
+<header class="header scrolled" id="header">
+  <a href="/" class="logo">KRSH</a>
+  <nav class="nav">
+    <a href="/#lookbook">Lookbook</a>
+    <a href="/catalog.html">Shop</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <div class="header-right">
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart, 2 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cartBadge" aria-hidden="true">2</span>
+    </button>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <nav class="mobile-nav-links">
+    <a href="/#lookbook">Lookbook</a>
+    <a href="/catalog.html">Shop</a>
+    <a href="/about.html">About</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+  <div class="mobile-nav-footer">
+    <a href="/catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
+    <div class="mobile-nav-socials">
+      <a href="#">Instagram</a><a href="#">Twitter</a><a href="#">TikTok</a>
+    </div>
+  </div>
+</div>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="cart-drawer-header">
+    <h3>Your Bag <span id="cartCount">(2)</span></h3>
+    <button class="cart-close" id="cartClose" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-item" data-price="310">
+      <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=160&h=160&fit=crop" alt="KRSH Venom">
+      <div class="cart-item-info">
+        <span class="cart-item-name">KRSH Venom</span>
+        <span class="cart-item-meta">Size 8.5 &middot; White</span>
+        <span class="cart-item-price">$310</span>
+      </div>
+      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
+    </div>
+    <div class="cart-item" data-price="220">
+      <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=160&h=160&fit=crop" alt="Street Phantom">
+      <div class="cart-item-info">
+        <span class="cart-item-name">Street Phantom</span>
+        <span class="cart-item-meta">Size 9 &middot; Black</span>
+        <span class="cart-item-price">$220</span>
+      </div>
+      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
+    </div>
+  </div>
+  <div class="cart-drawer-empty" id="cartEmpty" hidden>
+    <p>Your bag is empty.</p>
+    <a href="/catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
+  </div>
+  <div class="cart-drawer-footer" id="cartFooter">
+    <div class="cart-promo">
+      <input type="text" placeholder="Promo code">
+      <button type="button">Apply</button>
+    </div>
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">$530</span>
+    </div>
+    <a href="checkout.html" class="btn-primary cart-checkout-btn">Checkout &rarr;</a>
+  </div>
+</aside>
+
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a><span>/</span><a href="/catalog.html">Shop</a><span>/</span><span class="current">Checkout</span>
+</nav>
+
+<section class="catalog-hero">
+  <h1 class="catalog-title">CHECKOUT</h1>
+  <p class="catalog-count">Almost there &mdash; 2 items in your bag</p>
+</section>
+
+<!-- Checkout Steps -->
+<section class="checkout-section" id="checkoutSection">
+  <div class="checkout-grid">
+    <form class="checkout-form" id="checkoutForm">
+
+      <div class="checkout-step">
+        <div class="checkout-step-head">
+          <span class="checkout-step-num">01</span>
+          <h2>Contact</h2>
+        </div>
+        <div class="form-row">
+          <label for="co-email">Email</label>
+          <input type="email" id="co-email" name="email" placeholder="your@email.com" required>
+        </div>
+      </div>
+
+      <div class="checkout-step">
+        <div class="checkout-step-head">
+          <span class="checkout-step-num">02</span>
+          <h2>Shipping Address</h2>
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="co-first">First Name</label>
+            <input type="text" id="co-first" name="first" required>
+          </div>
+          <div class="form-row">
+            <label for="co-last">Last Name</label>
+            <input type="text" id="co-last" name="last" required>
+          </div>
+          <div class="form-row form-row-full">
+            <label for="co-address">Address</label>
+            <input type="text" id="co-address" name="address" placeholder="Street and number" required>
+          </div>
+          <div class="form-row">
+            <label for="co-city">City</label>
+            <input type="text" id="co-city" name="city" required>
+          </div>
+          <div class="form-row">
+            <label for="co-zip">ZIP / Postal Code</label>
+            <input type="text" id="co-zip" name="zip" required>
+          </div>
+          <div class="form-row form-row-full">
+            <label for="co-country">Country</label>
+            <select id="co-country" name="country">
+              <option>United States</option>
+              <option>United Kingdom</option>
+              <option>Germany</option>
+              <option>Russia</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-step">
+        <div class="checkout-step-head">
+          <span class="checkout-step-num">03</span>
+          <h2>Shipping Method</h2>
+        </div>
+        <div class="ship-options">
+          <label class="ship-option active">
+            <input type="radio" name="shipping" value="standard" checked>
+            <span class="ship-option-info">
+              <span class="ship-option-name">Standard Shipping</span>
+              <span class="ship-option-time">3&ndash;5 business days</span>
+            </span>
+            <span class="ship-option-price">Free</span>
+          </label>
+          <label class="ship-option">
+            <input type="radio" name="shipping" value="express">
+            <span class="ship-option-info">
+              <span class="ship-option-name">Express Shipping</span>
+              <span class="ship-option-time">1&ndash;2 business days</span>
+            </span>
+            <span class="ship-option-price">$15</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="checkout-step">
+        <div class="checkout-step-head">
+          <span class="checkout-step-num">04</span>
+          <h2>Payment</h2>
+        </div>
+        <div class="form-grid">
+          <div class="form-row form-row-full">
+            <label for="co-card">Card Number</label>
+            <input type="text" id="co-card" name="card" placeholder="0000 0000 0000 0000" required>
+          </div>
+          <div class="form-row">
+            <label for="co-exp">Expiry</label>
+            <input type="text" id="co-exp" name="exp" placeholder="MM / YY" required>
+          </div>
+          <div class="form-row">
+            <label for="co-cvc">CVC</label>
+            <input type="text" id="co-cvc" name="cvc" placeholder="123" required>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary checkout-submit" id="checkoutSubmit">Place Order &rarr;</button>
+    </form>
+
+    <aside class="order-summary">
+      <h2 class="order-summary-title">Order Summary</h2>
+      <div class="order-summary-items" id="orderItems">
+        <div class="cart-item" data-price="310">
+          <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=160&h=160&fit=crop" alt="KRSH Venom">
+          <div class="cart-item-info">
+            <span class="cart-item-name">KRSH Venom</span>
+            <span class="cart-item-meta">Size 8.5 &middot; White</span>
+            <span class="cart-item-price">$310</span>
+          </div>
+        </div>
+        <div class="cart-item" data-price="220">
+          <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=160&h=160&fit=crop" alt="Street Phantom">
+          <div class="cart-item-info">
+            <span class="cart-item-name">Street Phantom</span>
+            <span class="cart-item-meta">Size 9 &middot; Black</span>
+            <span class="cart-item-price">$220</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-promo">
+        <input type="text" placeholder="Promo code">
+        <button type="button">Apply</button>
+      </div>
+
+      <div class="order-totals">
+        <div class="order-totals-row">
+          <span>Subtotal</span>
+          <span id="sumSubtotal">$530</span>
+        </div>
+        <div class="order-totals-row">
+          <span>Shipping</span>
+          <span id="sumShipping">Free</span>
+        </div>
+        <div class="order-totals-row">
+          <span>Tax</span>
+          <span id="sumTax">$42</span>
+        </div>
+        <div class="order-totals-row order-totals-final">
+          <span>Total</span>
+          <span id="sumTotal">$572</span>
+        </div>
+      </div>
+
+      <div class="checkout-trust">
+        <div class="trust-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V5.5z"/><path d="M8.5 12l2.3 2.3L16 9.5"/></svg>
+          <span>Secure checkout</span>
+        </div>
+        <div class="trust-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+          <span>14-day returns</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- Order Success (hidden until submit) -->
+<section class="order-success" id="orderSuccess" hidden>
+  <div class="order-success-inner">
+    <span class="order-success-icon">&#10003;</span>
+    <h1>Order Placed</h1>
+    <p class="order-success-num">Order <span id="orderNumber">#KRSH-00000</span></p>
+    <p class="order-success-sub">A confirmation email is on its way. Your gear ships within 3&ndash;5 business days.</p>
+    <a href="/catalog.html" class="btn-primary">Continue Shopping &rarr;</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="trust-strip">
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="14" height="11"/><path d="M15 9h4l3 3.5V17h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
+      <span>Free shipping over $200</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V5.5z"/><path d="M8.5 12l2.3 2.3L16 9.5"/></svg>
+      <span>Secure checkout</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+      <span>14-day returns</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span>Authenticity guaranteed</span>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">KRSH</div>
+      <p class="footer-tagline">Your feet. Your rules.</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <h3>Shop</h3>
+        <a href="/catalog.html">All Products</a>
+        <a href="#">Sneakers</a>
+        <a href="#">Clothing</a>
+      </div>
+      <div class="footer-col">
+        <h3>Brand</h3>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <h3>Join the crew</h3>
+      <div class="nl-form">
+        <input type="email" placeholder="your@email.com">
+        <button>Subscribe</button>
+      </div>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 KRSH. All rights reserved.</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="script.js?v=16"></script>
+<script src="graffiti.js?v=2"></script>
+<script>
+(function() {
+  const shipOptions = document.querySelectorAll('.ship-option');
+  const sumShipping = document.getElementById('sumShipping');
+  const sumTotal = document.getElementById('sumTotal');
+  const SUBTOTAL = 530;
+  const TAX = 42;
+
+  function recalc() {
+    const selected = document.querySelector('input[name="shipping"]:checked');
+    const isExpress = selected && selected.value === 'express';
+    const shippingCost = isExpress ? 15 : 0;
+    sumShipping.textContent = isExpress ? '$15' : 'Free';
+    sumTotal.textContent = '$' + (SUBTOTAL + TAX + shippingCost);
+  }
+
+  shipOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      shipOptions.forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      const input = opt.querySelector('input');
+      if (input) input.checked = true;
+      recalc();
+    });
+  });
+
+  const form = document.getElementById('checkoutForm');
+  const checkoutSection = document.getElementById('checkoutSection');
+  const heroSection = document.querySelector('.catalog-hero');
+  const orderSuccess = document.getElementById('orderSuccess');
+  const orderNumber = document.getElementById('orderNumber');
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const num = 'KRSH-' + Math.floor(10000 + Math.random() * 89999);
+      orderNumber.textContent = '#' + num;
+      if (heroSection) heroSection.hidden = true;
+      checkoutSection.hidden = true;
+      orderSuccess.hidden = false;
+      const badge = document.getElementById('cartBadge');
+      if (badge) badge.textContent = '0';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+})();
+</script>
+</body>
+</html>

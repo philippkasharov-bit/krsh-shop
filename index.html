@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KRSH — Streetwear & Sneakers</title>
+<meta name="description" content="KRSH — curated streetwear and limited-edition sneakers. No hype tax, just real kicks for the culture. Shop new drops, exclusives, and underground brands.">
+<meta property="og:title" content="KRSH — Streetwear & Sneakers">
+<meta property="og:description" content="Curated streetwear and limited-edition sneakers. No hype tax.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://images.unsplash.com/photo-1547447134-cd3f5c716030?w=1200&h=630&fit=crop">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://krsh.store/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"KRSH","url":"https://krsh.store","description":"Curated streetwear and limited-edition sneakers","potentialAction":{"@type":"SearchAction","target":"https://krsh.store/catalog.html?q={search_term_string}","query-input":"required name=search_term_string"}}
+</script>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=17">
+</head>
+<body>
+
+<div class="cursor-drop" id="cursorDrop"></div>
+<div class="cursor-splatter" id="cursorSplatter"></div>
+<div class="grain-overlay"></div>
+
+<!-- Header -->
+<header class="header" id="header">
+  <a href="/" class="logo">KRSH</a>
+  <nav class="nav">
+    <a href="#lookbook">Lookbook</a>
+    <a href="/catalog.html">Shop</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <div class="header-right">
+    <a href="/catalog.html" class="header-cta">Shop Now</a>
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart, 2 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cartBadge" aria-hidden="true">2</span>
+    </button>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- Mobile Nav Overlay -->
+<div class="mobile-nav" id="mobileNav">
+  <nav class="mobile-nav-links">
+    <a href="/#lookbook">Lookbook</a>
+    <a href="/catalog.html">Shop</a>
+    <a href="/about.html">About</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+  <div class="mobile-nav-footer">
+    <a href="/catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
+    <div class="mobile-nav-socials">
+      <a href="#">Instagram</a><a href="#">Twitter</a><a href="#">TikTok</a>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="cart-drawer-header">
+    <h3>Your Bag <span id="cartCount">(2)</span></h3>
+    <button class="cart-close" id="cartClose" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-item" data-price="310">
+      <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=160&h=160&fit=crop" alt="KRSH Venom">
+      <div class="cart-item-info">
+        <span class="cart-item-name">KRSH Venom</span>
+        <span class="cart-item-meta">Size 8.5 &middot; White</span>
+        <span class="cart-item-price">$310</span>
+      </div>
+      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
+    </div>
+    <div class="cart-item" data-price="220">
+      <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=160&h=160&fit=crop" alt="Street Phantom">
+      <div class="cart-item-info">
+        <span class="cart-item-name">Street Phantom</span>
+        <span class="cart-item-meta">Size 9 &middot; Black</span>
+        <span class="cart-item-price">$220</span>
+      </div>
+      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
+    </div>
+  </div>
+  <div class="cart-drawer-empty" id="cartEmpty" hidden>
+    <p>Your bag is empty.</p>
+    <a href="/catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
+  </div>
+  <div class="cart-drawer-footer" id="cartFooter">
+    <div class="cart-promo">
+      <input type="text" placeholder="Promo code">
+      <button type="button">Apply</button>
+    </div>
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">$530</span>
+    </div>
+    <a href="checkout.html" class="btn-primary cart-checkout-btn">Checkout &rarr;</a>
+  </div>
+</aside>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<!-- Hero Campaign -->
+<section class="hero" id="hero">
+  <div class="hero-media">
+    <img src="https://images.unsplash.com/photo-1547447134-cd3f5c716030?w=1800&h=1100&fit=crop&q=80" alt="Street culture campaign" class="hero-img">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Summer 2026 Collection</p>
+    <h1 class="hero-title">STREET<br>CULTURE</h1>
+    <a href="/catalog.html" class="hero-link">Explore the drop &rarr;</a>
+  </div>
+</section>
+
+<!-- Lookbook -->
+<section class="lookbook" id="lookbook">
+  <div class="lookbook-grid">
+    <div class="lookbook-card lookbook-tall">
+      <img src="https://images.unsplash.com/photo-1601063476271-a159c71ab0b3?w=700&h=1000&fit=crop&q=80" alt="Lookbook 1">
+      <div class="lookbook-caption">
+        <span class="lookbook-tag">Editorial</span>
+        <span class="lookbook-name">Urban Layers</span>
+      </div>
+    </div>
+    <div class="lookbook-card">
+      <img src="https://images.unsplash.com/photo-1556906781-9a412961c28c?w=700&h=700&fit=crop&q=80" alt="Lookbook 2">
+      <div class="lookbook-caption">
+        <span class="lookbook-tag">New</span>
+        <span class="lookbook-name">KRSH Venom</span>
+      </div>
+    </div>
+    <div class="lookbook-card">
+      <img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=700&h=700&fit=crop&q=80" alt="Lookbook 3">
+      <div class="lookbook-caption">
+        <span class="lookbook-tag">Campaign</span>
+        <span class="lookbook-name">Walk the Line</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Drop -->
+<section class="featured-drop" id="featured">
+  <div class="featured-split">
+    <div class="featured-img-wrap">
+      <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=900&h=900&fit=crop&q=80" alt="KRSH Venom" class="featured-img">
+    </div>
+    <div class="featured-info">
+      <p class="featured-eyebrow">Featured Drop</p>
+      <h2 class="featured-name">KRSH<br>VENOM</h2>
+      <p class="featured-desc">Limited edition. Hand-numbered. 200 pairs worldwide. Built for the streets, designed for the culture.</p>
+      <div class="featured-meta">
+        <span class="featured-price">$310</span>
+        <span class="featured-limited">Limited — 47 left</span>
+      </div>
+      <a href="product.html?id=2" class="btn-primary">Shop Now &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-strip">
+  <div class="marquee-track" aria-hidden="true">
+    <span>KRSH</span><span>&times;</span><span>STREET CULTURE</span><span>&times;</span><span>EST. 2019</span><span>&times;</span><span>NO HYPE TAX</span><span>&times;</span><span>REAL SNEAKERS</span><span>&times;</span>
+    <span>KRSH</span><span>&times;</span><span>STREET CULTURE</span><span>&times;</span><span>EST. 2019</span><span>&times;</span><span>NO HYPE TAX</span><span>&times;</span><span>REAL SNEAKERS</span><span>&times;</span>
+  </div>
+</div>
+
+<!-- Product Grid -->
+<section class="products-section" id="products">
+  <div class="section-header">
+    <h2 class="section-title">New Arrivals</h2>
+    <a href="/catalog.html" class="section-link">View all &rarr;</a>
+  </div>
+  <div class="products-grid">
+    <a href="product.html?id=0" class="p-card">
+      <div class="p-card-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&h=500&fit=crop" alt="Air Blast X9" loading="lazy"></div>
+      <div class="p-card-info">
+        <span class="p-card-name">Air Blast X9</span>
+        <span class="p-card-price">$189</span>
+      </div>
+    </a>
+    <a href="product.html?id=1" class="p-card">
+      <span class="p-card-badge">New</span>
+      <div class="p-card-img"><img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=500&h=500&fit=crop" alt="Street Phantom" loading="lazy"></div>
+      <div class="p-card-info">
+        <span class="p-card-name">Street Phantom</span>
+        <span class="p-card-price">$220</span>
+      </div>
+    </a>
+    <a href="product.html?id=2" class="p-card">
+      <span class="p-card-badge badge-ltd">Limited</span>
+      <div class="p-card-img"><img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&h=500&fit=crop" alt="KRSH Venom" loading="lazy"></div>
+      <div class="p-card-info">
+        <span class="p-card-name">KRSH Venom</span>
+        <span class="p-card-price">$310</span>
+      </div>
+    </a>
+    <a href="product.html?id=3" class="p-card">
+      <div class="p-card-img"><img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&h=500&fit=crop" alt="Neon Flash 3.0" loading="lazy"></div>
+      <div class="p-card-info">
+        <span class="p-card-name">Neon Flash 3.0</span>
+        <span class="p-card-price">$175</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Manifesto / About -->
+<section class="manifesto" id="about">
+  <div class="manifesto-inner">
+    <h2 class="manifesto-text">Born on the <em>streets</em>,<br>built for the <em>culture</em>.</h2>
+    <p class="manifesto-sub">KRSH started in a garage in 2019. We curate the dopest kicks from underground brands and limited drops. No hype tax — just real streetwear for real people.</p>
+    <a href="/about.html" class="btn-secondary">Our Story &rarr;</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="trust-strip">
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="14" height="11"/><path d="M15 9h4l3 3.5V17h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
+      <span>Free shipping over $200</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V5.5z"/><path d="M8.5 12l2.3 2.3L16 9.5"/></svg>
+      <span>Secure checkout</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+      <span>14-day returns</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span>Authenticity guaranteed</span>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">KRSH</div>
+      <p class="footer-tagline">Your feet. Your rules.</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <h3>Shop</h3>
+        <a href="/catalog.html">All Products</a>
+        <a href="#">Sneakers</a>
+        <a href="#">Clothing</a>
+        <a href="#">Accessories</a>
+      </div>
+      <div class="footer-col">
+        <h3>Brand</h3>
+        <a href="/about.html">About</a>
+        <a href="#lookbook">Lookbook</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <h3>Join the crew</h3>
+      <div class="nl-form">
+        <input type="email" placeholder="your@email.com">
+        <button>Subscribe</button>
+      </div>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 KRSH. All rights reserved.</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="script.js?v=16"></script>
+<script src="graffiti.js?v=2"></script>
+</body>
+</html>

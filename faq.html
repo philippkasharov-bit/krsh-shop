@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — KRSH</title>
+<meta name="description" content="Frequently asked questions about KRSH orders, shipping, returns, sizing, and authenticity.">
+<link rel="canonical" href="https://krsh.store/faq.html">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How long does shipping take?","acceptedAnswer":{"@type":"Answer","text":"Standard delivery takes 3-5 business days. Express delivery (1-2 business days) is available for $15."}},
+{"@type":"Question","name":"What is your return policy?","acceptedAnswer":{"@type":"Answer","text":"We accept returns within 14 days of delivery. Items must be unworn and in original packaging."}},
+{"@type":"Question","name":"Are your sneakers authentic?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every pair is verified for authenticity before it ships."}}
+]}
+</script>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=17">
+</head>
+<body>
+
+<div class="cursor-drop" id="cursorDrop"></div>
+<div class="cursor-splatter" id="cursorSplatter"></div>
+<div class="grain-overlay"></div>
+
+<header class="header scrolled" id="header">
+  <a href="/" class="logo">KRSH</a>
+  <nav class="nav">
+    <a href="/#lookbook">Lookbook</a>
+    <a href="/catalog.html">Shop</a>
+    <a href="/about.html">About</a>
+  </nav>
+  <div class="header-right">
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart, 2 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-badge" id="cartBadge" aria-hidden="true">2</span>
+    </button>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <nav class="mobile-nav-links">
+    <a href="/#lookbook">Lookbook</a>
+    <a href="/catalog.html">Shop</a>
+    <a href="/about.html">About</a>
+    <a href="/faq.html">FAQ</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+  <div class="mobile-nav-footer">
+    <a href="/catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
+    <div class="mobile-nav-socials">
+      <a href="#">Instagram</a><a href="#">Twitter</a><a href="#">TikTok</a>
+    </div>
+  </div>
+</div>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+  <div class="cart-drawer-header">
+    <h3>Your Bag <span id="cartCount">(2)</span></h3>
+    <button class="cart-close" id="cartClose" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-item" data-price="310">
+      <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=160&h=160&fit=crop" alt="KRSH Venom">
+      <div class="cart-item-info">
+        <span class="cart-item-name">KRSH Venom</span>
+        <span class="cart-item-meta">Size 8.5 &middot; White</span>
+        <span class="cart-item-price">$310</span>
+      </div>
+      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
+    </div>
+    <div class="cart-item" data-price="220">
+      <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=160&h=160&fit=crop" alt="Street Phantom">
+      <div class="cart-item-info">
+        <span class="cart-item-name">Street Phantom</span>
+        <span class="cart-item-meta">Size 9 &middot; Black</span>
+        <span class="cart-item-price">$220</span>
+      </div>
+      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
+    </div>
+  </div>
+  <div class="cart-drawer-empty" id="cartEmpty" hidden>
+    <p>Your bag is empty.</p>
+    <a href="/catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
+  </div>
+  <div class="cart-drawer-footer" id="cartFooter">
+    <div class="cart-promo">
+      <input type="text" placeholder="Promo code">
+      <button type="button">Apply</button>
+    </div>
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">$530</span>
+    </div>
+    <a href="checkout.html" class="btn-primary cart-checkout-btn">Checkout &rarr;</a>
+  </div>
+</aside>
+
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a><span>/</span><span class="current">FAQ</span>
+</nav>
+
+<section class="catalog-hero">
+  <h1 class="catalog-title">FAQ</h1>
+  <p class="catalog-count">Everything you need to know</p>
+</section>
+
+<section class="faq-section">
+  <div class="faq-groups">
+
+    <div class="faq-group">
+      <h2 class="faq-group-title">Orders & Shipping</h2>
+      <details class="pdp-accordion faq-item" open>
+        <summary>How long does shipping take?</summary>
+        <div class="accordion-body"><p>Standard delivery takes 3-5 business days. Express delivery (1-2 business days) is available at checkout for $15.</p></div>
+      </details>
+      <details class="pdp-accordion faq-item">
+        <summary>Do you ship internationally?</summary>
+        <div class="accordion-body"><p>Yes, we ship to over 40 countries. International shipping times vary from 7-14 business days depending on destination.</p></div>
+      </details>
+      <details class="pdp-accordion faq-item">
+        <summary>Can I track my order?</summary>
+        <div class="accordion-body"><p>Yes. Once your order ships, you'll receive a tracking link via email within 24 hours.</p></div>
+      </details>
+    </div>
+
+    <div class="faq-group">
+      <h2 class="faq-group-title">Returns & Exchanges</h2>
+      <details class="pdp-accordion faq-item">
+        <summary>What is your return policy?</summary>
+        <div class="accordion-body"><p>We accept returns within 14 days of delivery. Items must be unworn, unwashed, and in original packaging with tags attached.</p></div>
+      </details>
+      <details class="pdp-accordion faq-item">
+        <summary>How do I exchange for a different size?</summary>
+        <div class="accordion-body"><p>Start a return for your original item and place a new order for the correct size — this is the fastest way to get the right fit while stock lasts.</p></div>
+      </details>
+      <details class="pdp-accordion faq-item">
+        <summary>Are limited drops returnable?</summary>
+        <div class="accordion-body"><p>Limited edition and final sale items are not eligible for return unless defective. This will always be noted on the product page.</p></div>
+      </details>
+    </div>
+
+    <div class="faq-group">
+      <h2 class="faq-group-title">Sizing</h2>
+      <details class="pdp-accordion faq-item">
+        <summary>How do KRSH sizes run?</summary>
+        <div class="accordion-body"><p>Most KRSH silhouettes run true to size. Check the size guide on each product page for brand-specific notes.</p></div>
+      </details>
+      <details class="pdp-accordion faq-item">
+        <summary>What if my size is sold out?</summary>
+        <div class="accordion-body"><p>Join the waitlist on the product page — we'll email you the moment it's restocked, if a restock is planned.</p></div>
+      </details>
+    </div>
+
+    <div class="faq-group">
+      <h2 class="faq-group-title">Authenticity</h2>
+      <details class="pdp-accordion faq-item">
+        <summary>Are your sneakers authentic?</summary>
+        <div class="accordion-body"><p>Yes, 100%. Every pair is verified by our authentication team before it ships. We never stock replicas.</p></div>
+      </details>
+      <details class="pdp-accordion faq-item">
+        <summary>Where do your limited drops come from?</summary>
+        <div class="accordion-body"><p>Direct partnerships with underground designers, small-batch manufacturers, and verified resellers we've worked with for years.</p></div>
+      </details>
+    </div>
+
+  </div>
+
+  <div class="faq-cta">
+    <p>Still have questions?</p>
+    <a href="/contact.html" class="btn-secondary">Contact Us &rarr;</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="trust-strip">
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="14" height="11"/><path d="M15 9h4l3 3.5V17h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
+      <span>Free shipping over $200</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V5.5z"/><path d="M8.5 12l2.3 2.3L16 9.5"/></svg>
+      <span>Secure checkout</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+      <span>14-day returns</span>
+    </div>
+    <div class="trust-item">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span>Authenticity guaranteed</span>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">KRSH</div>
+      <p class="footer-tagline">Your feet. Your rules.</p>
+    </div>
+    <div class="footer-nav">
+      <div class="footer-col">
+        <h3>Shop</h3>
+        <a href="/catalog.html">All Products</a>
+        <a href="#">Sneakers</a>
+        <a href="#">Clothing</a>
+      </div>
+      <div class="footer-col">
+        <h3>Brand</h3>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/faq.html">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <h3>Join the crew</h3>
+      <div class="nl-form">
+        <input type="email" placeholder="your@email.com">
+        <button>Subscribe</button>
+      </div>
+      <div class="footer-socials">
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">TikTok</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 KRSH. All rights reserved.</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="script.js?v=16"></script>
+<script src="graffiti.js?v=2"></script>
+</body>
+</html>
