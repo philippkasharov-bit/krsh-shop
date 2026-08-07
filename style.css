@@ -145,7 +145,11 @@ textarea:focus-visible, [tabindex]:focus-visible {
   border-color: var(--yellow);
   transform: rotate(-1deg);
 }
-.cart-btn { position: relative; }
+.cart-btn {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; margin: -11px;
+}
 .cart-btn svg { width: 22px; height: 22px; }
 .cart-badge {
   position: absolute; top: -5px; right: -7px;
@@ -154,7 +158,10 @@ textarea:focus-visible, [tabindex]:focus-visible {
   width: 16px; height: 16px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
 }
-.burger { display: none; flex-direction: column; gap: 6px; padding: 4px; }
+.burger {
+  display: none; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  width: 44px; height: 44px; margin: -13px -7px;
+}
 .burger span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: 0.3s; }
 
 /* ========== HERO ========== */
