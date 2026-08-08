@@ -141,7 +141,7 @@ window.KRSH_PRODUCTS = [
     price: 155,
     brand: 'adidas',
     badge: null,
-    img: 'https://images.unsplash.com/photo-1511499008188-de491bbbae98?w=500&h=500&fit=crop',
+    img: 'https://images.unsplash.com/photo-1547974009-6fb0db54c905?w=500&h=500&fit=crop',
     new: false,
     color: 'Black/White',
     desc: 'A daily driver that punches above its weight. Shadow Runner strips everything back to essentials — a clean black knit upper on a white Boost midsole. No noise, just performance.',
