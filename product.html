@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Product — KRSH</title>
 <meta name="description" content="Shop premium streetwear sneakers at KRSH. Limited drops, underground brands, no hype tax.">
+<meta property="og:title" content="Product — KRSH">
+<meta property="og:description" content="Shop premium streetwear sneakers at KRSH. Limited drops, underground brands, no hype tax.">
+<meta property="og:type" content="website">
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
 <link rel="canonical" href="https://krsh.store/product.html">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
@@ -19,11 +22,11 @@
 
 <!-- Header -->
 <header class="header scrolled" id="header">
-  <a href="/" class="logo">KRSH</a>
+  <a href="index.html" class="logo">KRSH</a>
   <nav class="nav">
-    <a href="/#lookbook">Lookbook</a>
-    <a href="/catalog.html">Shop</a>
-    <a href="/about.html">About</a>
+    <a href="index.html#lookbook">Lookbook</a>
+    <a href="catalog.html">Shop</a>
+    <a href="about.html">About</a>
   </nav>
   <div class="header-right">
     <button class="cart-btn" id="cartBtn" aria-label="Open cart, 2 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
@@ -37,16 +40,16 @@
 <!-- Mobile Nav Overlay -->
 <div class="mobile-nav" id="mobileNav">
   <nav class="mobile-nav-links">
-    <a href="/#lookbook">Lookbook</a>
-    <a href="/catalog.html">Shop</a>
-    <a href="/about.html">About</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="/contact.html">Contact</a>
+    <a href="index.html#lookbook">Lookbook</a>
+    <a href="catalog.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
   </nav>
   <div class="mobile-nav-footer">
-    <a href="/catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
+    <a href="catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
     <div class="mobile-nav-socials">
-      <a href="#">Instagram</a><a href="#">Twitter</a><a href="#">TikTok</a>
+      <a href="#" aria-disabled="true" title="Instagram — coming soon">Instagram</a><a href="#" aria-disabled="true" title="Twitter — coming soon">Twitter</a><a href="#" aria-disabled="true" title="TikTok — coming soon">TikTok</a>
     </div>
   </div>
 </div>
@@ -80,7 +83,7 @@
   </div>
   <div class="cart-drawer-empty" id="cartEmpty" hidden>
     <p>Your bag is empty.</p>
-    <a href="/catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
+    <a href="catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
   </div>
   <div class="cart-drawer-footer" id="cartFooter">
     <div class="cart-promo">
@@ -100,9 +103,9 @@
 
 <!-- Breadcrumb -->
 <nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="/">Home</a>
+  <a href="index.html">Home</a>
   <span>/</span>
-  <a href="/catalog.html">Shop</a>
+  <a href="catalog.html">Shop</a>
   <span>/</span>
   <span class="current" id="breadcrumbName">Product</span>
 </nav>
@@ -111,7 +114,7 @@
 <section class="pdp">
   <div class="pdp-gallery">
     <div class="pdp-main-img" id="mainImg">
-      <img src="" alt="" id="mainPhoto">
+      <img src="" alt="" id="mainPhoto" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27800%27 height=%27800%27 fill=%27%23222%27%3E%3Crect width=%27800%27 height=%27800%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 dominant-baseline=%27middle%27 text-anchor=%27middle%27 fill=%27%23555%27 font-size=%2732%27%3EImage unavailable%3C/text%3E%3C/svg%3E'">
     </div>
     <div class="pdp-thumbs" id="thumbs"></div>
   </div>
@@ -191,7 +194,7 @@
 <section class="products-section">
   <div class="section-header">
     <h2 class="section-title">You Might Also Like</h2>
-    <a href="/catalog.html" class="section-link">View all &rarr;</a>
+    <a href="catalog.html" class="section-link">View all &rarr;</a>
   </div>
   <div class="products-grid" id="relatedGrid"></div>
 </section>
@@ -224,15 +227,15 @@
     <div class="footer-nav">
       <div class="footer-col">
         <h3>Shop</h3>
-        <a href="/catalog.html">All Products</a>
+        <a href="catalog.html">All Products</a>
         <a href="#">Sneakers</a>
         <a href="#">Clothing</a>
       </div>
       <div class="footer-col">
         <h3>Brand</h3>
-        <a href="/about.html">About</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/faq.html">FAQ</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
       </div>
     </div>
     <div class="footer-newsletter">
@@ -242,9 +245,9 @@
         <button>Subscribe</button>
       </div>
       <div class="footer-socials">
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
-        <a href="#">TikTok</a>
+        <a href="#" aria-disabled="true" title="Instagram — coming soon">Instagram</a>
+        <a href="#" aria-disabled="true" title="Twitter — coming soon">Twitter</a>
+        <a href="#" aria-disabled="true" title="TikTok — coming soon">TikTok</a>
       </div>
     </div>
   </div>
@@ -269,6 +272,8 @@
 
   document.title = product.name + ' — KRSH';
   document.querySelector('meta[name="description"]').content = product.desc;
+  document.querySelector('meta[property="og:title"]').content = product.name + ' — KRSH';
+  document.querySelector('meta[property="og:description"]').content = product.desc;
   document.getElementById('breadcrumbName').textContent = product.name;
 
   // Main image + thumbnails

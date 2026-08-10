@@ -339,7 +339,7 @@
       const tl = gsap.timeline({ delay: 0.3 });
       tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
         .to('.hero-title', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
-        .to('.hero-link', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.6');
+        .to('.hero-link', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', clearProps: 'transform' }, '-=0.6');
     }
   }
 
@@ -405,5 +405,34 @@
       });
     });
   }
+
+  /* ---------- Image fallback for external sources ---------- */
+  document.addEventListener('error', (e) => {
+    if (e.target.tagName === 'IMG' && !e.target.dataset.fallback) {
+      e.target.dataset.fallback = '1';
+      e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500' fill='%23222'%3E%3Crect width='500' height='500'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23555' font-size='18'%3EImage unavailable%3C/text%3E%3C/svg%3E";
+    }
+  }, true);
+
+  /* ---------- Newsletter form validation ---------- */
+  document.querySelectorAll('.nl-form').forEach((form) => {
+    const input = form.querySelector('input[type="email"]');
+    const btn = form.querySelector('button');
+    if (!input || !btn) return;
+    btn.addEventListener('click', (e) => {
+      if (!input.value || !input.validity.valid) {
+        input.focus();
+        return;
+      }
+      if (window.showToast) window.showToast("You’re in! Welcome to the crew.");
+      input.value = '';
+    });
+  });
+
+  /* ---------- Inactive links (social placeholders not wired to real accounts yet) ---------- */
+  document.addEventListener('click', (e) => {
+    const inactive = e.target.closest('a[aria-disabled="true"]');
+    if (inactive) e.preventDefault();
+  });
 
 })();

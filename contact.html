@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — KRSH</title>
 <meta name="description" content="Get in touch with the KRSH crew — order questions, wholesale inquiries, press, or just to say hi.">
+<meta property="og:title" content="Contact — KRSH">
+<meta property="og:description" content="Get in touch with the KRSH crew — order questions, wholesale inquiries, press, or just to say hi.">
+<meta property="og:type" content="website">
 <link rel="canonical" href="https://krsh.store/contact.html">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
@@ -17,11 +20,11 @@
 <div class="grain-overlay"></div>
 
 <header class="header scrolled" id="header">
-  <a href="/" class="logo">KRSH</a>
+  <a href="index.html" class="logo">KRSH</a>
   <nav class="nav">
-    <a href="/#lookbook">Lookbook</a>
-    <a href="/catalog.html">Shop</a>
-    <a href="/about.html">About</a>
+    <a href="index.html#lookbook">Lookbook</a>
+    <a href="catalog.html">Shop</a>
+    <a href="about.html">About</a>
   </nav>
   <div class="header-right">
     <button class="cart-btn" id="cartBtn" aria-label="Open cart, 2 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
@@ -34,16 +37,16 @@
 
 <div class="mobile-nav" id="mobileNav">
   <nav class="mobile-nav-links">
-    <a href="/#lookbook">Lookbook</a>
-    <a href="/catalog.html">Shop</a>
-    <a href="/about.html">About</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="/contact.html">Contact</a>
+    <a href="index.html#lookbook">Lookbook</a>
+    <a href="catalog.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
   </nav>
   <div class="mobile-nav-footer">
-    <a href="/catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
+    <a href="catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
     <div class="mobile-nav-socials">
-      <a href="#">Instagram</a><a href="#">Twitter</a><a href="#">TikTok</a>
+      <a href="#" aria-disabled="true" title="Instagram — coming soon">Instagram</a><a href="#" aria-disabled="true" title="Twitter — coming soon">Twitter</a><a href="#" aria-disabled="true" title="TikTok — coming soon">TikTok</a>
     </div>
   </div>
 </div>
@@ -76,7 +79,7 @@
   </div>
   <div class="cart-drawer-empty" id="cartEmpty" hidden>
     <p>Your bag is empty.</p>
-    <a href="/catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
+    <a href="catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
   </div>
   <div class="cart-drawer-footer" id="cartFooter">
     <div class="cart-promo">
@@ -94,7 +97,7 @@
 <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
 <nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="/">Home</a><span>/</span><span class="current">Contact</span>
+  <a href="index.html">Home</a><span>/</span><span class="current">Contact</span>
 </nav>
 
 <section class="catalog-hero">
@@ -123,9 +126,9 @@
       <div class="contact-block">
         <h3>Follow the Crew</h3>
         <div class="footer-socials">
-          <a href="#">Instagram</a>
-          <a href="#">Twitter</a>
-          <a href="#">TikTok</a>
+          <a href="#" aria-disabled="true" title="Instagram — coming soon">Instagram</a>
+          <a href="#" aria-disabled="true" title="Twitter — coming soon">Twitter</a>
+          <a href="#" aria-disabled="true" title="TikTok — coming soon">TikTok</a>
         </div>
       </div>
     </div>
@@ -133,11 +136,13 @@
     <form class="contact-form" id="contactForm">
       <div class="form-row">
         <label for="cf-name">Name</label>
-        <input type="text" id="cf-name" name="name" required>
+        <input type="text" id="cf-name" name="name" required autocomplete="name" placeholder=" ">
+        <span class="field-error">Please enter your name</span>
       </div>
       <div class="form-row">
         <label for="cf-email">Email</label>
-        <input type="email" id="cf-email" name="email" required>
+        <input type="email" id="cf-email" name="email" required autocomplete="email" placeholder=" ">
+        <span class="field-error">Please enter a valid email</span>
       </div>
       <div class="form-row">
         <label for="cf-topic">Topic</label>
@@ -151,7 +156,8 @@
       </div>
       <div class="form-row">
         <label for="cf-message">Message</label>
-        <textarea id="cf-message" name="message" rows="5" required></textarea>
+        <textarea id="cf-message" name="message" rows="5" required placeholder=" "></textarea>
+        <span class="field-error">Please enter a message</span>
       </div>
       <button type="submit" class="btn-primary">Send Message &rarr;</button>
     </form>
@@ -185,15 +191,15 @@
     <div class="footer-nav">
       <div class="footer-col">
         <h3>Shop</h3>
-        <a href="/catalog.html">All Products</a>
+        <a href="catalog.html">All Products</a>
         <a href="#">Sneakers</a>
         <a href="#">Clothing</a>
       </div>
       <div class="footer-col">
         <h3>Brand</h3>
-        <a href="/about.html">About</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/faq.html">FAQ</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
       </div>
     </div>
     <div class="footer-newsletter">
@@ -203,9 +209,9 @@
         <button>Subscribe</button>
       </div>
       <div class="footer-socials">
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
-        <a href="#">TikTok</a>
+        <a href="#" aria-disabled="true" title="Instagram — coming soon">Instagram</a>
+        <a href="#" aria-disabled="true" title="Twitter — coming soon">Twitter</a>
+        <a href="#" aria-disabled="true" title="TikTok — coming soon">TikTok</a>
       </div>
     </div>
   </div>

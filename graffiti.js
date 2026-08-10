@@ -337,7 +337,7 @@
     gsap.registerPlugin(ScrollTrigger);
 
     const revealSections = document.querySelectorAll(
-      '.lookbook, .featured-drop, .products-section, .manifesto, .story-content, .values-section, .stats-section, .faq-section, .contact-section'
+      '.lookbook, .featured-drop, .products-section, .manifesto, .story-content, .values-section, .stats-section, .faq-section, .contact-section, .checkout-section'
     );
 
     revealSections.forEach((section) => {
@@ -446,7 +446,10 @@
       p.setAttribute('d', pDef.d);
       if (pDef.fill) {
         p.setAttribute('fill', color);
-        p.setAttribute('fill-opacity', '0.15');
+        /* Starts invisible: the fill blooms in as its own beat, after the
+           outline finishes drawing, instead of ghosting through pre-scroll. */
+        p.setAttribute('fill-opacity', '0');
+        p.classList.add('graffiti-fill-path');
       } else {
         p.setAttribute('fill', 'none');
       }
@@ -482,8 +485,14 @@
   const productsSection = document.querySelector('.products-section');
   const manifesto = document.querySelector('.manifesto');
   const heroSection = document.querySelector('.hero');
+  const contactSection = document.querySelector('.contact-section');
+  const faqSection = document.querySelector('.faq-section');
+  const checkoutSection = document.querySelector('.checkout-section');
 
-  const artTargets = [lookbook, featured, productsSection, manifesto, heroSection].filter(Boolean);
+  const artTargets = [
+    lookbook, featured, productsSection, manifesto, heroSection,
+    contactSection, faqSection, checkoutSection,
+  ].filter(Boolean);
 
   artTargets.forEach((el, i) => {
     const artDef = graffitiSVGs[i % graffitiSVGs.length];
@@ -492,20 +501,36 @@
     const pos = artPositions[i % artPositions.length];
     Object.assign(svg.style, pos);
 
+    const strokePaths = svg.querySelectorAll('.graffiti-draw-path');
+    const fillPaths = svg.querySelectorAll('.graffiti-fill-path');
+
     if (window.gsap && window.ScrollTrigger) {
-      const paths = svg.querySelectorAll('.graffiti-draw-path');
-      paths.forEach((p, pi) => {
-        gsap.to(p, {
+      /* Two-beat tag reveal: the outline sprays on first (existing stagger),
+         then the fill blooms in as its own beat once the outline lands —
+         same two-step a real spray tag goes down in. */
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none none' }
+      });
+      strokePaths.forEach((p, pi) => {
+        tl.to(p, {
           strokeDashoffset: 0,
           duration: prefersReducedMotion ? 0 : 1.5 + pi * 0.3,
           ease: 'power2.inOut',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          }
-        });
+        }, pi * (prefersReducedMotion ? 0 : 0.3));
       });
+      if (fillPaths.length) {
+        tl.to(fillPaths, {
+          fillOpacity: 0.15,
+          duration: prefersReducedMotion ? 0 : 0.9,
+          ease: 'power1.out',
+          stagger: prefersReducedMotion ? 0 : 0.08,
+        }, prefersReducedMotion ? 0 : '-=0.4');
+      }
+    } else {
+      /* No GSAP/ScrollTrigger: show the finished art immediately rather
+         than leaving it invisible forever. */
+      strokePaths.forEach((p) => { p.style.strokeDashoffset = 0; });
+      fillPaths.forEach((p) => { p.setAttribute('fill-opacity', '0.15'); });
     }
   });
 

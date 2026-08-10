@@ -18,11 +18,11 @@
 <div class="grain-overlay"></div>
 
 <header class="header scrolled" id="header">
-  <a href="/" class="logo">KRSH</a>
+  <a href="index.html" class="logo">KRSH</a>
   <nav class="nav">
-    <a href="/#lookbook">Lookbook</a>
-    <a href="/catalog.html">Shop</a>
-    <a href="/about.html">About</a>
+    <a href="index.html#lookbook">Lookbook</a>
+    <a href="catalog.html">Shop</a>
+    <a href="about.html">About</a>
   </nav>
   <div class="header-right">
     <button class="cart-btn" id="cartBtn" aria-label="Open cart, 2 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
@@ -35,16 +35,16 @@
 
 <div class="mobile-nav" id="mobileNav">
   <nav class="mobile-nav-links">
-    <a href="/#lookbook">Lookbook</a>
-    <a href="/catalog.html">Shop</a>
-    <a href="/about.html">About</a>
-    <a href="/faq.html">FAQ</a>
-    <a href="/contact.html">Contact</a>
+    <a href="index.html#lookbook">Lookbook</a>
+    <a href="catalog.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
   </nav>
   <div class="mobile-nav-footer">
-    <a href="/catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
+    <a href="catalog.html" class="btn-primary mobile-nav-cta">Shop Now</a>
     <div class="mobile-nav-socials">
-      <a href="#">Instagram</a><a href="#">Twitter</a><a href="#">TikTok</a>
+      <a href="#" aria-disabled="true" title="Instagram — coming soon">Instagram</a><a href="#" aria-disabled="true" title="Twitter — coming soon">Twitter</a><a href="#" aria-disabled="true" title="TikTok — coming soon">TikTok</a>
     </div>
   </div>
 </div>
@@ -77,7 +77,7 @@
   </div>
   <div class="cart-drawer-empty" id="cartEmpty" hidden>
     <p>Your bag is empty.</p>
-    <a href="/catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
+    <a href="catalog.html" class="btn-secondary">Start Shopping &rarr;</a>
   </div>
   <div class="cart-drawer-footer" id="cartFooter">
     <div class="cart-promo">
@@ -95,7 +95,7 @@
 <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
 <nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="/">Home</a><span>/</span><a href="/catalog.html">Shop</a><span>/</span><span class="current">Checkout</span>
+  <a href="index.html">Home</a><span>/</span><a href="catalog.html">Shop</a><span>/</span><span class="current">Checkout</span>
 </nav>
 
 <section class="catalog-hero">
@@ -115,7 +115,7 @@
         </div>
         <div class="form-row">
           <label for="co-email">Email</label>
-          <input type="email" id="co-email" name="email" placeholder="your@email.com" required>
+          <input type="email" id="co-email" name="email" placeholder="your@email.com" required autocomplete="email">
         </div>
       </div>
 
@@ -127,23 +127,23 @@
         <div class="form-grid">
           <div class="form-row">
             <label for="co-first">First Name</label>
-            <input type="text" id="co-first" name="first" required>
+            <input type="text" id="co-first" name="first" required autocomplete="given-name" placeholder=" ">
           </div>
           <div class="form-row">
             <label for="co-last">Last Name</label>
-            <input type="text" id="co-last" name="last" required>
+            <input type="text" id="co-last" name="last" required autocomplete="family-name" placeholder=" ">
           </div>
           <div class="form-row form-row-full">
             <label for="co-address">Address</label>
-            <input type="text" id="co-address" name="address" placeholder="Street and number" required>
+            <input type="text" id="co-address" name="address" placeholder="Street and number" required autocomplete="street-address">
           </div>
           <div class="form-row">
             <label for="co-city">City</label>
-            <input type="text" id="co-city" name="city" required>
+            <input type="text" id="co-city" name="city" required autocomplete="address-level2" placeholder=" ">
           </div>
           <div class="form-row">
             <label for="co-zip">ZIP / Postal Code</label>
-            <input type="text" id="co-zip" name="zip" required>
+            <input type="text" id="co-zip" name="zip" required autocomplete="postal-code" inputmode="text" placeholder=" ">
           </div>
           <div class="form-row form-row-full">
             <label for="co-country">Country</label>
@@ -191,15 +191,15 @@
         <div class="form-grid">
           <div class="form-row form-row-full">
             <label for="co-card">Card Number</label>
-            <input type="text" id="co-card" name="card" placeholder="0000 0000 0000 0000" required>
+            <input type="text" id="co-card" name="card" placeholder="0000 0000 0000 0000" required inputmode="numeric" maxlength="19" autocomplete="cc-number">
           </div>
           <div class="form-row">
             <label for="co-exp">Expiry</label>
-            <input type="text" id="co-exp" name="exp" placeholder="MM / YY" required>
+            <input type="text" id="co-exp" name="exp" placeholder="MM / YY" required inputmode="numeric" maxlength="7" autocomplete="cc-exp">
           </div>
           <div class="form-row">
             <label for="co-cvc">CVC</label>
-            <input type="text" id="co-cvc" name="cvc" placeholder="123" required>
+            <input type="text" id="co-cvc" name="cvc" placeholder="123" required inputmode="numeric" maxlength="4" autocomplete="cc-csc">
           </div>
         </div>
       </div>
@@ -273,7 +273,7 @@
     <h1>Order Placed</h1>
     <p class="order-success-num">Order <span id="orderNumber">#KRSH-00000</span></p>
     <p class="order-success-sub">A confirmation email is on its way. Your gear ships within 3&ndash;5 business days.</p>
-    <a href="/catalog.html" class="btn-primary">Continue Shopping &rarr;</a>
+    <a href="catalog.html" class="btn-primary">Continue Shopping &rarr;</a>
   </div>
 </section>
 
@@ -304,15 +304,15 @@
     <div class="footer-nav">
       <div class="footer-col">
         <h3>Shop</h3>
-        <a href="/catalog.html">All Products</a>
+        <a href="catalog.html">All Products</a>
         <a href="#">Sneakers</a>
         <a href="#">Clothing</a>
       </div>
       <div class="footer-col">
         <h3>Brand</h3>
-        <a href="/about.html">About</a>
-        <a href="/contact.html">Contact</a>
-        <a href="/faq.html">FAQ</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="faq.html">FAQ</a>
       </div>
     </div>
     <div class="footer-newsletter">
@@ -322,9 +322,9 @@
         <button>Subscribe</button>
       </div>
       <div class="footer-socials">
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
-        <a href="#">TikTok</a>
+        <a href="#" aria-disabled="true" title="Instagram — coming soon">Instagram</a>
+        <a href="#" aria-disabled="true" title="Twitter — coming soon">Twitter</a>
+        <a href="#" aria-disabled="true" title="TikTok — coming soon">TikTok</a>
       </div>
     </div>
   </div>
@@ -373,6 +373,10 @@
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const submitBtn = document.getElementById('checkoutSubmit');
+      if (submitBtn.disabled) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing…';
       const num = 'KRSH-' + Math.floor(10000 + Math.random() * 89999);
       orderNumber.textContent = '#' + num;
       if (heroSection) heroSection.hidden = true;
