@@ -539,8 +539,8 @@ textarea:focus-visible, [tabindex]:focus-visible {
 }
 .nl-form input {
   flex: 1; background: rgba(242,237,232,0.08); border: 1px solid rgba(242,237,232,0.18);
-  border-right: none; padding: 14px 18px;
-  color: var(--white); font-family: 'Satoshi', sans-serif; font-size: 14px;
+  border-right: none; padding: 14px 18px; min-height: 44px;
+  color: var(--white); font-family: 'Satoshi', sans-serif; font-size: 16px;
   outline: none;
 }
 .nl-form input::placeholder { color: rgba(242,237,232,0.45); }
@@ -1041,6 +1041,8 @@ body.nav-open { overflow: hidden; }
 .cart-close {
   font-size: 28px; line-height: 1; color: var(--text-dim);
   transition: color 0.2s;
+  min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
 }
 .cart-close:hover { color: var(--white); }
 
@@ -1061,6 +1063,8 @@ body.nav-open { overflow: hidden; }
 .cart-item-remove {
   font-size: 20px; color: var(--text-dim); align-self: start;
   transition: color 0.2s;
+  min-width: 44px; min-height: 44px;
+  display: flex; align-items: center; justify-content: center;
 }
 .cart-item-remove:hover { color: var(--pink); }
 
@@ -1079,13 +1083,14 @@ body.nav-open { overflow: hidden; }
 .cart-promo { display: flex; margin-bottom: 18px; }
 .cart-promo input {
   flex: 1; background: var(--gray); border: 1px solid rgba(242,237,232,0.1);
-  border-right: none; padding: 10px 14px; color: var(--white);
-  font-family: 'Satoshi', sans-serif; font-size: 13px; outline: none;
+  border-right: none; padding: 12px 14px; color: var(--white);
+  font-family: 'Satoshi', sans-serif; font-size: 16px; outline: none;
+  min-height: 44px;
 }
 .cart-promo input::placeholder { color: rgba(242,237,232,0.3); }
 .cart-promo button {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 2px; padding: 10px 18px;
+  letter-spacing: 2px; padding: 12px 18px; min-height: 44px;
   background: var(--gray2); color: var(--white);
   border: 1px solid rgba(242,237,232,0.1);
   transition: 0.2s;
@@ -1241,8 +1246,8 @@ body.nav-open { overflow: hidden; }
 .form-row input, .form-row select, .form-row textarea {
   background: var(--gray); border: 1px solid rgba(242,237,232,0.1);
   padding: 12px 16px; color: var(--white);
-  font-family: 'Satoshi', sans-serif; font-size: 14px;
-  outline: none; resize: vertical;
+  font-family: 'Satoshi', sans-serif; font-size: 16px;
+  outline: none; resize: vertical; min-height: 44px;
 }
 .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
   border-color: rgba(242,237,232,0.3);
