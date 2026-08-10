@@ -98,4 +98,22 @@
   loadMoreBtn.addEventListener('click', loadMore);
   render();
 
+  // On back-navigation from product page, tag the matching card image for the reverse morph
+  window.addEventListener('pagereveal', (e) => {
+    if (!e.viewTransition) return;
+    e.viewTransition.ready.catch(() => {});
+    const nav = performance.getEntriesByType('navigation')[0];
+    if (nav && nav.type === 'back_forward') {
+      const ref = document.referrer;
+      const match = ref && ref.match(/[?&]id=(\d+)/);
+      if (match) {
+        const card = grid.querySelector(`a.p-card[href*="id=${match[1]}"]`);
+        if (card) {
+          const img = card.querySelector('.p-card-img img');
+          if (img) img.style.viewTransitionName = 'product-hero';
+        }
+      }
+    }
+  });
+
 })();

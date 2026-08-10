@@ -1,3 +1,8 @@
+/* Suppress View Transition AbortErrors (expected when transitions are skipped) */
+window.addEventListener('unhandledrejection', (e) => {
+  if (e.reason && e.reason.name === 'AbortError') e.preventDefault();
+});
+
 /* ========== KRSH — Editorial Streetwear ========== */
 (function () {
   const isTouchDevice = window.matchMedia('(hover: none)').matches;
@@ -434,5 +439,32 @@
     const inactive = e.target.closest('a[aria-disabled="true"]');
     if (inactive) e.preventDefault();
   });
+
+  /* ---------- View Transitions: shared-element morph for product navigation ---------- */
+  (function() {
+    let lastClickedCard = null;
+
+    document.addEventListener('click', (e) => {
+      const card = e.target.closest('a.p-card');
+      if (card && card.href && card.href.includes('product.html')) {
+        lastClickedCard = card;
+      }
+    });
+
+    window.addEventListener('pageswap', (e) => {
+      if (!e.viewTransition) return;
+      e.viewTransition.finished.catch(() => {});
+      e.viewTransition.ready.catch(() => {});
+      if (!lastClickedCard) return;
+      const img = lastClickedCard.querySelector('.p-card-img img');
+      if (img) img.style.viewTransitionName = 'product-hero';
+    });
+
+    window.addEventListener('pagereveal', (e) => {
+      if (!e.viewTransition) return;
+      e.viewTransition.finished.catch(() => {});
+      e.viewTransition.ready.catch(() => {});
+    });
+  })();
 
 })();
