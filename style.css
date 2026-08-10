@@ -900,14 +900,16 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .wish-btn {
   position: absolute; top: 12px; right: 12px; z-index: 3;
   width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
-  background: rgba(10,10,10,0.65); backdrop-filter: blur(6px);
-  border-radius: 50%; color: var(--white);
+  background: none;
+  color: var(--white);
   opacity: 0; transform: translateY(-6px);
   transition: opacity 0.25s, transform 0.25s, color 0.2s;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.6));
 }
+.wish-btn svg { stroke-width: 2; }
 .p-card:hover .wish-btn { opacity: 1; transform: translateY(0); }
 .wish-btn.active { opacity: 1; color: var(--pink); }
-.wish-btn.active svg { fill: var(--pink); }
+.wish-btn.active svg { fill: var(--pink); stroke: var(--pink); }
 @media (hover: none) { .wish-btn { opacity: 1; transform: none; } }
 
 .quickview-btn {
