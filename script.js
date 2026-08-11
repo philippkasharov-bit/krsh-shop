@@ -111,7 +111,24 @@ window.addEventListener('unhandledrejection', (e) => {
     mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
   }
 
-  /* ---------- Cart drawer ---------- */
+  /* ---------- Cart (localStorage-backed, shared across every page) ---------- */
+  const CART_KEY = 'krsh_cart';
+  const DEFAULT_CART = [
+    { name: 'KRSH Venom', price: 310, size: '8.5', color: 'White', img: 'https://images.unsplash.com/photo-1544441892-794166f1e3be?w=160&h=160&fit=crop' },
+    { name: 'Street Phantom', price: 220, size: '9', color: 'White', img: 'https://images.unsplash.com/photo-1596480370804-cff0eed14888?w=160&h=160&fit=crop' }
+  ];
+
+  function getCart() {
+    try {
+      const raw = localStorage.getItem(CART_KEY);
+      if (raw === null) return DEFAULT_CART.slice();
+      return JSON.parse(raw) || [];
+    } catch (e) { return []; }
+  }
+  function setCart(items) {
+    try { localStorage.setItem(CART_KEY, JSON.stringify(items)); } catch (e) {}
+  }
+
   const cartBtn = document.getElementById('cartBtn');
   const cartDrawer = document.getElementById('cartDrawer');
   const cartOverlay = document.getElementById('cartOverlay');
@@ -122,11 +139,31 @@ window.addEventListener('unhandledrejection', (e) => {
   const cartItems = document.getElementById('cartItems');
   const cartEmpty = document.getElementById('cartEmpty');
   const cartFooter = document.getElementById('cartFooter');
+  const orderItems = document.getElementById('orderItems');
+
+  function cartRowHTML(item, index, removable) {
+    const meta = item.size ? 'Size ' + item.size + (item.color ? ' &middot; ' + item.color : '') : (item.color || '');
+    return '<div class="cart-item" data-index="' + index + '" data-price="' + item.price + '">' +
+      '<img src="' + item.img + '" alt="' + item.name + '">' +
+      '<div class="cart-item-info">' +
+      '<span class="cart-item-name">' + item.name + '</span>' +
+      (meta ? '<span class="cart-item-meta">' + meta + '</span>' : '') +
+      '<span class="cart-item-price">$' + item.price + '</span></div>' +
+      (removable ? '<button class="cart-item-remove" aria-label="Remove ' + item.name + ' from cart">&times;</button>' : '') +
+      '</div>';
+  }
+
+  function renderCart() {
+    const items = getCart();
+    if (cartItems) cartItems.innerHTML = items.map((item, i) => cartRowHTML(item, i, true)).join('');
+    if (orderItems) orderItems.innerHTML = items.map((item, i) => cartRowHTML(item, i, false)).join('');
+    updateCartTotals();
+    document.dispatchEvent(new CustomEvent('krsh:cart-updated', { detail: { items } }));
+  }
 
   function updateCartTotals() {
-    if (!cartItems) return;
-    const items = cartItems.querySelectorAll('.cart-item');
-    const total = [...items].reduce((sum, el) => sum + Number(el.dataset.price || 0), 0);
+    const items = getCart();
+    const total = items.reduce((sum, item) => sum + Number(item.price || 0), 0);
     if (cartBadge) cartBadge.textContent = items.length;
     if (cartBtn) cartBtn.setAttribute('aria-label', `Open cart, ${items.length} item${items.length === 1 ? '' : 's'}`);
     if (cartCount) cartCount.textContent = `(${items.length})`;
@@ -135,6 +172,24 @@ window.addEventListener('unhandledrejection', (e) => {
     if (cartEmpty) cartEmpty.hidden = !isEmpty;
     if (cartFooter) cartFooter.style.display = isEmpty ? 'none' : '';
   }
+
+  function addToCart(item) {
+    const items = getCart();
+    items.push(item);
+    setCart(items);
+    renderCart();
+    if (window.showToast) window.showToast(item.name + ' added to your bag');
+    if (window.krshOpenCart) setTimeout(window.krshOpenCart, 300);
+  }
+  function removeFromCart(index) {
+    const items = getCart();
+    items.splice(index, 1);
+    setCart(items);
+    renderCart();
+  }
+  window.krshAddToCart = addToCart;
+  window.krshGetCart = getCart;
+  window.krshClearCart = function () { setCart([]); renderCart(); };
 
   function openCart() {
     if (!cartDrawer) return;
@@ -163,13 +218,27 @@ window.addEventListener('unhandledrejection', (e) => {
       const removeBtn = e.target.closest('.cart-item-remove');
       if (!removeBtn) return;
       const item = removeBtn.closest('.cart-item');
+      const index = Number(item.dataset.index);
       item.style.transition = 'opacity 0.25s, transform 0.25s';
       item.style.opacity = '0';
       item.style.transform = 'translateX(20px)';
-      setTimeout(() => { item.remove(); updateCartTotals(); }, 250);
+      setTimeout(() => removeFromCart(index), 250);
     });
-    updateCartTotals();
+    renderCart();
   }
+
+  /* ---------- Promo code (demo-only: no real discount backend) ---------- */
+  document.querySelectorAll('.cart-promo').forEach(promo => {
+    const input = promo.querySelector('input');
+    const btn = promo.querySelector('button');
+    if (!input || !btn) return;
+    btn.addEventListener('click', () => {
+      if (!input.value.trim()) return;
+      if (window.showToast) window.showToast('"' + input.value.trim() + '" is not a valid code');
+      input.value = '';
+    });
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); btn.click(); } });
+  });
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
@@ -303,9 +372,14 @@ window.addEventListener('unhandledrejection', (e) => {
       });
 
       qvModal.querySelector('.qv-add').onclick = () => {
+        const sizeBtn = sizeGrid.querySelector('.size-btn.active');
+        const idMatch = href.match(/[?&]id=(\d+)/);
+        const product = idMatch && window.KRSH_PRODUCTS ? window.KRSH_PRODUCTS.find(p => p.id === Number(idMatch[1])) : null;
+        const cartItem = product
+          ? { name: product.name, price: product.price, size: sizeBtn ? sizeBtn.dataset.size : '9', color: product.color || '', img: product.img.replace(/w=\d+&h=\d+/, 'w=160&h=160') }
+          : { name, price: parseInt((price.match(/\$?(\d+)\s*$/) || [])[1] || '0', 10), size: sizeBtn ? sizeBtn.dataset.size : '9', color: '', img: img ? img.src.replace(/w=\d+&h=\d+/, 'w=160&h=160') : '' };
         closeQuickView();
-        if (window.showToast) window.showToast(`${name} added to your bag`);
-        if (window.krshOpenCart) setTimeout(window.krshOpenCart, 250);
+        if (window.krshAddToCart) window.krshAddToCart(cartItem);
       };
 
       document.body.classList.add('nav-open');

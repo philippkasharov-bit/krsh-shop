@@ -6,16 +6,40 @@
 
   const PER_PAGE = 9;
   let shown = 0;
-  let currentFilter = 'all';
-  let currentSort = 'featured';
 
   const grid = document.getElementById('catalogGrid');
   const emptyState = document.getElementById('emptyState');
   const loadMoreWrap = document.getElementById('loadMoreWrap');
   const loadMoreBtn = document.getElementById('loadMoreBtn');
   const countEl = document.getElementById('productCount');
+  const sortSelect = document.getElementById('sortSelect');
 
   if (!grid) return;
+
+  const VALID_FILTERS = ['all', 'nike', 'adidas', 'newbalance', 'puma', 'krsh'];
+  const VALID_SORTS = ['featured', 'price-low', 'price-high', 'newest'];
+  const params = new URLSearchParams(window.location.search);
+  const urlBrand = params.get('brand');
+  const urlSort = params.get('sort');
+  let currentFilter = VALID_FILTERS.includes(urlBrand) ? urlBrand : 'all';
+  let currentSort = VALID_SORTS.includes(urlSort) ? urlSort : 'featured';
+
+  // Reflect any URL-provided state into the controls before first render
+  const initialFilterBtn = document.querySelector(`.filter-tag[data-filter="${currentFilter}"]`);
+  if (initialFilterBtn) {
+    document.querySelector('.filter-tag.active')?.classList.remove('active');
+    initialFilterBtn.classList.add('active');
+  }
+  if (sortSelect) sortSelect.value = currentSort;
+
+  function syncURL() {
+    const url = new URL(window.location.href);
+    if (currentFilter === 'all') url.searchParams.delete('brand');
+    else url.searchParams.set('brand', currentFilter);
+    if (currentSort === 'featured') url.searchParams.delete('sort');
+    else url.searchParams.set('sort', currentSort);
+    history.replaceState(null, '', url.pathname + url.search);
+  }
 
   function getFiltered() {
     let list = currentFilter === 'all' ? [...PRODUCTS] : PRODUCTS.filter(p => p.brand === currentFilter);
@@ -86,14 +110,18 @@
       document.querySelector('.filter-tag.active').classList.remove('active');
       btn.classList.add('active');
       currentFilter = btn.dataset.filter;
+      syncURL();
       render();
     });
   });
 
-  document.getElementById('sortSelect').addEventListener('change', (e) => {
-    currentSort = e.target.value;
-    render();
-  });
+  if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      syncURL();
+      render();
+    });
+  }
 
   loadMoreBtn.addEventListener('click', loadMore);
   render();

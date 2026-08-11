@@ -63,24 +63,6 @@
     <button class="cart-close" id="cartClose" aria-label="Close cart">&times;</button>
   </div>
   <div class="cart-items" id="cartItems">
-    <div class="cart-item" data-price="310">
-      <img src="https://images.unsplash.com/photo-1544441892-794166f1e3be?w=160&h=160&fit=crop" alt="KRSH Venom">
-      <div class="cart-item-info">
-        <span class="cart-item-name">KRSH Venom</span>
-        <span class="cart-item-meta">Size 8.5 &middot; White</span>
-        <span class="cart-item-price">$310</span>
-      </div>
-      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
-    </div>
-    <div class="cart-item" data-price="220">
-      <img src="https://images.unsplash.com/photo-1596480370804-cff0eed14888?w=160&h=160&fit=crop" alt="Street Phantom">
-      <div class="cart-item-info">
-        <span class="cart-item-name">Street Phantom</span>
-        <span class="cart-item-meta">Size 9 &middot; White</span>
-        <span class="cart-item-price">$220</span>
-      </div>
-      <button class="cart-item-remove" aria-label="Remove item">&times;</button>
-    </div>
   </div>
   <div class="cart-drawer-empty" id="cartEmpty" hidden>
     <p>Your bag is empty.</p>
@@ -260,7 +242,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-<script src="script.js?v=17"></script>
+<script src="script.js?v=18"></script>
 <script src="products-data.js?v=5"></script>
 <script>
 window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTransition.ready.catch(() => {}); });
@@ -410,7 +392,6 @@ window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTrans
 
   // Add to bag
   const addBtn = document.getElementById('addToBag');
-  const cartItemsList = document.getElementById('cartItems');
   if (addBtn && !addBtn.disabled) {
     addBtn.addEventListener('click', () => {
       const size = document.querySelector('.size-btn.active');
@@ -418,33 +399,15 @@ window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTrans
       addBtn.style.background = 'var(--yellow)';
       setTimeout(() => { addBtn.textContent = 'Add to Bag'; addBtn.style.background = ''; }, 1500);
 
-      if (cartItemsList) {
-        const row = document.createElement('div');
-        row.className = 'cart-item';
-        row.dataset.price = String(product.price);
-        row.innerHTML =
-          '<img src="' + product.img.replace(/w=\d+&h=\d+/, 'w=160&h=160') + '" alt="' + product.name + '">' +
-          '<div class="cart-item-info">' +
-          '<span class="cart-item-name">' + product.name + '</span>' +
-          '<span class="cart-item-meta">Size ' + (size ? size.dataset.size : '8.5') + ' &middot; ' + product.color + '</span>' +
-          '<span class="cart-item-price">$' + product.price + '</span></div>' +
-          '<button class="cart-item-remove" aria-label="Remove item">&times;</button>';
-        cartItemsList.appendChild(row);
-        cartItemsList.dispatchEvent(new Event('cart:updated'));
-        if (window.gsap) gsap.from(row, { opacity: 0, x: 20, duration: 0.3 });
+      if (window.krshAddToCart) {
+        window.krshAddToCart({
+          name: product.name,
+          price: product.price,
+          size: size ? size.dataset.size : '8.5',
+          color: product.color,
+          img: product.img.replace(/w=\d+&h=\d+/, 'w=160&h=160')
+        });
       }
-
-      if (window.showToast) window.showToast(product.name + ' added to your bag');
-      if (window.krshOpenCart) setTimeout(window.krshOpenCart, 300);
-
-      const items = cartItemsList ? cartItemsList.querySelectorAll('.cart-item') : [];
-      const cartTotal = [...items].reduce((sum, el) => sum + Number(el.dataset.price || 0), 0);
-      const badge = document.getElementById('cartBadge');
-      const count = document.getElementById('cartCount');
-      const subtotal = document.getElementById('cartSubtotal');
-      if (badge) badge.textContent = items.length;
-      if (count) count.textContent = '(' + items.length + ')';
-      if (subtotal) subtotal.textContent = '$' + cartTotal;
     });
   }
 })();
