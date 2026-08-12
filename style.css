@@ -420,6 +420,9 @@ textarea:focus-visible, [tabindex]:focus-visible {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 16px; max-width: 1200px; margin: 0 auto;
 }
+/* Reserve space for JS-populated grids (e.g. product.html's #relatedGrid)
+   before they're filled in, so the initial paint doesn't collapse (CLS fix). */
+.products-grid:empty { min-height: 40vh; }
 .p-card {
   display: block; position: relative;
   background: var(--gray);
@@ -751,6 +754,9 @@ textarea:focus-visible, [tabindex]:focus-visible {
   font-size: 14px; line-height: 1.7;
   color: var(--text-dim);
 }
+/* The Description accordion is open by default and starts empty until JS
+   fills it from PRODUCTS data — reserve space to avoid a layout jump (CLS fix). */
+.pdp-accordion[open] .accordion-body:empty { min-height: 4.5em; }
 .accordion-body ul {
   list-style: none; padding: 0;
 }
@@ -767,6 +773,9 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .reviews-layout {
   display: grid; grid-template-columns: 0.6fr 1.4fr; gap: 60px;
 }
+/* Reserve space before product.html's inline script populates these from
+   PRODUCTS data, so the initial paint doesn't collapse to 0 height (CLS fix). */
+.reviews-layout:empty { min-height: 40vh; }
 .reviews-summary {
   display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
   padding: 28px; background: var(--gray); height: fit-content;
@@ -861,6 +870,9 @@ select option { background: #1a1a1a; color: #F2EDE8; }
 
 .catalog-grid-section { padding-top: 32px; }
 .catalog-grid { grid-template-columns: repeat(3, 1fr); }
+/* Reserve space before catalog.js populates the grid, so the initial paint
+   doesn't collapse to 0 height and jump once cards are injected (CLS fix). */
+.catalog-grid:empty { min-height: 60vh; }
 .price-old {
   text-decoration: line-through; color: var(--text-dim);
   font-size: 14px; margin-right: 4px;
