@@ -358,24 +358,6 @@
         once: true,
       });
     });
-
-    document.querySelectorAll('.section-title, .featured-name, .manifesto-text, .story-title, .catalog-title, .faq-group-title').forEach((heading) => {
-      const underline = document.createElement('span');
-      underline.className = 'spray-underline';
-      underline.style.setProperty('--spray-color', pick(NEON));
-      heading.style.position = 'relative';
-      heading.style.display = heading.style.display || 'inline-block';
-      heading.appendChild(underline);
-
-      if (window.ScrollTrigger) {
-        ScrollTrigger.create({
-          trigger: heading,
-          start: 'top 85%',
-          onEnter: () => underline.classList.add('drawn'),
-          once: true,
-        });
-      }
-    });
   }
 
 
@@ -535,19 +517,6 @@
   });
 
 
-  /* ========== 5. DRIP EDGE ACCENTS ========== */
-  function addDripEdge(section, position) {
-    if (!section) return;
-    const drip = document.createElement('div');
-    drip.className = 'drip-edge drip-edge-' + position;
-    drip.style.setProperty('--drip-color', pick(NEON));
-    section.style.position = 'relative';
-    section.appendChild(drip);
-  }
-
-  if (heroSection) addDripEdge(heroSection, 'bottom');
-  if (lookbook) addDripEdge(lookbook, 'top');
-  if (productsSection) addDripEdge(productsSection, 'bottom');
 
 
   /* ========== 6. SPRAY DOTS ON PRODUCT CARDS ========== */

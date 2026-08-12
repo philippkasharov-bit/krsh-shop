@@ -377,7 +377,7 @@ window.addEventListener('unhandledrejection', (e) => {
         const product = idMatch && window.KRSH_PRODUCTS ? window.KRSH_PRODUCTS.find(p => p.id === Number(idMatch[1])) : null;
         const cartItem = product
           ? { name: product.name, price: product.price, size: sizeBtn ? sizeBtn.dataset.size : '9', color: product.color || '', img: product.img.replace(/w=\d+&h=\d+/, 'w=160&h=160') }
-          : { name, price: parseInt((price.match(/\$?(\d+)\s*$/) || [])[1] || '0', 10), size: sizeBtn ? sizeBtn.dataset.size : '9', color: '', img: img ? img.src.replace(/w=\d+&h=\d+/, 'w=160&h=160') : '' };
+          : { name, price: parseInt((price.match(/\$?(\d+)\s*$/) || [])[1] || '0', 10), size: sizeBtn ? sizeBtn.dataset.size : '9', color: card.dataset.color || '', img: img ? img.src.replace(/w=\d+&h=\d+/, 'w=160&h=160') : '' };
         closeQuickView();
         if (window.krshAddToCart) window.krshAddToCart(cartItem);
       };
