@@ -13,7 +13,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
 <script type="application/ld+json" id="productSchema">{}</script>
 <script>window.addEventListener('unhandledrejection',e=>{if(e.reason&&e.reason.name==='AbortError')e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=26">
+<link rel="stylesheet" href="style.css?v=27">
 </head>
 <body>
 
@@ -99,7 +99,6 @@
     <div class="pdp-main-img" id="mainImg">
       <img src="" alt="" id="mainPhoto" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27800%27 height=%27800%27 fill=%27%23222%27%3E%3Crect width=%27800%27 height=%27800%27/%3E%3Ctext x=%2750%25%27 y=%2750%25%27 dominant-baseline=%27middle%27 text-anchor=%27middle%27 fill=%27%23555%27 font-size=%2732%27%3EImage unavailable%3C/text%3E%3C/svg%3E'">
     </div>
-    <div class="pdp-thumbs" id="thumbs"></div>
   </div>
 
   <div class="pdp-info">
@@ -266,9 +265,6 @@ window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTrans
   mainPhoto.src = baseImg;
   mainPhoto.alt = product.name + ' — main view';
 
-  const thumbsEl = document.getElementById('thumbs');
-  thumbsEl.style.display = 'none';
-
   // Badge
   const badgeEl = document.getElementById('pdpBadge');
   if (product.badge && product.badge !== 'sold') {
@@ -349,8 +345,10 @@ window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTrans
       }).join('') +
     '</div>';
 
-  // Related products (4 random, excluding current)
-  const related = PRODUCTS.filter(p => p.id !== product.id).sort(() => Math.random() - 0.5).slice(0, 4);
+  // Related products: same brand first, then the rest, both in stable id order
+  const sameBrand = PRODUCTS.filter(p => p.id !== product.id && p.brand === product.brand);
+  const otherBrand = PRODUCTS.filter(p => p.id !== product.id && p.brand !== product.brand);
+  const related = [...sameBrand, ...otherBrand].slice(0, 4);
   const relatedGrid = document.getElementById('relatedGrid');
   relatedGrid.innerHTML = related.map(p => {
     const badgeCls = { new: 'badge-new', limited: 'badge-limited', sold: 'badge-sold', sale: 'badge-sale' }[p.badge] || '';
