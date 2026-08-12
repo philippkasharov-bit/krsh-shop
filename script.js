@@ -92,6 +92,37 @@ window.addEventListener('unhandledrejection', (e) => {
     }, 2600);
   };
 
+  /* ---------- Shared focus management for dialog-like overlays
+     (cart drawer, mobile nav, Quick View) ---------- */
+  let lastFocusedEl = null;
+  function focusInto(container) {
+    lastFocusedEl = document.activeElement;
+    const target = container.querySelector('button, a[href], input, select, textarea, [tabindex]');
+    if (target) target.focus();
+  }
+  function focusReturn() {
+    if (lastFocusedEl && document.contains(lastFocusedEl)) lastFocusedEl.focus();
+    lastFocusedEl = null;
+  }
+  function focusableIn(container) {
+    return [...container.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )].filter(el => el.offsetParent !== null);
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const openDialog =
+      document.getElementById('mobileNav')?.classList.contains('open') && document.getElementById('mobileNav') ||
+      document.getElementById('cartDrawer')?.classList.contains('open') && document.getElementById('cartDrawer') ||
+      document.querySelector('.qv-modal.open');
+    if (!openDialog) return;
+    const list = focusableIn(openDialog);
+    if (!list.length) return;
+    const first = list[0], last = list[list.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
   /* ---------- Mobile nav ---------- */
   const burger = document.getElementById('burger');
   const mobileNav = document.getElementById('mobileNav');
@@ -100,13 +131,18 @@ window.addEventListener('unhandledrejection', (e) => {
       burger.classList.remove('open');
       burger.setAttribute('aria-expanded', 'false');
       mobileNav.classList.remove('open');
+      mobileNav.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('nav-open');
+      focusReturn();
     };
     burger.addEventListener('click', () => {
       const isOpen = mobileNav.classList.toggle('open');
       burger.classList.toggle('open', isOpen);
       burger.setAttribute('aria-expanded', String(isOpen));
+      mobileNav.setAttribute('aria-hidden', String(!isOpen));
       document.body.classList.toggle('nav-open', isOpen);
+      if (isOpen) focusInto(mobileNav);
+      else focusReturn();
     });
     mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
   }
@@ -198,6 +234,7 @@ window.addEventListener('unhandledrejection', (e) => {
     cartDrawer.setAttribute('aria-hidden', 'false');
     cartBtn && cartBtn.setAttribute('aria-expanded', 'true');
     document.body.classList.add('nav-open');
+    focusInto(cartDrawer);
   }
   function closeCart() {
     if (!cartDrawer) return;
@@ -206,6 +243,7 @@ window.addEventListener('unhandledrejection', (e) => {
     cartDrawer.setAttribute('aria-hidden', 'true');
     cartBtn && cartBtn.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('nav-open');
+    focusReturn();
   }
   window.krshOpenCart = openCart;
 
@@ -266,8 +304,8 @@ window.addEventListener('unhandledrejection', (e) => {
       }
       card.insertAdjacentHTML('beforeend',
         '<button class="wish-btn" aria-label="Add to wishlist" type="button">' +
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' +
-        '<path d="M12 21s-7-4.5-9.5-9C.5 8 2 4 6 4c2 0 3.5 1.2 4 2 .5-.8 2-2 4-2 4 0 5.5 4 3.5 8-2.5 4.5-9.5 9-9.5 9z"/></svg></button>'
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>'
       );
     }
 
@@ -289,6 +327,20 @@ window.addEventListener('unhandledrejection', (e) => {
     const catalogGrid = document.getElementById('catalogGrid');
     if (catalogGrid && window.MutationObserver) {
       new MutationObserver(setupCards).observe(catalogGrid, { childList: true });
+    }
+
+    // product.html's "You Might Also Like" grid is populated after this script
+    // runs, so it misses both the Quick View/wishlist button injection above
+    // and the ScrollTrigger reveal below unless we handle it explicitly here.
+    const relatedGrid = document.getElementById('relatedGrid');
+    if (relatedGrid && window.MutationObserver) {
+      new MutationObserver(() => {
+        setupCards();
+        const cards = relatedGrid.querySelectorAll('.p-card');
+        if (window.gsap && cards.length) {
+          gsap.from(cards, { y: 40, opacity: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out' });
+        }
+      }).observe(relatedGrid, { childList: true });
     }
 
     document.addEventListener('click', (e) => {
@@ -323,12 +375,15 @@ window.addEventListener('unhandledrejection', (e) => {
       qvOverlay.className = 'qv-overlay';
       qvModal = document.createElement('div');
       qvModal.className = 'qv-modal';
+      qvModal.setAttribute('role', 'dialog');
+      qvModal.setAttribute('aria-modal', 'true');
+      qvModal.setAttribute('aria-labelledby', 'qvModalName');
       qvModal.innerHTML =
         '<button class="qv-close" aria-label="Close quick view">&times;</button>' +
         '<div class="qv-img"><img src="" alt=""></div>' +
         '<div class="qv-info">' +
         '<span class="qv-badge"></span>' +
-        '<h3 class="qv-name"></h3>' +
+        '<h3 class="qv-name" id="qvModalName"></h3>' +
         '<span class="qv-price"></span>' +
         '<div class="qv-sizes"><label>Size</label><div class="qv-size-grid"></div></div>' +
         '<button class="btn-primary qv-add" type="button">Add to Bag</button>' +
@@ -387,6 +442,7 @@ window.addEventListener('unhandledrejection', (e) => {
         qvOverlay.classList.add('open');
         qvModal.classList.add('open');
       });
+      focusInto(qvModal);
     }
 
     function closeQuickView() {
@@ -394,6 +450,7 @@ window.addEventListener('unhandledrejection', (e) => {
       qvOverlay.classList.remove('open');
       qvModal.classList.remove('open');
       document.body.classList.remove('nav-open');
+      focusReturn();
     }
 
     document.addEventListener('keydown', (e) => {

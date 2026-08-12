@@ -50,6 +50,7 @@
   --gray: #141414;
   --gray2: #1C1C1C;
   --text-dim: rgba(242,237,232,0.65);
+  --error: #ff4444;
 }
 html { scroll-behavior: smooth; }
 body {
@@ -234,14 +235,16 @@ textarea:focus-visible, [tabindex]:focus-visible {
   font-size: 12px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 4px; color: var(--yellow);
   margin-bottom: 20px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9);
   opacity: 0; transform: translateY(20px);
 }
 .hero-title {
   font-family: 'Clash Display', sans-serif;
-  font-size: clamp(64px, 12vw, 140px);
-  font-weight: 700; line-height: 0.9;
-  letter-spacing: -2px;
+  font-size: clamp(72px, 13.5vw, 168px);
+  font-weight: 700; line-height: 0.87;
+  letter-spacing: -3px;
   margin-bottom: 28px;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.5);
   opacity: 0; transform: translateY(40px);
 }
 .hero-link {
@@ -680,6 +683,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
 }
 .size-btn {
   padding: 10px 4px; font-size: 13px; font-weight: 600;
+  min-height: 44px;
   border: 1px solid rgba(242,237,232,0.15);
   background: transparent; color: var(--white);
   text-align: center; transition: 0.2s;
@@ -831,6 +835,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
   font-size: 13px; font-weight: 700;
   letter-spacing: 1.5px; text-transform: uppercase;
   padding: 10px 22px; white-space: nowrap;
+  min-height: 44px;
   border: 1px solid rgba(242,237,232,0.25);
   background: transparent; color: var(--white);
   transition: 0.2s;
@@ -854,7 +859,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
   border-radius: 4px;
   transition: border-color 0.2s;
 }
-select option { background: #1a1a1a; color: #F2EDE8; }
+select option { background: var(--gray2); color: var(--white); }
 .sort-select:hover { border-color: rgba(242,237,232,0.3); }
 
 .catalog-grid-section { padding-top: 32px; }
@@ -919,7 +924,9 @@ select option { background: #1a1a1a; color: #F2EDE8; }
   transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
 }
 .p-card:hover .quickview-btn { transform: translateY(0); }
-@media (hover: none) { .quickview-btn { display: none; } }
+/* Touch devices have no hover state to reveal this — mirror .wish-btn's
+   touch fallback instead of hiding the trigger entirely (was unreachable). */
+@media (hover: none) { .quickview-btn { transform: translateY(0); } }
 
 .qv-overlay {
   position: fixed; inset: 0; z-index: 250;
@@ -1255,10 +1262,10 @@ body.nav-open { overflow: hidden; }
 
 .form-row input:invalid:not(:focus):not(:placeholder-shown),
 .form-row textarea:invalid:not(:focus):not(:placeholder-shown) {
-  border-color: #ff4444;
+  border-color: var(--error);
 }
 .form-row .field-error {
-  font-size: 12px; color: #ff4444; margin-top: -4px;
+  font-size: 12px; color: var(--error); margin-top: -4px;
   display: none;
 }
 .form-row input:invalid:not(:focus):not(:placeholder-shown) ~ .field-error,
@@ -1266,7 +1273,7 @@ body.nav-open { overflow: hidden; }
   display: block;
 }
 .nl-form input:invalid:not(:focus):not(:placeholder-shown) {
-  border-color: #ff4444;
+  border-color: var(--error);
 }
 .btn-primary:disabled, .btn-primary[aria-disabled="true"] {
   opacity: 0.5; pointer-events: none;
@@ -1479,9 +1486,9 @@ body.nav-open { overflow: hidden; }
   position: absolute; inset: 0; z-index: 5; pointer-events: none;
   background: linear-gradient(
     135deg,
-    var(--spray-a, #E8FF00) 0%,
+    var(--spray-a, var(--yellow)) 0%,
     transparent 35%,
-    var(--spray-b, #FF2D6B) 75%,
+    var(--spray-b, var(--pink)) 75%,
     transparent 100%
   );
   opacity: 0;
