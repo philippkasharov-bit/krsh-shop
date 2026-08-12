@@ -440,7 +440,7 @@
         p.setAttribute('stroke-width', '2');
         p.setAttribute('stroke-linecap', 'round');
         p.setAttribute('stroke-linejoin', 'round');
-        p.setAttribute('stroke-opacity', '0.25');
+        p.setAttribute('stroke-opacity', '0.45');
         const len = 800;
         p.style.strokeDasharray = len;
         p.style.strokeDashoffset = len;
@@ -502,7 +502,7 @@
       });
       if (fillPaths.length) {
         tl.to(fillPaths, {
-          fillOpacity: 0.15,
+          fillOpacity: 0.3,
           duration: prefersReducedMotion ? 0 : 0.9,
           ease: 'power1.out',
           stagger: prefersReducedMotion ? 0 : 0.08,
@@ -512,7 +512,7 @@
       /* No GSAP/ScrollTrigger: show the finished art immediately rather
          than leaving it invisible forever. */
       strokePaths.forEach((p) => { p.style.strokeDashoffset = 0; });
-      fillPaths.forEach((p) => { p.setAttribute('fill-opacity', '0.15'); });
+      fillPaths.forEach((p) => { p.setAttribute('fill-opacity', '0.3'); });
     }
   });
 

@@ -392,13 +392,13 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .marquee-track {
   display: flex; gap: 48px;
   font-family: 'Clash Display', sans-serif;
-  font-size: 16px; font-weight: 600; letter-spacing: 6px;
+  font-size: 26px; font-weight: 700; letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(242,237,232,0.55);
+  color: rgba(242,237,232,0.9);
   white-space: nowrap;
   animation: marquee 30s linear infinite;
 }
-.marquee-track span:nth-child(even) { color: rgba(232,255,0,0.55); }
+.marquee-track span:nth-child(even) { color: var(--yellow); }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ========== PRODUCTS ========== */
@@ -409,8 +409,16 @@ textarea:focus-visible, [tabindex]:focus-visible {
 }
 .section-title {
   font-family: 'Clash Display', sans-serif;
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 600; letter-spacing: -1px;
+  font-size: clamp(40px, 5.5vw, 64px);
+  font-weight: 700; letter-spacing: -2px; line-height: 0.95;
+}
+/* Recurring brand mark: the same "×" that separates the marquee words,
+   reused as a graphic accent so it reads as a signature, not a one-off. */
+.section-title::before {
+  content: '\00d7';
+  color: var(--yellow);
+  margin-right: 14px;
+  display: inline-block;
 }
 .section-link {
   font-size: 13px; font-weight: 700; text-transform: uppercase;
@@ -422,6 +430,17 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .products-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 16px; max-width: 1200px; margin: 0 auto;
+}
+/* Break the uniform grid rhythm: the first card in a fresh (unsorted/
+   unfiltered) grid reads as a featured pick instead of just item #1.
+   Desktop only — a 2x2 span on a narrower grid would look broken. */
+@media (min-width: 1024px) {
+  .products-grid, .catalog-grid { grid-auto-flow: dense; }
+  .products-grid .p-card:first-child,
+  .catalog-grid .p-card:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
 }
 /* Reserve space for JS-populated grids (e.g. product.html's #relatedGrid)
    before they're filled in, so the initial paint doesn't collapse (CLS fix). */
@@ -455,11 +474,11 @@ textarea:focus-visible, [tabindex]:focus-visible {
   padding: 16px 16px 20px;
 }
 .p-card-name {
-  font-size: 14px; font-weight: 600;
+  font-size: 15px; font-weight: 700;
 }
 .p-card-price {
   font-family: 'Clash Display', sans-serif;
-  font-size: 16px; font-weight: 600;
+  font-size: 17px; font-weight: 700;
   color: var(--white);
 }
 
