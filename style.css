@@ -357,20 +357,25 @@ textarea:focus-visible, [tabindex]:focus-visible {
   position: static; display: inline-block;
 }
 
-/* ========== BUTTONS — Stencil / Spray-Cut ========== */
+/* ========== BUTTONS ========== */
 .btn-primary {
   display: inline-block; position: relative;
   font-size: 12px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 4px; padding: 16px 40px;
-  background: var(--white); color: var(--black);
+  background: var(--yellow); color: var(--black);
   border-radius: 4px;
-  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 0 rgba(10,10,10,0.8);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
 }
 .btn-primary:hover {
-  background: var(--yellow);
-  transform: scale(1.03);
+  background: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 rgba(10,10,10,0.8);
 }
-.btn-primary:active { transform: scale(0.97); }
+.btn-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(10,10,10,0.8);
+}
 
 .btn-secondary {
   display: inline-block; position: relative;
@@ -744,12 +749,13 @@ textarea:focus-visible, [tabindex]:focus-visible {
   width: 100%; padding: 18px;
   font-size: 14px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 4px;
-  background: var(--white); color: var(--black);
-  margin-bottom: 32px; transition: background 0.3s, transform 0.2s;
+  background: var(--yellow); color: var(--black);
+  margin-bottom: 32px; transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
   border-radius: 4px;
+  box-shadow: 0 4px 0 rgba(10,10,10,0.8);
 }
-.add-to-bag:hover:not(:disabled) { background: var(--yellow); transform: scale(1.02); }
-.add-to-bag:active:not(:disabled) { transform: scale(0.98); }
+.add-to-bag:hover:not(:disabled) { background: var(--white); transform: translateY(-1px); box-shadow: 0 5px 0 rgba(10,10,10,0.8); }
+.add-to-bag:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 rgba(10,10,10,0.8); }
 .add-to-bag:disabled { cursor: not-allowed; }
 
 .pdp-details { border-top: 1px solid rgba(242,237,232,0.08); }
