@@ -4,6 +4,7 @@
   const PRODUCTS = window.KRSH_PRODUCTS;
   if (!PRODUCTS) return;
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const PER_PAGE = 9;
   let shown = 0;
 
@@ -97,10 +98,15 @@
 
   function animateCards(cards) {
     const els = cards || grid.querySelectorAll('.p-card');
-    if (window.gsap) {
-      gsap.from(els, {
-        y: 40, opacity: 0,
-        duration: 0.6, stagger: 0.06, ease: 'power3.out'
+    if (prefersReducedMotion) return;
+    if (window.anime) {
+      const { animate, stagger } = window.anime;
+      animate(els, {
+        y: { from: 40, to: 0 },
+        opacity: { from: 0, to: 1 },
+        duration: 650,
+        delay: stagger(60),
+        ease: 'out(3)'
       });
     }
   }

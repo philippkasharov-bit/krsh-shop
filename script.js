@@ -216,6 +216,15 @@ window.addEventListener('unhandledrejection', (e) => {
     renderCart();
     if (window.showToast) window.showToast(item.name + ' added to your bag');
     if (window.krshOpenCart) setTimeout(window.krshOpenCart, 300);
+    if (!prefersReducedMotion && window.anime && cartBtn) {
+      const { animate, spring } = window.anime;
+      animate(cartBtn, {
+        scale: [
+          { to: 1.25, duration: 200, ease: 'out(3)' },
+          { to: 1, duration: 400, ease: spring({ bounce: 0.5 }) }
+        ]
+      });
+    }
   }
   function removeFromCart(index) {
     const items = getCart();
@@ -337,8 +346,12 @@ window.addEventListener('unhandledrejection', (e) => {
       new MutationObserver(() => {
         setupCards();
         const cards = relatedGrid.querySelectorAll('.p-card');
-        if (window.gsap && cards.length) {
-          gsap.from(cards, { y: 40, opacity: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out' });
+        if (!prefersReducedMotion && window.anime && cards.length) {
+          const { animate, stagger } = window.anime;
+          animate(cards, {
+            y: { from: 40, to: 0 }, opacity: { from: 0, to: 1 },
+            duration: 650, delay: stagger(60), ease: 'out(3)'
+          });
         }
       }).observe(relatedGrid, { childList: true });
     }
@@ -356,6 +369,15 @@ window.addEventListener('unhandledrejection', (e) => {
         } else {
           list.push(key);
           if (window.showToast) window.showToast(`${key} added to wishlist`);
+          if (!prefersReducedMotion && window.anime) {
+            const { animate, spring } = window.anime;
+            animate(wishBtn, {
+              scale: [
+                { to: 1.5, duration: 160, ease: 'out(3)' },
+                { to: 1, duration: 350, ease: spring({ bounce: 0.55 }) }
+              ]
+            });
+          }
         }
         setWishlist(list);
         refreshWishlistIcons();
@@ -441,6 +463,17 @@ window.addEventListener('unhandledrejection', (e) => {
       requestAnimationFrame(() => {
         qvOverlay.classList.add('open');
         qvModal.classList.add('open');
+        if (!prefersReducedMotion && window.anime) {
+          const { animate, stagger } = window.anime;
+          const infoEls = qvModal.querySelectorAll('.qv-info > *');
+          animate(infoEls, {
+            opacity: { from: 0, to: 1 },
+            x: { from: 16, to: 0 },
+            duration: 450,
+            delay: stagger(50, { start: 150 }),
+            ease: 'out(3)'
+          });
+        }
       });
       focusInto(qvModal);
     }
@@ -466,16 +499,25 @@ window.addEventListener('unhandledrejection', (e) => {
     }, { passive: true });
   }
 
-  /* ---------- Hero animation ---------- */
+  /* ---------- Hero animation (Anime.js v4) ---------- */
   const hero = document.querySelector('.hero');
   if (hero) {
     requestAnimationFrame(() => hero.classList.add('loaded'));
 
-    if (window.gsap) {
-      const tl = gsap.timeline({ delay: 0.3 });
-      tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
-        .to('.hero-title', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
-        .to('.hero-link', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', clearProps: 'transform' }, '-=0.6');
+    const heroEls = ['.hero-eyebrow', '.hero-title', '.hero-link']
+      .map(sel => document.querySelector(sel)).filter(Boolean);
+
+    if (prefersReducedMotion) {
+      heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    } else if (window.anime) {
+      const { createTimeline, spring } = window.anime;
+      createTimeline({ delay: 300 })
+        .add('.hero-eyebrow', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 700, ease: 'out(3)' })
+        .add('.hero-title', {
+          opacity: { from: 0, to: 1 }, y: { from: 40, to: 0 },
+          duration: 900, ease: spring({ bounce: 0.35, duration: 900 })
+        }, '-=500')
+        .add('.hero-link', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=400');
     }
   }
 

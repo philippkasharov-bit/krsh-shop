@@ -306,10 +306,12 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-<script src="script.js?v=22"></script>
+<script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
+<script src="script.js?v=23"></script>
 <script src="graffiti.js?v=4"></script>
 <script>
 (function() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const shipOptions = document.querySelectorAll('.ship-option');
   const sumSubtotal = document.getElementById('sumSubtotal');
   const sumShipping = document.getElementById('sumShipping');
@@ -375,6 +377,24 @@
         orderSuccess.hidden = false;
         if (window.krshClearCart) window.krshClearCart();
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (!prefersReducedMotion && window.anime) {
+          const { animate, createTimeline, stagger, spring } = window.anime;
+          const icon = orderSuccess.querySelector('.order-success-icon');
+          const rest = orderSuccess.querySelectorAll('.order-success-inner > :not(.order-success-icon)');
+          createTimeline()
+            .add(icon, {
+              scale: [{ to: 0, duration: 0 }, { to: 1.3, duration: 350, ease: 'out(3)' }, { to: 1, duration: 400, ease: spring({ bounce: 0.6 }) }],
+              rotate: { from: -20, to: 0 }
+            })
+            .add(rest, {
+              opacity: { from: 0, to: 1 },
+              y: { from: 16, to: 0 },
+              duration: 450,
+              delay: stagger(80),
+              ease: 'out(3)'
+            }, '-=250');
+        }
       }, 500);
     });
   }
