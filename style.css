@@ -51,6 +51,11 @@
   --gray2: #1C1C1C;
   --text-dim: rgba(242,237,232,0.65);
   --error: #ff4444;
+  /* Unified grade applied to every product/lookbook/hero photo. The source
+     images are disparate Unsplash stock, shot under different light and
+     color casts — this one filter is what makes them read as one catalog
+     shot by one brand instead of fifteen unrelated photos. */
+  --photo-grade: contrast(1.08) saturate(0.9) brightness(0.97);
 }
 html { scroll-behavior: smooth; }
 body {
@@ -214,6 +219,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .hero-img {
   width: 100%; height: 100%; object-fit: cover;
   transform: scale(1.05);
+  filter: var(--photo-grade);
   transition: transform 8s ease-out;
 }
 .hero.loaded .hero-img { transform: scale(1); }
@@ -268,6 +274,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
 }
 .lookbook-card img {
   width: 100%; height: 100%; object-fit: cover;
+  filter: var(--photo-grade);
   transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
 }
 .lookbook-card:hover img { transform: scale(1.04); }
@@ -311,6 +318,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .featured-img-wrap { overflow: hidden; }
 .featured-img {
   width: 100%; height: 100%; object-fit: cover;
+  filter: var(--photo-grade);
   transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
 }
 .featured-split:hover .featured-img { transform: scale(1.03); }
@@ -466,6 +474,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .p-card-img { position: relative; overflow: hidden; }
 .p-card-img img {
   width: 100%; aspect-ratio: 1; object-fit: cover;
+  filter: var(--photo-grade);
   transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
 }
 .p-card:hover .p-card-img img { transform: scale(1.05); }
@@ -647,6 +656,7 @@ textarea:focus-visible, [tabindex]:focus-visible {
 }
 .pdp-main-img img {
   width: 100%; aspect-ratio: 1; object-fit: cover;
+  filter: var(--photo-grade);
   transition: opacity 0.2s ease, filter 0.35s ease;
 }
 
