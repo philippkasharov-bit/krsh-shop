@@ -504,20 +504,23 @@ window.addEventListener('unhandledrejection', (e) => {
   if (hero) {
     requestAnimationFrame(() => hero.classList.add('loaded'));
 
-    const heroEls = ['.hero-eyebrow', '.hero-title', '.hero-link']
+    const heroEls = ['.hero-eyebrow', '.hero-sub', '.hero-title', '.hero-link']
       .map(sel => document.querySelector(sel)).filter(Boolean);
 
     if (prefersReducedMotion) {
       heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     } else if (window.anime) {
       const { createTimeline, spring } = window.anime;
-      createTimeline({ delay: 300 })
-        .add('.hero-eyebrow', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 700, ease: 'out(3)' })
-        .add('.hero-title', {
+      const tl = createTimeline({ delay: 300 });
+      const eyebrow = document.querySelector('.hero-eyebrow');
+      if (eyebrow) tl.add('.hero-eyebrow', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 700, ease: 'out(3)' });
+      tl.add('.hero-title', {
           opacity: { from: 0, to: 1 }, y: { from: 40, to: 0 },
           duration: 900, ease: spring({ bounce: 0.35, duration: 900 })
-        }, '-=500')
-        .add('.hero-link', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=400');
+        }, eyebrow ? '-=500' : 0)
+        .add(document.querySelector('.hero-sub') ? '.hero-sub' : '.hero-link', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=400');
+      if (document.querySelector('.hero-sub'))
+        tl.add('.hero-link', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=300');
     }
   }
 
