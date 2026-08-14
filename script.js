@@ -528,63 +528,95 @@ window.addEventListener('unhandledrejection', (e) => {
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Lookbook cards
+    // Lookbook — clip-path curtain reveal, each card from a different edge
+    const clipDirs = [
+      'polygon(0 0, 0 0, 0 100%, 0 100%)',
+      'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)',
+      'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)'
+    ];
     gsap.utils.toArray('.lookbook-card').forEach((card, i) => {
-      gsap.from(card, {
-        y: 60, opacity: 0,
-        duration: 0.9, delay: i * 0.12,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: card, start: 'top 85%' }
-      });
+      gsap.fromTo(card,
+        { clipPath: clipDirs[i] || clipDirs[0], opacity: 0.3 },
+        { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', opacity: 1,
+          duration: 1.1, ease: 'power4.out',
+          scrollTrigger: { trigger: card, start: 'top 85%' }
+        }
+      );
     });
 
-    // Featured drop
+    // Featured drop — the focal moment: shoe scales up, info wipes in
     const featuredSplit = document.querySelector('.featured-split');
     if (featuredSplit) {
-      gsap.from('.featured-img-wrap', {
-        x: -40, opacity: 0, duration: 1, ease: 'power3.out',
-        scrollTrigger: { trigger: featuredSplit, start: 'top 75%' }
+      const featTl = gsap.timeline({
+        scrollTrigger: { trigger: featuredSplit, start: 'top 70%' }
       });
-      gsap.from('.featured-info', {
-        x: 40, opacity: 0, duration: 1, delay: 0.15, ease: 'power3.out',
-        scrollTrigger: { trigger: featuredSplit, start: 'top 75%' }
+      featTl.from('.featured-img', {
+        scale: 0.8, opacity: 0, rotate: 6,
+        duration: 1, ease: 'power3.out'
       });
+      featTl.fromTo('.featured-info',
+        { clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' },
+        { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          duration: 0.8, ease: 'power4.inOut' },
+        '-=0.6'
+      );
+      featTl.from('.featured-name, .featured-desc, .featured-meta, .featured-info .btn-primary', {
+        y: 20, opacity: 0, stagger: 0.08, duration: 0.5, ease: 'power3.out'
+      }, '-=0.3');
     }
 
-    // Product cards
+    // Product cards — scale pop with stagger
     gsap.utils.toArray('.p-card').forEach((card, i) => {
       gsap.from(card, {
-        y: 40, opacity: 0,
-        duration: 0.7, delay: i * 0.08,
-        ease: 'power3.out',
+        scale: 0.9, opacity: 0,
+        duration: 0.6, delay: i * 0.06,
+        ease: 'back.out(1.4)',
         scrollTrigger: { trigger: card, start: 'top 88%' }
       });
     });
 
-    // Manifesto
+    // Manifesto — blur-to-sharp focus pull
     const manifesto = document.querySelector('.manifesto-text');
     if (manifesto) {
       gsap.from(manifesto, {
-        y: 50, opacity: 0, duration: 1, ease: 'power3.out',
+        filter: 'blur(12px)', opacity: 0, y: 20,
+        duration: 1.2, ease: 'power2.out',
         scrollTrigger: { trigger: manifesto, start: 'top 80%' }
       });
       gsap.from('.manifesto-sub', {
-        y: 30, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power3.out',
+        filter: 'blur(6px)', opacity: 0,
+        duration: 0.8, delay: 0.3, ease: 'power2.out',
         scrollTrigger: { trigger: manifesto, start: 'top 80%' }
       });
-      gsap.from('.btn-secondary', {
-        y: 20, opacity: 0, duration: 0.6, delay: 0.35, ease: 'power3.out',
+      gsap.from('.manifesto .btn-secondary', {
+        y: 16, opacity: 0, duration: 0.6, delay: 0.5, ease: 'power3.out',
         scrollTrigger: { trigger: manifesto, start: 'top 80%' }
       });
     }
 
-    // Section headers
+    // Section headers — line draws in from left
     gsap.utils.toArray('.section-header').forEach((h) => {
-      gsap.from(h, {
-        y: 30, opacity: 0, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: { trigger: h, start: 'top 88%' }
-      });
+      gsap.fromTo(h,
+        { clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' },
+        { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: h, start: 'top 88%' }
+        }
+      );
     });
+
+    // Marquee — subtle parallax speed shift on scroll
+    const marquee = document.querySelector('.marquee-strip');
+    if (marquee) {
+      gsap.to('.marquee-track', {
+        x: '-=120',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: marquee, start: 'top bottom', end: 'bottom top',
+          scrub: 0.5
+        }
+      });
+    }
   }
 
   /* ---------- Image fallback for external sources ---------- */
