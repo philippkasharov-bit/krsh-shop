@@ -4,8 +4,8 @@
     {
       "name": "krsh-dev",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3003", "--no-clipboard", "."],
-      "port": 3003
+      "runtimeArgs": ["serve", "-l", "3004", "--no-clipboard", "."],
+      "port": 3004
     }
   ]
 }
