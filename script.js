@@ -613,6 +613,69 @@ window.addEventListener('unhandledrejection', (e) => {
     if (inactive) e.preventDefault();
   });
 
+  /* ---------- 3D tilt on product cards ---------- */
+  if (!isTouchDevice && !prefersReducedMotion) {
+    document.addEventListener('mousemove', (e) => {
+      const card = e.target.closest('.p-card');
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-3px)`;
+      card.style.setProperty('--glow-x', ((x + 0.5) * 100) + '%');
+      card.style.setProperty('--glow-y', ((y + 0.5) * 100) + '%');
+      const img = card.querySelector('.p-card-img img');
+      if (img) img.style.transform = `scale(1.05) translateX(${x * -6}px) translateY(${y * -6}px)`;
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (!e.target || !e.target.closest) return;
+      const card = e.target.closest('.p-card');
+      if (card && !card.contains(e.relatedTarget)) {
+        card.style.transform = '';
+        const img = card.querySelector('.p-card-img img');
+        if (img) img.style.transform = '';
+      }
+    });
+  }
+
+  /* ---------- Scroll-driven reveals ---------- */
+  if (!prefersReducedMotion) {
+    const revealTargets = [
+      { sel: '.value-card', cls: '' },
+      { sel: '.stat-item', cls: '' },
+      { sel: '.story-grid', cls: 'reveal-scale' },
+      { sel: '.trust-item', cls: '' },
+      { sel: '.footer-brand', cls: 'reveal-left' },
+      { sel: '.footer-newsletter', cls: 'reveal-right' },
+      { sel: '.checkout-step', cls: '' },
+      { sel: '.contact-block', cls: '' },
+      { sel: '.faq-groups', cls: 'reveal-scale' },
+      { sel: '.reviews-summary', cls: 'reveal-left' },
+      { sel: '.reviews-list', cls: 'reveal-right' },
+    ];
+    revealTargets.forEach(({ sel, cls }) => {
+      document.querySelectorAll(sel).forEach(el => {
+        el.classList.add('reveal');
+        if (cls) el.classList.add(cls);
+      });
+    });
+    const staggerContainers = ['.values-grid', '.stats-grid', '.trust-strip'];
+    staggerContainers.forEach(sel => {
+      const c = document.querySelector(sel);
+      if (c) c.classList.add('reveal-stagger');
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  }
+
   /* ---------- View Transitions: shared-element morph for product navigation ---------- */
   (function() {
     let lastClickedCard = null;
