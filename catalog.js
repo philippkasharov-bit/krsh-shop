@@ -17,12 +17,12 @@
 
   if (!grid) return;
 
-  const VALID_FILTERS = ['all', 'nike', 'adidas', 'newbalance', 'puma', 'krsh'];
+  const VALID_FILTERS = ['all', 'low', 'high', 'boot', 'runner'];
   const VALID_SORTS = ['featured', 'price-low', 'price-high', 'newest'];
   const params = new URLSearchParams(window.location.search);
-  const urlBrand = params.get('brand');
+  const urlCategory = params.get('category');
   const urlSort = params.get('sort');
-  let currentFilter = VALID_FILTERS.includes(urlBrand) ? urlBrand : 'all';
+  let currentFilter = VALID_FILTERS.includes(urlCategory) ? urlCategory : 'all';
   let currentSort = VALID_SORTS.includes(urlSort) ? urlSort : 'featured';
 
   // Reflect any URL-provided state into the controls before first render
@@ -35,15 +35,15 @@
 
   function syncURL() {
     const url = new URL(window.location.href);
-    if (currentFilter === 'all') url.searchParams.delete('brand');
-    else url.searchParams.set('brand', currentFilter);
+    if (currentFilter === 'all') url.searchParams.delete('category');
+    else url.searchParams.set('category', currentFilter);
     if (currentSort === 'featured') url.searchParams.delete('sort');
     else url.searchParams.set('sort', currentSort);
     history.replaceState(null, '', url.pathname + url.search);
   }
 
   function getFiltered() {
-    let list = currentFilter === 'all' ? [...PRODUCTS] : PRODUCTS.filter(p => p.brand === currentFilter);
+    let list = currentFilter === 'all' ? [...PRODUCTS] : PRODUCTS.filter(p => p.category === currentFilter);
     if (currentSort === 'price-low') list.sort((a, b) => a.price - b.price);
     else if (currentSort === 'price-high') list.sort((a, b) => b.price - a.price);
     else if (currentSort === 'newest') list.sort((a, b) => (b.new ? 1 : 0) - (a.new ? 1 : 0));

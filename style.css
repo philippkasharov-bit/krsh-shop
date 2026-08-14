@@ -476,10 +476,9 @@ textarea:focus-visible, [tabindex]:focus-visible {
   border-radius: 3px;
 }
 .badge-ltd { background: var(--pink); color: var(--white); }
-.p-card-img { position: relative; overflow: hidden; }
+.p-card-img { position: relative; overflow: hidden; background: #f2ede8; border-radius: 6px 6px 0 0; }
 .p-card-img img {
-  width: 100%; aspect-ratio: 1; object-fit: cover;
-  filter: var(--photo-grade);
+  width: 100%; aspect-ratio: 1; object-fit: contain; padding: 8%;
   transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
 }
 .p-card:hover .p-card-img img { transform: scale(1.05); }
@@ -655,13 +654,12 @@ textarea:focus-visible, [tabindex]:focus-visible {
   margin: 0 auto; padding: 32px 40px 80px;
 }
 .pdp-main-img {
-  background: var(--gray); overflow: hidden;
+  background: #f2ede8; overflow: hidden;
   position: relative;
   border-radius: 6px;
 }
 .pdp-main-img img {
-  width: 100%; aspect-ratio: 1; object-fit: cover;
-  filter: var(--photo-grade);
+  width: 100%; aspect-ratio: 1; object-fit: contain; padding: 6%;
   transition: opacity 0.2s ease, filter 0.35s ease;
 }
 
