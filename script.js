@@ -510,9 +510,45 @@ window.addEventListener('unhandledrejection', (e) => {
     if (prefersReducedMotion) {
       heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     } else if (window.gsap) {
-      gsap.to('.hero-title', { opacity: 1, y: 0, duration: 0.9, delay: 0.2, ease: 'power3.out' });
-      gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 0.5, ease: 'power3.out' });
-      gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.7, delay: 0.65, ease: 'power3.out' });
+      // Typewriter effect on hero title
+      const heroTitleEl = document.querySelector('.hero-title');
+      if (heroTitleEl) {
+        const originalHTML = heroTitleEl.innerHTML;
+        const lines = originalHTML.split('<br>');
+        heroTitleEl.innerHTML = '';
+        heroTitleEl.style.opacity = '1';
+        heroTitleEl.style.transform = 'none';
+
+        let charIndex = 0;
+        const fullText = lines.join('\n');
+        let currentLine = 0;
+        let currentChar = 0;
+
+        function typeNext() {
+          if (currentLine >= lines.length) {
+            gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power3.out' });
+            gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out' });
+            return;
+          }
+          const line = lines[currentLine];
+          if (currentChar < line.length) {
+            heroTitleEl.innerHTML = lines.slice(0, currentLine).join('<br>') +
+              (currentLine > 0 ? '<br>' : '') +
+              line.substring(0, currentChar + 1) +
+              '<span class="type-cursor">|</span>';
+            currentChar++;
+            setTimeout(typeNext, 55 + Math.random() * 40);
+          } else {
+            currentLine++;
+            currentChar = 0;
+            setTimeout(typeNext, 120);
+          }
+        }
+        setTimeout(typeNext, 300);
+      } else {
+        gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 0.5, ease: 'power3.out' });
+        gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.7, delay: 0.65, ease: 'power3.out' });
+      }
     } else {
       heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     }
@@ -536,16 +572,15 @@ window.addEventListener('unhandledrejection', (e) => {
       });
     }
 
-    // Lookbook — cards slide in from opposite sides, tied to scroll position
+    // Lookbook — cards fade up cleanly, tied to scroll position
     const lookbookCards = gsap.utils.toArray('.lookbook-card');
     lookbookCards.forEach((card, i) => {
-      const fromX = i % 2 === 0 ? -120 : 120;
       gsap.fromTo(card,
-        { x: fromX, opacity: 0, scale: 0.9 },
-        { x: 0, opacity: 1, scale: 1,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1,
           ease: 'none',
           scrollTrigger: {
-            trigger: card, start: 'top 95%', end: 'top 45%',
+            trigger: card, start: 'top 95%', end: 'top 55%',
             scrub: 0.6
           }
         }
@@ -556,11 +591,11 @@ window.addEventListener('unhandledrejection', (e) => {
     const featuredSplit = document.querySelector('.featured-split');
     if (featuredSplit) {
       gsap.fromTo('.featured-img',
-        { scale: 0.5, rotate: 15, opacity: 0 },
-        { scale: 1, rotate: 0, opacity: 1,
+        { scale: 0.85, opacity: 0 },
+        { scale: 1, opacity: 1,
           ease: 'none',
           scrollTrigger: {
-            trigger: featuredSplit, start: 'top 90%', end: 'top 30%',
+            trigger: featuredSplit, start: 'top 90%', end: 'top 40%',
             scrub: 0.8
           }
         }
@@ -626,11 +661,11 @@ window.addEventListener('unhandledrejection', (e) => {
       );
     }
 
-    // Section headers — clip-path wipe scrubbed to scroll
+    // Section headers — fade up scrubbed to scroll
     gsap.utils.toArray('.section-header').forEach((h) => {
       gsap.fromTo(h,
-        { clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' },
-        { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1,
           ease: 'none',
           scrollTrigger: {
             trigger: h, start: 'top 90%', end: 'top 60%',

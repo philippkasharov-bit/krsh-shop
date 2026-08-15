@@ -1684,6 +1684,14 @@ body.nav-open { overflow: hidden; }
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
+.type-cursor {
+  -webkit-text-fill-color: var(--yellow);
+  animation: cursorBlink 0.6s step-end infinite;
+}
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 .section-title::before {
   background: linear-gradient(135deg, var(--yellow), var(--pink));
   -webkit-background-clip: text;
