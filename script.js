@@ -600,26 +600,28 @@ window.addEventListener('unhandledrejection', (e) => {
           }
         }
       );
-      gsap.fromTo('.featured-info',
-        { clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)', opacity: 0 },
-        { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: featuredSplit, start: 'top 70%', end: 'top 20%',
-            scrub: 0.8
+      gsap.utils.toArray('.featured-info > *').forEach((el, i) => {
+        gsap.fromTo(el,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: featuredSplit, start: `top ${75 - i * 8}%`, end: `top ${35 - i * 8}%`,
+              scrub: 0.8
+            }
           }
-        }
-      );
+        );
+      });
     }
 
-    // Product cards — fly up from below with staggered scroll ranges
+    // Product cards — fade up softly with slight stagger
     gsap.utils.toArray('.p-card').forEach((card, i) => {
       gsap.fromTo(card,
-        { y: 80 + (i * 20), opacity: 0, scale: 0.85 },
-        { y: 0, opacity: 1, scale: 1,
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1,
           ease: 'none',
           scrollTrigger: {
-            trigger: card, start: 'top 100%', end: 'top 55%',
+            trigger: card, start: 'top 95%', end: 'top 60%',
             scrub: 0.5
           }
         }
