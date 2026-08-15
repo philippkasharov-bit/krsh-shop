@@ -958,6 +958,18 @@ select option { background: var(--gray2); color: var(--white); }
   font-size: 13px; color: var(--text-dim);
   margin-top: 12px; text-transform: uppercase; letter-spacing: 3px;
 }
+.empty-icon { color: rgba(242,237,232,0.15); margin-bottom: 20px; }
+.wishlist-card { position: relative; }
+.wishlist-card-link { display: block; text-decoration: none; color: inherit; }
+.wishlist-remove {
+  position: absolute; top: 12px; right: 12px; z-index: 3;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(10,10,10,0.7); border: 1px solid rgba(242,237,232,0.2);
+  color: var(--white); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0; transition: opacity 0.2s, background 0.2s;
+}
+.wishlist-card:hover .wishlist-remove { opacity: 1; }
+.wishlist-remove:hover { background: var(--pink); border-color: var(--pink); }
 
 .load-more-wrap { display: flex; justify-content: center; padding: 48px 0 16px; }
 .load-more-btn {
