@@ -499,46 +499,22 @@ window.addEventListener('unhandledrejection', (e) => {
     }, { passive: true });
   }
 
-  /* ---------- Hero animation — split-text character reveal ---------- */
+  /* ---------- Hero animation — clean fade-in ---------- */
   const hero = document.querySelector('.hero');
   if (hero) {
     requestAnimationFrame(() => hero.classList.add('loaded'));
 
-    const heroTitle = hero.querySelector('.hero-title');
-    const heroEls = ['.hero-eyebrow', '.hero-sub', '.hero-title', '.hero-link']
+    const heroEls = ['.hero-sub', '.hero-title', '.hero-link']
       .map(sel => document.querySelector(sel)).filter(Boolean);
 
     if (prefersReducedMotion) {
       heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    } else if (window.gsap) {
+      gsap.to('.hero-title', { opacity: 1, y: 0, duration: 0.9, delay: 0.2, ease: 'power3.out' });
+      gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 0.5, ease: 'power3.out' });
+      gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.7, delay: 0.65, ease: 'power3.out' });
     } else {
-      // Split hero title into individual characters
-      if (heroTitle) {
-        const html = heroTitle.innerHTML;
-        heroTitle.innerHTML = html.split('<br>').map(line =>
-          '<span class="hero-line">' +
-          line.split('').map(ch =>
-            ch === ' ' ? ' ' : '<span class="hero-char">' + ch + '</span>'
-          ).join('') +
-          '</span>'
-        ).join('<br>');
-        heroTitle.style.opacity = '1';
-      }
-
-      if (window.anime) {
-        const { createTimeline, stagger, spring } = window.anime;
-        const tl = createTimeline({ delay: 200 });
-        tl.add('.hero-char', {
-          y: { from: 80, to: 0 },
-          rotate: { from: 8, to: 0 },
-          opacity: { from: 0, to: 1 },
-          duration: 700,
-          delay: stagger(30),
-          ease: 'out(4)'
-        });
-        const heroSub = document.querySelector('.hero-sub');
-        if (heroSub) tl.add('.hero-sub', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=300');
-        tl.add('.hero-link', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=300');
-      }
+      heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     }
   }
 
@@ -666,31 +642,8 @@ window.addEventListener('unhandledrejection', (e) => {
     if (inactive) e.preventDefault();
   });
 
-  /* ---------- 3D tilt on product cards + featured shoe ---------- */
+  /* ---------- Featured shoe — 3D tilt following cursor ---------- */
   if (!isTouchDevice && !prefersReducedMotion) {
-    document.addEventListener('mousemove', (e) => {
-      const card = e.target.closest('.p-card');
-      if (!card) return;
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-3px)`;
-      card.style.setProperty('--glow-x', ((x + 0.5) * 100) + '%');
-      card.style.setProperty('--glow-y', ((y + 0.5) * 100) + '%');
-      const img = card.querySelector('.p-card-img img');
-      if (img) img.style.transform = `scale(1.05) translateX(${x * -6}px) translateY(${y * -6}px)`;
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (!e.target || !e.target.closest) return;
-      const card = e.target.closest('.p-card');
-      if (card && !card.contains(e.relatedTarget)) {
-        card.style.transform = '';
-        const img = card.querySelector('.p-card-img img');
-        if (img) img.style.transform = '';
-      }
-    });
-
-    // Featured shoe — 3D tilt following cursor
     const featuredWrap = document.querySelector('.featured-img-wrap');
     if (featuredWrap) {
       const fImg = featuredWrap.querySelector('.featured-img');
@@ -705,62 +658,8 @@ window.addEventListener('unhandledrejection', (e) => {
       });
     }
 
-    // Magnetic buttons — attract toward cursor on proximity
-    document.querySelectorAll('.btn-primary, .header-cta').forEach(btn => {
-      btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.4}px)`;
-      });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = '';
-        btn.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-        setTimeout(() => { btn.style.transition = ''; }, 400);
-      });
-    });
   }
 
-  /* ---------- Parallax depth layers on scroll ---------- */
-  if (!prefersReducedMotion && window.gsap && window.ScrollTrigger) {
-    // Hero image subtle parallax
-    const heroImg = document.querySelector('.hero-img');
-    if (heroImg) {
-      gsap.to(heroImg, {
-        y: 100,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero', start: 'top top', end: 'bottom top',
-          scrub: true
-        }
-      });
-    }
-
-    // Lookbook cards parallax at different speeds
-    gsap.utils.toArray('.lookbook-card').forEach((card, i) => {
-      gsap.to(card, {
-        y: (i === 0) ? -40 : (i === 1) ? -60 : -20,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.lookbook', start: 'top bottom', end: 'bottom top',
-          scrub: true
-        }
-      });
-    });
-
-    // Featured shoe float
-    const featuredImg = document.querySelector('.featured-img');
-    if (featuredImg) {
-      gsap.to(featuredImg, {
-        y: -30, rotate: -3,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.featured-drop', start: 'top bottom', end: 'bottom top',
-          scrub: true
-        }
-      });
-    }
-  }
 
   /* ---------- Scroll-driven reveals ---------- */
   if (!prefersReducedMotion) {

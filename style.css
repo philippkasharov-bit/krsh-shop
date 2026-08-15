@@ -267,11 +267,6 @@ textarea:focus-visible, [tabindex]:focus-visible {
   margin-top: 8px;
   opacity: 0; transform: translateY(20px);
 }
-.hero-char {
-  display: inline-block;
-  opacity: 0;
-}
-.hero-line { display: inline; }
 
 /* ========== LOOKBOOK ========== */
 .lookbook { padding: 80px 40px 140px; }
