@@ -499,28 +499,46 @@ window.addEventListener('unhandledrejection', (e) => {
     }, { passive: true });
   }
 
-  /* ---------- Hero animation (Anime.js v4) ---------- */
+  /* ---------- Hero animation — split-text character reveal ---------- */
   const hero = document.querySelector('.hero');
   if (hero) {
     requestAnimationFrame(() => hero.classList.add('loaded'));
 
+    const heroTitle = hero.querySelector('.hero-title');
     const heroEls = ['.hero-eyebrow', '.hero-sub', '.hero-title', '.hero-link']
       .map(sel => document.querySelector(sel)).filter(Boolean);
 
     if (prefersReducedMotion) {
       heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
-    } else if (window.anime) {
-      const { createTimeline, spring } = window.anime;
-      const tl = createTimeline({ delay: 300 });
-      const eyebrow = document.querySelector('.hero-eyebrow');
-      if (eyebrow) tl.add('.hero-eyebrow', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 700, ease: 'out(3)' });
-      tl.add('.hero-title', {
-          opacity: { from: 0, to: 1 }, y: { from: 40, to: 0 },
-          duration: 900, ease: spring({ bounce: 0.35, duration: 900 })
-        }, eyebrow ? '-=500' : 0)
-        .add(document.querySelector('.hero-sub') ? '.hero-sub' : '.hero-link', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=400');
-      if (document.querySelector('.hero-sub'))
+    } else {
+      // Split hero title into individual characters
+      if (heroTitle) {
+        const html = heroTitle.innerHTML;
+        heroTitle.innerHTML = html.split('<br>').map(line =>
+          '<span class="hero-line">' +
+          line.split('').map(ch =>
+            ch === ' ' ? ' ' : '<span class="hero-char">' + ch + '</span>'
+          ).join('') +
+          '</span>'
+        ).join('<br>');
+        heroTitle.style.opacity = '1';
+      }
+
+      if (window.anime) {
+        const { createTimeline, stagger, spring } = window.anime;
+        const tl = createTimeline({ delay: 200 });
+        tl.add('.hero-char', {
+          y: { from: 80, to: 0 },
+          rotate: { from: 8, to: 0 },
+          opacity: { from: 0, to: 1 },
+          duration: 700,
+          delay: stagger(30),
+          ease: 'out(4)'
+        });
+        const heroSub = document.querySelector('.hero-sub');
+        if (heroSub) tl.add('.hero-sub', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=300');
         tl.add('.hero-link', { opacity: { from: 0, to: 1 }, y: { from: 20, to: 0 }, duration: 600, ease: 'out(3)' }, '-=300');
+      }
     }
   }
 
@@ -648,7 +666,7 @@ window.addEventListener('unhandledrejection', (e) => {
     if (inactive) e.preventDefault();
   });
 
-  /* ---------- 3D tilt on product cards ---------- */
+  /* ---------- 3D tilt on product cards + featured shoe ---------- */
   if (!isTouchDevice && !prefersReducedMotion) {
     document.addEventListener('mousemove', (e) => {
       const card = e.target.closest('.p-card');
@@ -671,6 +689,77 @@ window.addEventListener('unhandledrejection', (e) => {
         if (img) img.style.transform = '';
       }
     });
+
+    // Featured shoe — 3D tilt following cursor
+    const featuredWrap = document.querySelector('.featured-img-wrap');
+    if (featuredWrap) {
+      const fImg = featuredWrap.querySelector('.featured-img');
+      featuredWrap.addEventListener('mousemove', (e) => {
+        const rect = featuredWrap.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        if (fImg) fImg.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 10}deg) scale(1.04)`;
+      });
+      featuredWrap.addEventListener('mouseleave', () => {
+        if (fImg) fImg.style.transform = '';
+      });
+    }
+
+    // Magnetic buttons — attract toward cursor on proximity
+    document.querySelectorAll('.btn-primary, .header-cta').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.4}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+        setTimeout(() => { btn.style.transition = ''; }, 400);
+      });
+    });
+  }
+
+  /* ---------- Parallax depth layers on scroll ---------- */
+  if (!prefersReducedMotion && window.gsap && window.ScrollTrigger) {
+    // Hero image subtle parallax
+    const heroImg = document.querySelector('.hero-img');
+    if (heroImg) {
+      gsap.to(heroImg, {
+        y: 100,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero', start: 'top top', end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
+
+    // Lookbook cards parallax at different speeds
+    gsap.utils.toArray('.lookbook-card').forEach((card, i) => {
+      gsap.to(card, {
+        y: (i === 0) ? -40 : (i === 1) ? -60 : -20,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.lookbook', start: 'top bottom', end: 'bottom top',
+          scrub: true
+        }
+      });
+    });
+
+    // Featured shoe float
+    const featuredImg = document.querySelector('.featured-img');
+    if (featuredImg) {
+      gsap.to(featuredImg, {
+        y: -30, rotate: -3,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.featured-drop', start: 'top bottom', end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
   }
 
   /* ---------- Scroll-driven reveals ---------- */
