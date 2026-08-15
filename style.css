@@ -1348,12 +1348,25 @@ body.nav-open { overflow: hidden; }
   border-color: var(--error);
 }
 .form-row .field-error {
-  font-size: 12px; color: var(--error); margin-top: -4px;
+  font-size: 11px; font-weight: 600; color: var(--error); margin-top: 6px;
+  text-transform: uppercase; letter-spacing: 1px;
   display: none;
 }
 .form-row input:invalid:not(:focus):not(:placeholder-shown) ~ .field-error,
 .form-row textarea:invalid:not(:focus):not(:placeholder-shown) ~ .field-error {
   display: block;
+}
+.form-row input:invalid:not(:focus):not(:placeholder-shown),
+.form-row textarea:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: var(--error);
+}
+.form-submitted .form-row input:invalid ~ .field-error,
+.form-submitted .form-row textarea:invalid ~ .field-error {
+  display: block;
+}
+.form-submitted .form-row input:invalid,
+.form-submitted .form-row textarea:invalid {
+  border-color: var(--error);
 }
 .nl-form input:invalid:not(:focus):not(:placeholder-shown) {
   border-color: var(--error);

@@ -116,7 +116,7 @@
       </div>
     </div>
 
-    <form class="contact-form" id="contactForm">
+    <form class="contact-form" id="contactForm" novalidate>
       <div class="form-row">
         <label for="cf-name">Name</label>
         <input type="text" id="cf-name" name="name" required autocomplete="name" placeholder=" ">
@@ -214,7 +214,14 @@
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      form.classList.add('form-submitted');
+      if (!form.checkValidity()) {
+        const firstInvalid = form.querySelector(':invalid');
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
       if (window.showToast) window.showToast('Message sent! We\'ll get back to you within 24 hours.');
+      form.classList.remove('form-submitted');
       form.reset();
     });
   }

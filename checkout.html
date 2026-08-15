@@ -89,7 +89,7 @@
 <!-- Checkout Steps -->
 <section class="checkout-section" id="checkoutSection">
   <div class="checkout-grid">
-    <form class="checkout-form" id="checkoutForm">
+    <form class="checkout-form" id="checkoutForm" novalidate>
 
       <div class="checkout-step">
         <div class="checkout-step-head">
@@ -99,6 +99,7 @@
         <div class="form-row">
           <label for="co-email">Email</label>
           <input type="email" id="co-email" name="email" placeholder="your@email.com" required autocomplete="email">
+          <span class="field-error">Enter a valid email (e.g. name@example.com)</span>
         </div>
       </div>
 
@@ -110,23 +111,28 @@
         <div class="form-grid">
           <div class="form-row">
             <label for="co-first">First Name</label>
-            <input type="text" id="co-first" name="first" required autocomplete="given-name" placeholder=" ">
+            <input type="text" id="co-first" name="first" required autocomplete="given-name" placeholder=" " minlength="2">
+            <span class="field-error">First name is required (min 2 characters)</span>
           </div>
           <div class="form-row">
             <label for="co-last">Last Name</label>
-            <input type="text" id="co-last" name="last" required autocomplete="family-name" placeholder=" ">
+            <input type="text" id="co-last" name="last" required autocomplete="family-name" placeholder=" " minlength="2">
+            <span class="field-error">Last name is required (min 2 characters)</span>
           </div>
           <div class="form-row form-row-full">
             <label for="co-address">Address</label>
-            <input type="text" id="co-address" name="address" placeholder="Street and number" required autocomplete="street-address">
+            <input type="text" id="co-address" name="address" placeholder="Street and number" required autocomplete="street-address" minlength="5">
+            <span class="field-error">Enter your street address (e.g. 123 Main St)</span>
           </div>
           <div class="form-row">
             <label for="co-city">City</label>
-            <input type="text" id="co-city" name="city" required autocomplete="address-level2" placeholder=" ">
+            <input type="text" id="co-city" name="city" required autocomplete="address-level2" placeholder=" " minlength="2">
+            <span class="field-error">City is required</span>
           </div>
           <div class="form-row">
             <label for="co-zip">ZIP / Postal Code</label>
-            <input type="text" id="co-zip" name="zip" required autocomplete="postal-code" inputmode="text" placeholder=" ">
+            <input type="text" id="co-zip" name="zip" required autocomplete="postal-code" inputmode="text" placeholder=" " pattern="[A-Za-z0-9\s\-]{3,10}">
+            <span class="field-error">Enter a valid postal code (e.g. 10001 or SW1A 1AA)</span>
           </div>
           <div class="form-row form-row-full">
             <label for="co-country">Country</label>
@@ -360,8 +366,10 @@
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      form.classList.add('form-submitted');
       if (!form.checkValidity()) {
-        form.reportValidity();
+        const firstInvalid = form.querySelector(':invalid');
+        if (firstInvalid) firstInvalid.focus();
         return;
       }
       const submitBtn = document.getElementById('checkoutSubmit');
