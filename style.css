@@ -244,7 +244,6 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .hero-content {
   position: relative; z-index: 2;
   padding: 0 40px 80px;
-  max-width: 900px;
 }
 .hero-eyebrow {
   font-size: 12px; font-weight: 700; text-transform: uppercase;
@@ -1684,13 +1683,18 @@ body.nav-open { overflow: hidden; }
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
-.type-cursor {
-  -webkit-text-fill-color: var(--yellow);
-  animation: cursorBlink 0.6s step-end infinite;
+.hero-graffiti-svg {
+  display: block;
+  width: 90vw !important;
+  max-width: 1100px;
+  filter: drop-shadow(0 0 30px rgba(232,255,0,0.3)) drop-shadow(0 0 60px rgba(232,255,0,0.1));
 }
-@keyframes cursorBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+.graffiti-line {
+  font-family: 'Clash Display', sans-serif;
+  font-weight: 700;
+  font-size: inherit;
+  letter-spacing: -3px;
+  paint-order: stroke fill;
 }
 .section-title::before {
   background: linear-gradient(135deg, var(--yellow), var(--pink));

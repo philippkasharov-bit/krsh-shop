@@ -510,41 +510,75 @@ window.addEventListener('unhandledrejection', (e) => {
     if (prefersReducedMotion) {
       heroEls.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
     } else if (window.gsap) {
-      // Typewriter effect on hero title
+      // Graffiti stroke-draw effect on hero title
       const heroTitleEl = document.querySelector('.hero-title');
       if (heroTitleEl) {
-        const originalHTML = heroTitleEl.innerHTML;
-        const lines = originalHTML.split('<br>');
+        const rawHTML = heroTitleEl.innerHTML.trim();
+        const parts = rawHTML.split(/<br\s*\/?>/i);
+        const line1 = (parts[0] || 'STREET').replace(/<[^>]+>/g, '').trim();
+        const line2 = (parts[1] || 'CULTURE').replace(/<[^>]+>/g, '').trim();
+
+        const fontSize = 168;
+        const lineH = fontSize * 0.92;
+
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class', 'hero-graffiti-svg');
+        svg.style.overflow = 'visible';
+
+        [line1, line2].forEach((text, idx) => {
+          const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          t.setAttribute('x', '0');
+          t.setAttribute('y', (idx + 1) * lineH);
+          t.setAttribute('font-size', fontSize);
+          t.setAttribute('font-family', "'Clash Display', sans-serif");
+          t.setAttribute('font-weight', '700');
+          t.setAttribute('letter-spacing', '-3');
+          t.setAttribute('class', 'graffiti-line');
+          t.textContent = text;
+          svg.appendChild(t);
+        });
+
         heroTitleEl.innerHTML = '';
+        heroTitleEl.appendChild(svg);
         heroTitleEl.style.opacity = '1';
         heroTitleEl.style.transform = 'none';
 
-        let charIndex = 0;
-        const fullText = lines.join('\n');
-        let currentLine = 0;
-        let currentChar = 0;
+        requestAnimationFrame(() => {
+          // Fit viewBox to actual text bounds
+          const bbox = svg.getBBox();
+          svg.setAttribute('viewBox', `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
+          svg.style.width = '100%';
+          svg.style.height = 'auto';
 
-        function typeNext() {
-          if (currentLine >= lines.length) {
-            gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: 'power3.out' });
-            gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.7, delay: 0.25, ease: 'power3.out' });
-            return;
-          }
-          const line = lines[currentLine];
-          if (currentChar < line.length) {
-            heroTitleEl.innerHTML = lines.slice(0, currentLine).join('<br>') +
-              (currentLine > 0 ? '<br>' : '') +
-              line.substring(0, currentChar + 1) +
-              '<span class="type-cursor">|</span>';
-            currentChar++;
-            setTimeout(typeNext, 55 + Math.random() * 40);
-          } else {
-            currentLine++;
-            currentChar = 0;
-            setTimeout(typeNext, 120);
-          }
-        }
-        setTimeout(typeNext, 300);
+          const textEls = svg.querySelectorAll('.graffiti-line');
+          textEls.forEach((t, idx) => {
+            const len = t.getTotalLength ? t.getTotalLength() : 3000;
+            const pathLen = Math.max(len, 2000);
+            t.style.strokeDasharray = pathLen;
+            t.style.strokeDashoffset = pathLen;
+            t.style.fill = 'transparent';
+            t.style.stroke = '#E8FF00';
+            t.style.strokeWidth = '2';
+
+            const delay = idx * 0.6;
+            gsap.to(t, {
+              strokeDashoffset: 0,
+              duration: 1.4,
+              delay: 0.3 + delay,
+              ease: 'power2.inOut',
+              onComplete: () => {
+                gsap.to(t, {
+                  fill: '#E8FF00',
+                  strokeWidth: 0,
+                  duration: 0.5,
+                  ease: 'power2.out'
+                });
+              }
+            });
+          });
+          gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 2.8, ease: 'power3.out' });
+          gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.7, delay: 3.0, ease: 'power3.out' });
+        });
       } else {
         gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 0.5, ease: 'power3.out' });
         gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.7, delay: 0.65, ease: 'power3.out' });
