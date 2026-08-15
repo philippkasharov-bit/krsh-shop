@@ -518,96 +518,137 @@ window.addEventListener('unhandledrejection', (e) => {
     }
   }
 
-  /* ---------- GSAP ScrollTrigger ---------- */
+  /* ---------- GSAP ScrollTrigger — scroll-driven cinema ---------- */
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Lookbook — clip-path curtain reveal, each card from a different edge
-    const clipDirs = [
-      'polygon(0 0, 0 0, 0 100%, 0 100%)',
-      'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)',
-      'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)'
-    ];
-    gsap.utils.toArray('.lookbook-card').forEach((card, i) => {
+    // Hero — title shrinks and fades as you scroll away (scrubbed to scroll position)
+    const heroTitle = document.querySelector('.hero-title');
+    const heroContent = document.querySelector('.hero-content');
+    if (heroTitle && heroContent) {
+      gsap.to(heroContent, {
+        scale: 0.85, opacity: 0, filter: 'blur(8px)',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero', start: 'top top', end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
+
+    // Lookbook — cards slide in from opposite sides, tied to scroll position
+    const lookbookCards = gsap.utils.toArray('.lookbook-card');
+    lookbookCards.forEach((card, i) => {
+      const fromX = i % 2 === 0 ? -120 : 120;
       gsap.fromTo(card,
-        { clipPath: clipDirs[i] || clipDirs[0], opacity: 0.3 },
-        { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', opacity: 1,
-          duration: 1.1, ease: 'power4.out',
-          scrollTrigger: { trigger: card, start: 'top 85%' }
+        { x: fromX, opacity: 0, scale: 0.9 },
+        { x: 0, opacity: 1, scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: card, start: 'top 95%', end: 'top 45%',
+            scrub: 0.6
+          }
         }
       );
     });
 
-    // Featured drop — the focal moment: shoe scales up, info wipes in
+    // Featured drop — shoe scales and rotates driven by scroll, info wipes in
     const featuredSplit = document.querySelector('.featured-split');
     if (featuredSplit) {
-      const featTl = gsap.timeline({
-        scrollTrigger: { trigger: featuredSplit, start: 'top 70%' }
-      });
-      featTl.from('.featured-img', {
-        scale: 0.8, opacity: 0, rotate: 6,
-        duration: 1, ease: 'power3.out'
-      });
-      featTl.fromTo('.featured-info',
-        { clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' },
-        { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-          duration: 0.8, ease: 'power4.inOut' },
-        '-=0.6'
+      gsap.fromTo('.featured-img',
+        { scale: 0.5, rotate: 15, opacity: 0 },
+        { scale: 1, rotate: 0, opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: featuredSplit, start: 'top 90%', end: 'top 30%',
+            scrub: 0.8
+          }
+        }
       );
-      featTl.from('.featured-name, .featured-desc, .featured-meta, .featured-info .btn-primary', {
-        y: 20, opacity: 0, stagger: 0.08, duration: 0.5, ease: 'power3.out'
-      }, '-=0.3');
+      gsap.fromTo('.featured-info',
+        { clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)', opacity: 0 },
+        { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)', opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: featuredSplit, start: 'top 70%', end: 'top 20%',
+            scrub: 0.8
+          }
+        }
+      );
     }
 
-    // Product cards — scale pop with stagger
+    // Product cards — fly up from below with staggered scroll ranges
     gsap.utils.toArray('.p-card').forEach((card, i) => {
-      gsap.from(card, {
-        scale: 0.9, opacity: 0,
-        duration: 0.6, delay: i * 0.06,
-        ease: 'back.out(1.4)',
-        scrollTrigger: { trigger: card, start: 'top 88%' }
-      });
+      gsap.fromTo(card,
+        { y: 80 + (i * 20), opacity: 0, scale: 0.85 },
+        { y: 0, opacity: 1, scale: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: card, start: 'top 100%', end: 'top 55%',
+            scrub: 0.5
+          }
+        }
+      );
     });
 
-    // Manifesto — blur-to-sharp focus pull
+    // Manifesto — text fades from blur, scrubbed to scroll
     const manifesto = document.querySelector('.manifesto-text');
     if (manifesto) {
-      gsap.from(manifesto, {
-        filter: 'blur(12px)', opacity: 0, y: 20,
-        duration: 1.2, ease: 'power2.out',
-        scrollTrigger: { trigger: manifesto, start: 'top 80%' }
-      });
-      gsap.from('.manifesto-sub', {
-        filter: 'blur(6px)', opacity: 0,
-        duration: 0.8, delay: 0.3, ease: 'power2.out',
-        scrollTrigger: { trigger: manifesto, start: 'top 80%' }
-      });
-      gsap.from('.manifesto .btn-secondary', {
-        y: 16, opacity: 0, duration: 0.6, delay: 0.5, ease: 'power3.out',
-        scrollTrigger: { trigger: manifesto, start: 'top 80%' }
-      });
+      gsap.fromTo(manifesto,
+        { filter: 'blur(20px)', opacity: 0, scale: 0.9, y: 40 },
+        { filter: 'blur(0px)', opacity: 1, scale: 1, y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: manifesto, start: 'top 90%', end: 'top 40%',
+            scrub: 0.6
+          }
+        }
+      );
+      gsap.fromTo('.manifesto-sub',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.manifesto-sub', start: 'top 90%', end: 'top 55%',
+            scrub: 0.6
+          }
+        }
+      );
+      gsap.fromTo('.manifesto .btn-secondary',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.manifesto .btn-secondary', start: 'top 95%', end: 'top 70%',
+            scrub: 0.5
+          }
+        }
+      );
     }
 
-    // Section headers — line draws in from left
+    // Section headers — clip-path wipe scrubbed to scroll
     gsap.utils.toArray('.section-header').forEach((h) => {
       gsap.fromTo(h,
         { clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' },
         { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-          duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: h, start: 'top 88%' }
+          ease: 'none',
+          scrollTrigger: {
+            trigger: h, start: 'top 90%', end: 'top 60%',
+            scrub: 0.4
+          }
         }
       );
     });
 
-    // Marquee — subtle parallax speed shift on scroll
+    // Marquee — scroll-driven speed shift
     const marquee = document.querySelector('.marquee-strip');
     if (marquee) {
       gsap.to('.marquee-track', {
-        x: '-=120',
+        x: '-=200',
         ease: 'none',
         scrollTrigger: {
           trigger: marquee, start: 'top bottom', end: 'bottom top',
-          scrub: 0.5
+          scrub: 0.3
         }
       });
     }
