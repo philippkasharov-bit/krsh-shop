@@ -180,6 +180,11 @@ textarea:focus-visible, [tabindex]:focus-visible {
 .nav a:hover { color: var(--white); }
 .nav-active { color: var(--white) !important; }
 .header-right { display: flex; align-items: center; gap: 20px; }
+.wishlist-btn {
+  color: var(--white); display: flex; align-items: center; justify-content: center;
+  transition: color 0.2s;
+}
+.wishlist-btn:hover { color: var(--yellow); }
 .header-cta {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
   letter-spacing: 3px; padding: 10px 24px;
@@ -959,7 +964,10 @@ select option { background: var(--gray2); color: var(--white); }
   margin-top: 12px; text-transform: uppercase; letter-spacing: 3px;
 }
 .empty-icon { color: rgba(242,237,232,0.15); margin-bottom: 20px; }
+.wishlist-section .catalog-grid { gap: 24px; }
 .wishlist-card { position: relative; }
+.wishlist-card .p-card-img { aspect-ratio: 1/1; }
+.wishlist-card .p-card-img img { width: 100%; height: 100%; object-fit: cover; }
 .wishlist-card-link { display: block; text-decoration: none; color: inherit; }
 .wishlist-remove {
   position: absolute; top: 12px; right: 12px; z-index: 3;
