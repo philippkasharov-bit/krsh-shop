@@ -202,5 +202,140 @@ window.KRSH_PRODUCTS = [
       { author: 'Mia R.', stars: 5, text: 'Classic KRSH silhouette. Leather quality is premium.', date: '2 weeks ago' },
       { author: 'Eric B.', stars: 4, text: 'Runs half size big like always. Size down.', date: '1 month ago' }
     ]
+  },
+  {
+    id: 10,
+    name: 'KRSH Slide',
+    price: 175,
+    brand: 'krsh',
+    category: 'low',
+    badge: 'new',
+    img: 'images/krsh-slide.jpg',
+    new: true,
+    color: 'Triple Black',
+    desc: 'No laces, no fuss. The Slide is a laceless slip-on in triple black canvas with elastic side gussets and a branded pull tab. Built for quick exits and all-day comfort.',
+    materials: ['Heavy canvas upper', 'Elastic side gussets', 'Vulcanized rubber outsole', 'KRSH woven pull tab'],
+    rating: 4.6,
+    reviewCount: 42,
+    reviews: [
+      { author: 'Zara K.', stars: 5, text: 'Perfect grab-and-go shoe. Slip on and you are out the door.', date: '1 week ago' },
+      { author: 'Leo T.', stars: 4, text: 'Runs a bit snug. Half size up recommended.', date: '3 weeks ago' }
+    ]
+  },
+  {
+    id: 11,
+    name: 'KRSH Phantom',
+    price: 240,
+    brand: 'krsh',
+    category: 'runner',
+    badge: null,
+    img: 'images/krsh-phantom.jpg',
+    new: false,
+    color: 'Triple White',
+    desc: 'All white everything. The Phantom is a clean athletic runner with perforated toe panels, a sculpted midsole, and tonal stitching. Disappears into any fit while adding structure.',
+    materials: ['Synthetic leather upper', 'Perforated toe box', 'Stacked EVA midsole', 'Rubber outsole'],
+    rating: 4.7,
+    reviewCount: 78,
+    reviews: [
+      { author: 'Nina V.', stars: 5, text: 'Cleanest white runner out right now. Goes with absolutely everything.', date: '2 weeks ago' },
+      { author: 'Carlos M.', stars: 4, text: 'Comfortable right out of the box. Easy to keep clean too.', date: '1 month ago' }
+    ]
+  },
+  {
+    id: 12,
+    name: 'KRSH Titan',
+    price: 360,
+    brand: 'krsh',
+    category: 'boot',
+    badge: 'limited',
+    img: 'images/krsh-titan.jpg',
+    new: false,
+    color: 'Charcoal',
+    stock: 60,
+    desc: 'Heavy-duty utility boot built for the streets. The Titan features a padded collar, contrast stitching, metal lace hardware, and a lugged outsole that grips concrete and gravel alike.',
+    materials: ['Waxed canvas & nubuck upper', 'Padded neoprene collar', 'Metal D-ring lace hardware', 'Lugged rubber outsole'],
+    rating: 4.8,
+    reviewCount: 55,
+    reviews: [
+      { author: 'Raven J.', stars: 5, text: 'Tank of a boot. Walked through rain and snow, feet stayed dry.', date: '2 weeks ago' },
+      { author: 'Troy B.', stars: 5, text: 'The charcoal color is perfect. Not too dark, not too light.', date: '1 month ago' }
+    ]
+  },
+  {
+    id: 13,
+    name: 'KRSH Trail',
+    price: 275,
+    brand: 'krsh',
+    category: 'runner',
+    badge: 'new',
+    img: 'images/krsh-trail.jpg',
+    new: true,
+    color: 'Olive/Tan',
+    desc: 'Retro runner energy with modern comfort. The Trail blends olive suede panels with cream mesh and tan leather accents on a chunky sculpted midsole with gum rubber outsole.',
+    materials: ['Pig suede & mesh upper', 'Leather accent panels', 'Sculpted EVA midsole', 'Gum rubber outsole'],
+    rating: 4.7,
+    reviewCount: 31,
+    reviews: [
+      { author: 'Dex W.', stars: 5, text: 'The earth tones on these are fire. Best colorway KRSH has done.', date: '5 days ago' },
+      { author: 'Maya P.', stars: 5, text: 'Chunky but not heavy. Perfect fall sneaker.', date: '2 weeks ago' }
+    ]
+  },
+  {
+    id: 14,
+    name: 'KRSH Revolt',
+    price: 210,
+    brand: 'krsh',
+    category: 'high',
+    badge: null,
+    img: 'images/krsh-revolt.jpg',
+    new: false,
+    color: 'Cream/Black',
+    desc: 'Classic high-top rebellion. The Revolt is a heavyweight canvas high-top in cream with a black leather toe cap, metal eyelets, and a gum-toned vulcanized sole. Old school done right.',
+    materials: ['Heavyweight canvas upper', 'Leather toe cap', 'Metal eyelets', 'Vulcanized gum sole'],
+    rating: 4.5,
+    reviewCount: 96,
+    reviews: [
+      { author: 'Jade H.', stars: 5, text: 'Best high-top in the game right now. Canvas is thick and premium.', date: '1 week ago' },
+      { author: 'Ryan O.', stars: 4, text: 'Runs true to size. Break-in takes about a week.', date: '1 month ago' }
+    ]
+  },
+  {
+    id: 15,
+    name: 'KRSH Noir',
+    price: 250,
+    brand: 'krsh',
+    category: 'low',
+    badge: null,
+    img: 'images/krsh-noir.jpg',
+    new: false,
+    color: 'Black',
+    desc: 'Murdered out minimalism. The Noir is a sleek low-top in matte black leather with a matching black sole unit and tonal stitching. No logos, no flash — just pure stealth.',
+    materials: ['Matte nappa leather upper', 'Tonal stitching throughout', 'Flat rubber outsole', 'Memory foam insole'],
+    rating: 4.8,
+    reviewCount: 145,
+    reviews: [
+      { author: 'Vincent S.', stars: 5, text: 'The matte leather finish is insane. Looks expensive.', date: '1 week ago' },
+      { author: 'Aisha D.', stars: 5, text: 'Clean, minimal, and goes with everything. Daily driver.', date: '3 weeks ago' }
+    ]
+  },
+  {
+    id: 16,
+    name: 'KRSH Dunk',
+    price: 290,
+    brand: 'krsh',
+    category: 'low',
+    badge: 'limited',
+    img: 'images/krsh-dunk.jpg',
+    new: false,
+    color: 'Black/Gray/Gum',
+    stock: 95,
+    desc: 'Street court classic. The Dunk is a two-tone low-top in black and cool gray leather with a white midsole and gum rubber outsole. Perforated toe box for breathability.',
+    materials: ['Full-grain leather upper', 'Perforated toe box', 'Encapsulated air midsole', 'Gum rubber outsole'],
+    rating: 4.9,
+    reviewCount: 67,
+    reviews: [
+      { author: 'JP Cruz', stars: 5, text: 'The gum sole makes this. Black and gray combo is timeless.', date: '1 week ago' },
+      { author: 'Kendall F.', stars: 5, text: 'Best KRSH silhouette hands down. Leather is premium quality.', date: '2 weeks ago' }
+    ]
   }
 ];
