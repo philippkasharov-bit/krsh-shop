@@ -143,47 +143,6 @@ window.KRSH_PRODUCTS = [
     ]
   },
   {
-    id: 7,
-    name: 'KRSH Storm',
-    price: 295,
-    brand: 'krsh',
-    category: 'runner',
-    badge: 'new',
-    img: 'images/krsh-storm.webp',
-    new: true,
-    color: 'Olive/White',
-    stock: 120,
-    desc: 'Weather the storm. A chunky trail runner silhouette with olive mesh panels, cream suede overlays, and an aggressive sculpted midsole. Built for the city when the city fights back.',
-    materials: ['Mesh & suede upper', 'KRSH CloudStep sculpted midsole', 'Lugged rubber outsole', 'Gusseted tongue'],
-    rating: 4.7,
-    reviewCount: 18,
-    reviews: [
-      { author: 'Ian M.', stars: 5, text: 'The chunky sole is crazy. Way more comfortable than it looks.', date: '4 days ago' },
-      { author: 'Keisha J.', stars: 5, text: 'Olive and cream combo is perfect. Lugged sole grips everything.', date: '1 week ago' }
-    ]
-  },
-  {
-    id: 8,
-    name: 'KRSH Heritage',
-    price: 195,
-    brand: 'krsh',
-    category: 'high',
-    badge: 'sale',
-    img: 'images/krsh-heritage.webp',
-    new: false,
-    oldPrice: 235,
-    color: 'Cream',
-    desc: 'Vintage soul, modern craft. The Heritage is a distressed canvas high-top with raw edges and a classic red-and-blue sole stripe. Pre-washed for that lived-in look from day one.',
-    materials: ['Pre-washed canvas upper', 'Rubber vulcanized outsole', 'Cotton laces', 'Padded tongue & collar'],
-    rating: 4.5,
-    reviewCount: 340,
-    reviews: [
-      { author: 'Alex M.', stars: 5, text: 'The distressed look is perfect. Not trying too hard, just effortless.', date: '1 week ago' },
-      { author: 'Rachel K.', stars: 4, text: 'Great at this sale price. Canvas is thick and durable.', date: '3 weeks ago' },
-      { author: 'David L.', stars: 5, text: 'Goes with literally everything. My most-worn pair right now.', date: '1 month ago' }
-    ]
-  },
-  {
     id: 9,
     name: 'KRSH Stealth',
     price: 230,
@@ -220,25 +179,6 @@ window.KRSH_PRODUCTS = [
     reviews: [
       { author: 'Zara K.', stars: 5, text: 'Perfect grab-and-go shoe. Slip on and you are out the door.', date: '1 week ago' },
       { author: 'Leo T.', stars: 4, text: 'Runs a bit snug. Half size up recommended.', date: '3 weeks ago' }
-    ]
-  },
-  {
-    id: 11,
-    name: 'KRSH Phantom',
-    price: 240,
-    brand: 'krsh',
-    category: 'runner',
-    badge: null,
-    img: 'images/krsh-phantom.webp',
-    new: false,
-    color: 'Triple White',
-    desc: 'All white everything. The Phantom is a clean athletic runner with perforated toe panels, a sculpted midsole, and tonal stitching. Disappears into any fit while adding structure.',
-    materials: ['Synthetic leather upper', 'Perforated toe box', 'Stacked EVA midsole', 'Rubber outsole'],
-    rating: 4.7,
-    reviewCount: 78,
-    reviews: [
-      { author: 'Nina V.', stars: 5, text: 'Cleanest white runner out right now. Goes with absolutely everything.', date: '2 weeks ago' },
-      { author: 'Carlos M.', stars: 4, text: 'Comfortable right out of the box. Easy to keep clean too.', date: '1 month ago' }
     ]
   },
   {
@@ -297,25 +237,6 @@ window.KRSH_PRODUCTS = [
     reviews: [
       { author: 'Jade H.', stars: 5, text: 'Best high-top in the game right now. Canvas is thick and premium.', date: '1 week ago' },
       { author: 'Ryan O.', stars: 4, text: 'Runs true to size. Break-in takes about a week.', date: '1 month ago' }
-    ]
-  },
-  {
-    id: 15,
-    name: 'KRSH Noir',
-    price: 250,
-    brand: 'krsh',
-    category: 'low',
-    badge: null,
-    img: 'images/krsh-noir.webp',
-    new: false,
-    color: 'Black',
-    desc: 'Murdered out minimalism. The Noir is a sleek low-top in matte black leather with a matching black sole unit and tonal stitching. No logos, no flash — just pure stealth.',
-    materials: ['Matte nappa leather upper', 'Tonal stitching throughout', 'Flat rubber outsole', 'Memory foam insole'],
-    rating: 4.8,
-    reviewCount: 145,
-    reviews: [
-      { author: 'Vincent S.', stars: 5, text: 'The matte leather finish is insane. Looks expensive.', date: '1 week ago' },
-      { author: 'Aisha D.', stars: 5, text: 'Clean, minimal, and goes with everything. Daily driver.', date: '3 weeks ago' }
     ]
   },
   {
