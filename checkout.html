@@ -10,7 +10,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
 <script>window.addEventListener("unhandledrejection",function(e){if(e.reason&&e.reason.name==="AbortError")e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=47">
+<link rel="stylesheet" href="style.css?v=48">
 </head>
 <body>
 
@@ -29,9 +29,9 @@
     <a href="wishlist.html" class="wishlist-btn" aria-label="Wishlist">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
     </a>
-    <button class="cart-btn" id="cartBtn" aria-label="Open cart, 2 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart, 0 items" aria-haspopup="true" aria-expanded="false" aria-controls="cartDrawer">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      <span class="cart-badge" id="cartBadge" aria-hidden="true">2</span>
+      <span class="cart-badge" id="cartBadge" aria-hidden="true">0</span>
     </button>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span></button>
   </div>
@@ -67,7 +67,7 @@
   </div>
   <div class="cart-drawer-footer" id="cartFooter">
     <div class="cart-promo">
-      <input type="text" placeholder="Promo code">
+      <input type="text" placeholder="Promo code" aria-label="Promo code">
       <button type="button">Apply</button>
     </div>
     <div class="cart-subtotal">
@@ -208,7 +208,7 @@
       </div>
 
       <div class="cart-promo">
-        <input type="text" placeholder="Promo code">
+        <input type="text" placeholder="Promo code" aria-label="Promo code">
         <button type="button">Apply</button>
       </div>
 
@@ -297,7 +297,7 @@
     <div class="footer-newsletter">
       <h3>Join the crew</h3>
       <div class="nl-form">
-        <input type="email" placeholder="your@email.com">
+        <input type="email" placeholder="your@email.com" aria-label="Email address for newsletter">
         <button>Subscribe</button>
       </div>
       <div class="footer-socials">
