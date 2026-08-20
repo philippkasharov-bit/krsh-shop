@@ -149,10 +149,9 @@ window.addEventListener('unhandledrejection', (e) => {
 
   /* ---------- Cart (localStorage-backed, shared across every page) ---------- */
   const CART_KEY = 'krsh_cart';
-  const DEFAULT_CART = [
-    { name: 'KRSH Venom', price: 310, size: '8.5', color: 'White', img: 'https://images.unsplash.com/photo-1544441892-794166f1e3be?w=160&h=160&fit=crop' },
-    { name: 'Street Phantom', price: 220, size: '9', color: 'White', img: 'https://images.unsplash.com/photo-1596480370804-cff0eed14888?w=160&h=160&fit=crop' }
-  ];
+  /* A first-time visitor starts with an empty bag. The drawer already has a
+     designed empty state, which beats pre-loading somebody else's cart. */
+  const DEFAULT_CART = [];
 
   function getCart() {
     try {
