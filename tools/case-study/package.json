@@ -1,0 +1,12 @@
+{
+  "name": "krsh-case-study",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generates the KRSH portfolio case-study deck from the site's own design tokens.",
+  "scripts": {
+    "build": "node generate.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  }
+}
