@@ -6,6 +6,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["serve", "-l", "3004", "--no-clipboard", "."],
       "port": 3004
+    },
+    {
+      "name": "pcash-dev",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "3005", "--no-clipboard", "D:\\PCash\\Claude\\PCASHWEB"],
+      "port": 3005
     }
   ]
 }
