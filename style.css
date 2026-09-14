@@ -61,6 +61,8 @@
   --text-glow: 0 0 40px rgba(232,255,0,0.4), 0 0 80px rgba(232,255,0,0.15);
 }
 html { scroll-behavior: smooth; }
+html { overflow-x: clip; }
+
 body {
   background: var(--black);
   color: var(--white);
@@ -1858,4 +1860,11 @@ body.nav-open { overflow: hidden; }
   .hero-title { animation: none; background-position: 0% 50%; }
   .btn-primary::before { animation: none; }
   @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } }
+}
+
+
+/* На телефоне сдвиг по горизонтали выталкивал блоки за экран — только вертикальное появление */
+@media (max-width: 768px) {
+  .reveal.reveal-left,
+  .reveal.reveal-right { transform: translateY(40px); }
 }
