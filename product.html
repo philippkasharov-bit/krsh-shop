@@ -19,7 +19,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
 <script type="application/ld+json" id="productSchema">{}</script>
 <script>window.addEventListener('unhandledrejection',e=>{if(e.reason&&e.reason.name==='AbortError')e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=49">
+<link rel="stylesheet" href="style.css?v=50">
 </head>
 <body>
 
@@ -251,8 +251,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
-<script src="script.js?v=35"></script>
-<script src="products-data.js?v=7"></script>
+<script src="script.js?v=36"></script>
+<script src="products-data.js?v=8"></script>
 <script>
 window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTransition.ready.catch(() => {}); });
 (function() {
@@ -275,6 +275,56 @@ window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTrans
   const baseImg = product.img.replace(/w=\d+&h=\d+/, 'w=800&h=800');
   mainPhoto.src = baseImg;
   mainPhoto.alt = product.name + ' — main view';
+
+  // 3D view: <model-viewer> + the GLB are fetched only when the visitor asks for it
+  if (product.model) {
+    const mainImg = document.getElementById('mainImg');
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'pdp-3d-toggle';
+    toggle.setAttribute('aria-pressed', 'false');
+    toggle.textContent = '3D';
+    mainImg.appendChild(toggle);
+
+    let viewer = null;
+    const loadViewerLib = () => {
+      if (customElements.get('model-viewer')) return;
+      const s = document.createElement('script');
+      s.type = 'module';
+      s.src = 'https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js';
+      document.head.appendChild(s);
+    };
+
+    toggle.addEventListener('click', () => {
+      const on = toggle.getAttribute('aria-pressed') !== 'true';
+      if (on && !viewer) {
+        loadViewerLib();
+        viewer = document.createElement('model-viewer');
+        viewer.className = 'pdp-3d';
+        viewer.setAttribute('src', product.model);
+        viewer.setAttribute('poster', product.img);
+        viewer.setAttribute('alt', product.name + ' — 3D model, drag to rotate');
+        viewer.setAttribute('camera-controls', '');
+        viewer.setAttribute('touch-action', 'pan-y');
+        viewer.setAttribute('interaction-prompt', 'none');
+        viewer.setAttribute('shadow-intensity', '0.8');
+        if (!prefersReducedMotion) {
+          viewer.setAttribute('auto-rotate', '');
+          viewer.setAttribute('auto-rotate-delay', '0');
+          viewer.setAttribute('rotation-per-second', '12deg');
+        }
+        viewer.addEventListener('load', () => mainImg.classList.remove('is-loading-3d'));
+        viewer.addEventListener('error', () => mainImg.classList.remove('is-loading-3d'));
+        mainImg.classList.add('is-loading-3d');
+        mainImg.insertBefore(viewer, toggle);
+      }
+      mainImg.classList.toggle('show-3d', on);
+      toggle.setAttribute('aria-pressed', String(on));
+      toggle.textContent = on ? 'PHOTO' : '3D';
+      toggle.setAttribute('aria-label', on ? 'Show product photo' : 'Show 3D model');
+    });
+    toggle.setAttribute('aria-label', 'Show 3D model');
+  }
 
   // Badge
   const badgeEl = document.getElementById('pdpBadge');
