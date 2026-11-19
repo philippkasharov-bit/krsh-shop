@@ -19,9 +19,10 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"KRSH","url":"https://krsh-shop.netlify.app","description":"Curated streetwear and limited-edition sneakers","potentialAction":{"@type":"SearchAction","target":"https://philippkasharov-bit.github.io/krsh-shop/catalog.html?q={search_term_string}","query-input":"required name=search_term_string"}}
 </script>
-<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>window.addEventListener("unhandledrejection",function(e){if(e.reason&&e.reason.name==="AbortError")e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=50">
+<link rel="stylesheet" href="style.css?v=52">
 </head>
 <body>
 
@@ -96,19 +97,28 @@
 <!-- Toast container -->
 <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
-<!-- Hero Campaign -->
-<section class="hero" id="hero">
-  <div class="hero-media">
-    <img src="images/hero-bg.webp" alt="Street culture campaign" class="hero-img">
-    <!-- src is set by script.js only when motion is allowed, so reduced-motion visitors never download it -->
+<!-- Hero: Venom spec sheet (B) -->
+<section class="hero hero-b" id="hero">
+  <p class="hb-meta mono"><span>Drop 07</span><span>Summer 2026</span><span>200 pairs, hand-numbered</span></p>
+  <h1 class="hb-name">Venom<span class="hb-dot" aria-hidden="true">.</span></h1>
+  <div class="hb-stage" data-model="media/sneaker.glb" data-poster="images/krsh-venom.webp" data-alt="KRSH Venom, 3D model. Drag to rotate.">
+    <img class="hb-poster" src="images/krsh-venom.webp" alt="KRSH Venom, black leather platform sneaker" width="1000" height="1000" fetchpriority="high">
+    <span class="hb-callout c1 mono">Full-grain leather upper</span>
+    <span class="hb-callout c2 mono">Platform EVA midsole</span>
+    <span class="hb-callout c3 mono">Drag to rotate</span>
+  </div>
+  <figure class="hb-field">
     <video class="hero-img hero-video" data-src="media/hero-alley-web.mp4" poster="images/hero-bg.webp" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
-  </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <h1 class="hero-title">STREET<br>CULTURE</h1>
-    <p class="hero-sub">Summer 2026 — Limited drops, no hype tax.</p>
-    <a href="catalog.html" class="hero-link btn-primary">SHOP THE COLLECTION</a>
-  </div>
+    <img class="hb-field-still" src="images/hero-bg.webp" alt="" loading="lazy">
+    <figcaption class="mono">Field recording / East Alley, 02:14</figcaption>
+  </figure>
+  <dl class="hb-specs mono">
+    <div><dt>Ref.</dt><dd>KR-000</dd></div>
+    <div><dt>Upper</dt><dd>Full-grain</dd></div>
+    <div><dt>Run</dt><dd>200 pr</dd></div>
+    <div><dt>Price</dt><dd>$310</dd></div>
+    <a class="hb-buy" href="product.html?id=0">Select size <span aria-hidden="true">&rarr;</span></a>
+  </dl>
 </section>
 
 <!-- Lookbook -->
@@ -278,7 +288,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
-<script src="script.js?v=36"></script>
+<script src="script.js?v=38"></script>
 </body>
 </html>
 <!-- KRSH v20260820105922 -->
