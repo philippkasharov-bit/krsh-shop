@@ -541,6 +541,34 @@ window.addEventListener('unhandledrejection', (e) => {
     }, { passive: true });
   }
 
+  /* ---------- 3D stages (B): poster first, model-viewer + GLB after page load ---------- */
+  const MV_SRC = 'https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js';
+  window.krshLoadModelViewer = function () {
+    if (customElements.get('model-viewer') || document.querySelector('script[data-mv]')) return;
+    const s = document.createElement('script'); s.type = 'module'; s.src = MV_SRC; s.dataset.mv = '1';
+    document.head.appendChild(s);
+  };
+  document.querySelectorAll('.hb-stage[data-model]').forEach(stage => {
+    if (navigator.connection && navigator.connection.saveData) return; // poster stays
+    const start = () => {
+      window.krshLoadModelViewer();
+      const mv = document.createElement('model-viewer');
+      mv.setAttribute('src', stage.dataset.model);
+      mv.setAttribute('alt', stage.dataset.alt || '');
+      mv.setAttribute('camera-controls', '');
+      mv.setAttribute('touch-action', 'pan-y');
+      mv.setAttribute('interaction-prompt', 'none');
+      mv.setAttribute('camera-orbit', '-30deg 75deg 105%');
+      mv.setAttribute('shadow-intensity', '1');
+      mv.setAttribute('exposure', '1.05');
+      if (!prefersReducedMotion) { mv.setAttribute('auto-rotate', ''); mv.setAttribute('auto-rotate-delay', '0'); mv.setAttribute('rotation-per-second', '14deg'); }
+      mv.addEventListener('load', () => stage.classList.add('is-3d'), { once: true });
+      stage.prepend(mv);
+    };
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
+  });
+
   /* ---------- Hero animation — clean fade-in ---------- */
   const hero = document.querySelector('.hero');
   if (hero) {

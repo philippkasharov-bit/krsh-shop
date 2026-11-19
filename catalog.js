@@ -70,6 +70,11 @@
             <span class="p-card-name">${p.name}</span>
             <span class="p-card-price">${priceHTML}</span>
           </div>
+          <dl class="p-card-spec mono">
+            <div><dt>Ref.</dt><dd>KR-${String(p.id).padStart(3, '0')}</dd></div>
+            <div><dt>Cut</dt><dd>${p.category}</dd></div>
+            <div><dt>Colour</dt><dd>${p.color || '—'}</dd></div>
+          </dl>
         </a>`;
     }).join('');
   }
