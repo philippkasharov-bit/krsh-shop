@@ -8,6 +8,7 @@ window.KRSH_PRODUCTS = [
     category: 'low',
     badge: 'limited',
     img: 'images/krsh-venom.webp',
+    model: 'media/sneaker.glb', // 3D view on the product page (loaded on demand)
     new: false,
     color: 'Black/White',
     stock: 47,

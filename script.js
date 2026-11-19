@@ -503,6 +503,26 @@ window.addEventListener('unhandledrejection', (e) => {
   if (hero) {
     requestAnimationFrame(() => hero.classList.add('loaded'));
 
+    // Background video: attach src only when motion is allowed and the visitor
+    // isn't on Save-Data; pause it while the hero is off-screen or the tab is hidden.
+    const heroVideo = hero.querySelector('.hero-video');
+    const saveData = navigator.connection && navigator.connection.saveData;
+    if (heroVideo && !prefersReducedMotion && !saveData) {
+      heroVideo.addEventListener('playing', () => heroVideo.classList.add('is-playing'), { once: true });
+      heroVideo.src = heroVideo.dataset.src;
+      let heroVisible = true;
+      const syncPlayback = () => {
+        if (heroVisible && !document.hidden) heroVideo.play().catch(() => {});
+        else heroVideo.pause();
+      };
+      syncPlayback();
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(([entry]) => { heroVisible = entry.isIntersecting; syncPlayback(); })
+          .observe(hero);
+      }
+      document.addEventListener('visibilitychange', syncPlayback);
+    }
+
     const heroEls = ['.hero-sub', '.hero-title', '.hero-link']
       .map(sel => document.querySelector(sel)).filter(Boolean);
 

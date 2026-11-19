@@ -239,6 +239,16 @@ textarea:focus-visible, [tabindex]:focus-visible {
   transition: transform 8s ease-out;
 }
 .hero.loaded .hero-img { transform: scale(1); }
+/* Video sits over the still and fades in once frames are actually playing */
+.hero-video {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: transform 8s ease-out, opacity 0.8s ease;
+}
+.hero-video.is-playing { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+}
 .hero-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(to top,
@@ -707,6 +717,27 @@ textarea:focus-visible, [tabindex]:focus-visible {
   width: 100%; aspect-ratio: 1; object-fit: contain; padding: 6%;
   transition: opacity 0.2s ease, filter 0.35s ease;
 }
+/* 3D view (product.model) — viewer replaces the photo in the same square box */
+.pdp-3d {
+  display: none;
+  width: 100%; aspect-ratio: 1; height: auto;
+  background: #f2ede8;
+  --poster-color: #f2ede8;
+  --progress-bar-color: var(--black);
+}
+.pdp-main-img.show-3d .pdp-3d { display: block; }
+.pdp-main-img.show-3d #mainPhoto { display: none; }
+.pdp-3d-toggle {
+  position: absolute; top: 14px; right: 14px; z-index: 2;
+  min-width: 44px; min-height: 44px; padding: 0 16px;
+  border-radius: 999px;
+  background: var(--black); color: var(--white);
+  font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  transition: background 0.2s, color 0.2s;
+}
+.pdp-3d-toggle:hover, .pdp-3d-toggle[aria-pressed="true"] { background: var(--yellow); color: var(--black); }
+.pdp-3d-toggle:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
+.pdp-main-img.is-loading-3d .pdp-3d-toggle { opacity: 0.6; }
 
 .pdp-info { padding-top: 8px; }
 .pdp-info .p-card-badge { position: static; display: inline-block; margin-bottom: 16px; }
