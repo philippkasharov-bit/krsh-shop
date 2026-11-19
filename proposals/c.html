@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KRSH — C · Drop Night</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* C — Drop Night: the homepage is the queue for tonight's release */
+:root { --night:#0A0A0A; --chalk:#F4F1EA; --tape:#FFD60A; --mute:#8C8A85; --gut:clamp(16px,2.5vw,32px); }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--night); color:var(--chalk); font:500 15px/1.45 'Space Grotesk',sans-serif; }
+a { color:inherit; text-decoration:none; }
+.hero { position:relative; height:100svh; min-height:640px; overflow:hidden; display:grid; grid-template-rows:auto 1fr auto; }
+.hero video, .hero > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
+.hero::after { content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(10,10,10,.55),rgba(10,10,10,.1) 35%,rgba(10,10,10,.85)); }
+.top { display:flex; justify-content:space-between; align-items:center; padding:18px var(--gut); }
+.logo { font:900 30px/1 'Big Shoulders Display',sans-serif; letter-spacing:.02em; }
+.top nav { display:flex; gap:24px; font-weight:700; font-size:13px; text-transform:uppercase; }
+/* tape strip: the one loud element, a slightly rotated band across the frame */
+.tape { position:absolute; left:-4%; right:-4%; bottom:150px; transform:rotate(-4deg); background:var(--tape); color:var(--night); overflow:hidden; white-space:nowrap; padding:10px 0; font:900 26px/1 'Big Shoulders Display',sans-serif; text-transform:uppercase; letter-spacing:.04em; }
+.tape span { display:inline-block; animation:run 22s linear infinite; }
+@keyframes run { to { transform:translateX(-50%); } }
+.mid { align-self:center; padding:0 var(--gut); }
+.drop { font:900 clamp(100px,18vw,290px)/.78 'Big Shoulders Display',sans-serif; text-transform:uppercase; letter-spacing:-.01em; }
+.drop small { display:block; font:700 14px/1 'Space Grotesk'; letter-spacing:.06em; color:var(--tape); margin-bottom:14px; }
+.bottom { display:grid; grid-template-columns:1fr auto; align-items:end; gap:24px; padding:0 var(--gut) 24px; }
+.clock { display:flex; gap:18px; font-variant-numeric:tabular-nums; }
+.clock div { display:flex; flex-direction:column; }
+.clock b { font:900 64px/0.9 'Big Shoulders Display',sans-serif; }
+.clock span { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--mute); }
+.join { display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+.join a { background:var(--chalk); color:var(--night); font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:18px 28px; transition:background .2s, transform .2s; }
+.join a:hover { background:var(--tape); transform:translateY(-2px); }
+.join p { font-size:12px; color:var(--mute); }
+@media (max-width:760px) {
+  .top nav { display:none; } .tape { bottom:210px; font-size:20px; }
+  .drop { font-size:34vw; } .bottom { grid-template-columns:1fr; } .join { align-items:stretch; } .join a { text-align:center; }
+  .clock b { font-size:48px; }
+}
+@media (prefers-reduced-motion:reduce) { .tape span { animation:none; } }
+</style></head>
+<body>
+<main class="hero">
+  <img src="../images/hero-bg.webp" alt="">
+  <video src="../media/hero-alley-web.mp4" poster="../images/hero-bg.webp" autoplay muted loop playsinline aria-hidden="true"></video>
+  <header class="top"><a class="logo" href="#">KRSH</a><nav><a href="#">Drops</a><a href="#">Archive</a><a href="#">Raffle rules</a></nav><a href="#">Bag 0</a></header>
+  <div class="mid"><h1 class="drop"><small>Drop 07 · KRSH Venom · 200 pairs</small>Tonight<br>22:00</h1></div>
+  <div class="tape" aria-hidden="true"><span>No hype tax × Hand-numbered × 200 pairs worldwide × One per person × No hype tax × Hand-numbered × 200 pairs worldwide × One per person × </span></div>
+  <div class="bottom">
+    <div class="clock" id="clock" aria-label="Time until the drop"><div><b>04</b><span>hrs</span></div><div><b>12</b><span>min</span></div><div><b>37</b><span>sec</span></div></div>
+    <div class="join"><a href="#">Join the queue</a><p>Raffle closes 21:45. One entry per person.</p></div>
+  </div>
+</main>
+<script>
+// live countdown to 22:00 local time
+(function(){ const el=document.getElementById('clock').querySelectorAll('b');
+  function tick(){ const n=new Date(), t=new Date(n); t.setHours(22,0,0,0); if(t<n) t.setDate(t.getDate()+1);
+    let s=Math.floor((t-n)/1000); const v=[Math.floor(s/3600),Math.floor(s%3600/60),s%60]; v.forEach((x,i)=>el[i].textContent=String(x).padStart(2,'0')); }
+  tick(); setInterval(tick,1000); })();
+</script>
+</body></html>
