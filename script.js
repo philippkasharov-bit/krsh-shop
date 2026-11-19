@@ -153,13 +153,30 @@ window.addEventListener('unhandledrejection', (e) => {
      designed empty state, which beats pre-loading somebody else's cart. */
   const DEFAULT_CART = [];
 
+  // Same shoe in the same size is one line with a quantity. Older carts stored
+  // one entry per click, so duplicates are folded together on read.
+  const lineKey = (item) => [item.id != null ? item.id : item.name, item.size || '', item.color || ''].join('|');
+  function normalizeCart(items) {
+    const lines = [];
+    const byKey = new Map();
+    (Array.isArray(items) ? items : []).forEach(item => {
+      if (!item) return;
+      const key = lineKey(item);
+      const qty = Math.max(1, Number(item.qty) || 1);
+      if (byKey.has(key)) byKey.get(key).qty += qty;
+      else { const line = Object.assign({}, item, { qty }); byKey.set(key, line); lines.push(line); }
+    });
+    return lines;
+  }
   function getCart() {
     try {
       const raw = localStorage.getItem(CART_KEY);
       if (raw === null) return DEFAULT_CART.slice();
-      return JSON.parse(raw) || [];
+      return normalizeCart(JSON.parse(raw));
     } catch (e) { return []; }
   }
+  const cartQty = (items) => items.reduce((n, item) => n + item.qty, 0);
+  const cartTotal = (items) => items.reduce((sum, item) => sum + Number(item.price || 0) * item.qty, 0);
   function setCart(items) {
     try { localStorage.setItem(CART_KEY, JSON.stringify(items)); } catch (e) {}
   }
@@ -176,15 +193,23 @@ window.addEventListener('unhandledrejection', (e) => {
   const cartFooter = document.getElementById('cartFooter');
   const orderItems = document.getElementById('orderItems');
 
-  function cartRowHTML(item, index, removable) {
+  function cartRowHTML(item, index, editable) {
     const meta = item.size ? 'Size ' + item.size + (item.color ? ' &middot; ' + item.color : '') : (item.color || '');
+    const qtyControl = editable
+      ? '<div class="cart-qty" role="group" aria-label="Quantity of ' + item.name + '">' +
+          '<button type="button" class="cart-qty-btn" data-step="-1" aria-label="' + (item.qty > 1 ? 'Remove one' : 'Remove ' + item.name) + '">&minus;</button>' +
+          '<span class="cart-qty-val" aria-live="polite">' + item.qty + '</span>' +
+          '<button type="button" class="cart-qty-btn" data-step="1" aria-label="Add one more">+</button>' +
+        '</div>'
+      : (item.qty > 1 ? '<span class="cart-item-meta">Qty ' + item.qty + '</span>' : '');
     return '<div class="cart-item" data-index="' + index + '" data-price="' + item.price + '">' +
-      '<img src="' + item.img + '" alt="' + item.name + '">' +
+      '<div class="cart-item-img"><img src="' + item.img + '" alt="' + item.name + '"></div>' +
       '<div class="cart-item-info">' +
       '<span class="cart-item-name">' + item.name + '</span>' +
       (meta ? '<span class="cart-item-meta">' + meta + '</span>' : '') +
-      '<span class="cart-item-price">$' + item.price + '</span></div>' +
-      (removable ? '<button class="cart-item-remove" aria-label="Remove ' + item.name + ' from cart">&times;</button>' : '') +
+      qtyControl + '</div>' +
+      '<span class="cart-item-price">$' + (Number(item.price) * item.qty) + '</span>' +
+      (editable ? '<button class="cart-item-remove" aria-label="Remove ' + item.name + ' from cart">&times;</button>' : '') +
       '</div>';
   }
 
@@ -193,25 +218,23 @@ window.addEventListener('unhandledrejection', (e) => {
     if (cartItems) cartItems.innerHTML = items.map((item, i) => cartRowHTML(item, i, true)).join('');
     if (orderItems) orderItems.innerHTML = items.map((item, i) => cartRowHTML(item, i, false)).join('');
     updateCartTotals();
-    document.dispatchEvent(new CustomEvent('krsh:cart-updated', { detail: { items } }));
+    document.dispatchEvent(new CustomEvent('krsh:cart-updated', { detail: { items, qty: cartQty(items), subtotal: cartTotal(items) } }));
   }
 
   function updateCartTotals() {
     const items = getCart();
-    const total = items.reduce((sum, item) => sum + Number(item.price || 0), 0);
-    if (cartBadge) cartBadge.textContent = items.length;
-    if (cartBtn) cartBtn.setAttribute('aria-label', `Open cart, ${items.length} item${items.length === 1 ? '' : 's'}`);
-    if (cartCount) cartCount.textContent = `(${items.length})`;
-    if (cartSubtotal) cartSubtotal.textContent = `$${total}`;
+    const qty = cartQty(items);
+    if (cartBadge) cartBadge.textContent = qty;
+    if (cartBtn) cartBtn.setAttribute('aria-label', `Open cart, ${qty} item${qty === 1 ? '' : 's'}`);
+    if (cartCount) cartCount.textContent = `(${qty})`;
+    if (cartSubtotal) cartSubtotal.textContent = `$${cartTotal(items)}`;
     const isEmpty = items.length === 0;
     if (cartEmpty) cartEmpty.hidden = !isEmpty;
     if (cartFooter) cartFooter.style.display = isEmpty ? 'none' : '';
   }
 
   function addToCart(item) {
-    const items = getCart();
-    items.push(item);
-    setCart(items);
+    setCart(normalizeCart(getCart().concat([Object.assign({}, item, { qty: 1 })])));
     renderCart();
     if (window.showToast) window.showToast(item.name + ' added to your bag');
     if (window.krshOpenCart) setTimeout(window.krshOpenCart, 300);
@@ -231,8 +254,17 @@ window.addEventListener('unhandledrejection', (e) => {
     setCart(items);
     renderCart();
   }
+  function stepQty(index, step) {
+    const items = getCart();
+    if (!items[index]) return;
+    items[index].qty += step;
+    if (items[index].qty < 1) items.splice(index, 1);
+    setCart(items);
+    renderCart();
+  }
   window.krshAddToCart = addToCart;
   window.krshGetCart = getCart;
+  window.krshCartTotals = () => { const items = getCart(); return { qty: cartQty(items), subtotal: cartTotal(items) }; };
   window.krshClearCart = function () { setCart([]); renderCart(); };
 
   function openCart() {
@@ -241,7 +273,7 @@ window.addEventListener('unhandledrejection', (e) => {
     cartOverlay.classList.add('open');
     cartDrawer.setAttribute('aria-hidden', 'false');
     cartBtn && cartBtn.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('nav-open');
+    document.body.classList.add('nav-open', 'cart-open');
     focusInto(cartDrawer);
   }
   function closeCart() {
@@ -250,7 +282,7 @@ window.addEventListener('unhandledrejection', (e) => {
     cartOverlay.classList.remove('open');
     cartDrawer.setAttribute('aria-hidden', 'true');
     cartBtn && cartBtn.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('nav-open');
+    document.body.classList.remove('nav-open', 'cart-open');
     focusReturn();
   }
   window.krshOpenCart = openCart;
@@ -261,6 +293,17 @@ window.addEventListener('unhandledrejection', (e) => {
 
   if (cartItems) {
     cartItems.addEventListener('click', (e) => {
+      const stepBtn = e.target.closest('.cart-qty-btn');
+      if (stepBtn) {
+        const row = stepBtn.closest('.cart-item');
+        const index = Number(row.dataset.index);
+        const step = Number(stepBtn.dataset.step);
+        stepQty(index, step);
+        // keep keyboard focus on the same control after re-render
+        const next = cartItems.querySelector('.cart-item[data-index="' + index + '"] .cart-qty-btn[data-step="' + step + '"]');
+        if (next) next.focus();
+        return;
+      }
       const removeBtn = e.target.closest('.cart-item-remove');
       if (!removeBtn) return;
       const item = removeBtn.closest('.cart-item');
@@ -509,13 +552,17 @@ window.addEventListener('unhandledrejection', (e) => {
     const saveData = navigator.connection && navigator.connection.saveData;
     if (heroVideo && !prefersReducedMotion && !saveData) {
       heroVideo.addEventListener('playing', () => heroVideo.classList.add('is-playing'), { once: true });
-      heroVideo.src = heroVideo.dataset.src;
       let heroVisible = true;
       const syncPlayback = () => {
+        if (!heroVideo.src) return;
         if (heroVisible && !document.hidden) heroVideo.play().catch(() => {});
         else heroVideo.pause();
       };
-      syncPlayback();
+      // The still is the LCP image; the 1 MB loop only starts downloading once
+      // the page has loaded, so it never competes with first paint.
+      const startVideo = () => { heroVideo.src = heroVideo.dataset.src; syncPlayback(); };
+      if (document.readyState === 'complete') startVideo();
+      else window.addEventListener('load', startVideo, { once: true });
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(([entry]) => { heroVisible = entry.isIntersecting; syncPlayback(); })
           .observe(hero);

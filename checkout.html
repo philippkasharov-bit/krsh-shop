@@ -10,7 +10,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
 <script>window.addEventListener("unhandledrejection",function(e){if(e.reason&&e.reason.name==="AbortError")e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=50">
+<link rel="stylesheet" href="style.css?v=51">
 </head>
 <body>
 
@@ -87,6 +87,13 @@
 <section class="catalog-hero">
   <h1 class="catalog-title">CHECKOUT</h1>
   <p class="catalog-count" id="checkoutItemCount">Almost there</p>
+</section>
+
+<!-- Empty bag: nothing to check out (shown instead of the form) -->
+<section class="checkout-empty" id="checkoutEmpty" hidden>
+  <p class="checkout-empty-title">Nothing in the bag yet.</p>
+  <p class="checkout-empty-sub">Pick a pair first. Your size and colour carry straight through to here.</p>
+  <a href="catalog.html" class="btn-primary">Shop the collection</a>
 </section>
 
 <!-- Checkout Steps -->
@@ -245,6 +252,16 @@
   </div>
 </section>
 
+<script>
+/* Decide empty-vs-form before first paint so the page does not jump (CLS). */
+(function () {
+  var qty = 0;
+  try { (JSON.parse(localStorage.getItem("krsh_cart")) || []).forEach(function (i) { qty += Math.max(1, Number(i && i.qty) || 1); }); } catch (e) {}
+  document.getElementById("checkoutEmpty").hidden = qty > 0;
+  document.getElementById("checkoutSection").hidden = qty === 0;
+})();
+</script>
+
 <!-- Order Success (hidden until submit) -->
 <section class="order-success" id="orderSuccess" hidden>
   <div class="order-success-inner">
@@ -316,7 +333,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
-<script src="script.js?v=36"></script>
+<script src="script.js?v=37"></script>
 <script>
 (function() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -328,14 +345,18 @@
   const itemCountEl = document.getElementById('checkoutItemCount');
   const TAX_RATE = 0.08;
 
-  function currentSubtotal() {
-    const items = window.krshGetCart ? window.krshGetCart() : [];
-    return items.reduce((sum, item) => sum + Number(item.price || 0), 0);
-  }
+  const checkoutEmpty = document.getElementById('checkoutEmpty');
+  const checkoutSectionEl = document.getElementById('checkoutSection');
+  const totals = () => window.krshCartTotals ? window.krshCartTotals() : { qty: 0, subtotal: 0 };
+  let orderPlaced = false;
 
   function recalc() {
-    const items = window.krshGetCart ? window.krshGetCart() : [];
-    const subtotal = currentSubtotal();
+    const { qty, subtotal } = totals();
+    // An empty bag gets an empty state, not a form that can "place" a $0 order
+    if (!orderPlaced) {
+      if (checkoutEmpty) checkoutEmpty.hidden = qty > 0;
+      if (checkoutSectionEl) checkoutSectionEl.hidden = qty === 0;
+    }
     const tax = Math.round(subtotal * TAX_RATE);
     const selected = document.querySelector('input[name="shipping"]:checked');
     const isExpress = selected && selected.value === 'express';
@@ -344,7 +365,7 @@
     if (sumShipping) sumShipping.textContent = isExpress ? '$15' : 'Free';
     if (sumTax) sumTax.textContent = '$' + tax;
     if (sumTotal) sumTotal.textContent = '$' + (subtotal + tax + shippingCost);
-    if (itemCountEl) itemCountEl.textContent = items.length === 0 ? 'Your bag is empty' : `Almost there — ${items.length} item${items.length === 1 ? '' : 's'} in your bag`;
+    if (itemCountEl) itemCountEl.textContent = qty === 0 ? 'Your bag is empty' : `${qty} item${qty === 1 ? '' : 's'} in your bag`;
   }
 
   document.addEventListener('krsh:cart-updated', recalc);
@@ -376,12 +397,13 @@
         return;
       }
       const submitBtn = document.getElementById('checkoutSubmit');
-      if (submitBtn.disabled) return;
+      if (submitBtn.disabled || totals().qty === 0) return;
       submitBtn.disabled = true;
       submitBtn.textContent = 'Processing…';
       setTimeout(() => {
         const num = 'KRSH-' + Math.floor(10000 + Math.random() * 89999);
         orderNumber.textContent = '#' + num;
+        orderPlaced = true;
         if (heroSection) heroSection.hidden = true;
         checkoutSection.hidden = true;
         orderSuccess.hidden = false;
