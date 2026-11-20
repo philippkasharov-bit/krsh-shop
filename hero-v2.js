@@ -1,5 +1,5 @@
 /* KRSH v2 hero — floating product stage.
-   Motion system adapted from the GetLayers "Soda" template (commercial licence): cursor lean (lerp 0.05),
+   Motion system adapted from the GetLayers "Soda" template (commercial licence): cursor lean (lerp 0.14),
    parallax layers, pointer repulsion (r 400 / -80), rising particles, and a scene switch with a full
    revolution + implode/explode. The product is a 360° image sequence (spin360.js), freely draggable.
    Under prefers-reduced-motion everything decorative is skipped; drag, keys and scene switch still work. */
@@ -35,15 +35,15 @@
     if (reduce || !window.gsap) { applyScene(name); return; }
     const tl = gsap.timeline();
     // phase 1: wind up with motion blur, swap the scene at the peak
-    tl.to(spin, { val: N / 2, blur: 12, duration: 0.6, ease: 'power2.in' })
+    tl.to(spin, { val: N / 2, blur: 8, duration: 0.35, ease: 'power2.in' })
       .add(() => applyScene(name))
-      .to(spin, { val: N, blur: 0, duration: 1.5, ease: 'back.out(0.7)' })
+      .to(spin, { val: N, blur: 0, duration: 0.8, ease: 'power3.out' })
       .add(() => { spin.val = 0; });
     // tags implode to centre, hold, explode back out
     tags.forEach(t => {
       gsap.timeline()
-        .to(t, { '--k': 0.1, opacity: 0, duration: 0.5, ease: 'power2.in' })
-        .to(t, { '--k': 1, opacity: 1, duration: 0.9, ease: 'back.out(1.5)', delay: 0.3,
+        .to(t, { '--k': 0.1, opacity: 0, duration: 0.3, ease: 'power2.in' })
+        .to(t, { '--k': 1, opacity: 1, duration: 0.6, ease: 'back.out(1.5)', delay: 0.1,
                  '--jx': (Math.random() - 0.5) * 200 + 'px', '--jy': (Math.random() - 0.5) * 200 + 'px' });
     });
   }));
@@ -64,8 +64,8 @@
 
   let visible = true, raf = 0;
   function frame(t) {
-    current.x += (target.x - current.x) * 0.05;
-    current.y += (target.y - current.y) * 0.05;
+    current.x += (target.x - current.x) * 0.14; // was 0.05: felt laggy
+    current.y += (target.y - current.y) * 0.14;
     // cursor leans the shoe up to ±3 frames (±22°) on top of the free 360° turn; tilt is a 2D lean
     if (spinner) spinner.extra = (fine ? current.x * 3 : 0) + spin.val;
     center.style.transform = fine ? `rotate(${current.y * -2}deg)` : '';
