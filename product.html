@@ -20,7 +20,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
 <script type="application/ld+json" id="productSchema">{}</script>
 <script>window.addEventListener('unhandledrejection',e=>{if(e.reason&&e.reason.name==='AbortError')e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=55">
+<link rel="stylesheet" href="style.css?v=58">
 </head>
 <body>
 
@@ -253,7 +253,8 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
 <script src="script.js?v=39"></script>
-<script src="products-data.js?v=9"></script>
+<script src="spin360.js?v=2"></script>
+<script src="products-data.js?v=10"></script>
 <script>
 window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTransition.ready.catch(() => {}); });
 (function() {
@@ -277,55 +278,34 @@ window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTrans
   mainPhoto.src = baseImg;
   mainPhoto.alt = product.name + ' — main view';
 
-  // 3D view: <model-viewer> + the GLB are fetched only when the visitor asks for it
-  if (product.model) {
+  // 360° view (spin360.js): frame 0 is light; the other frames load after window load
+  if (product.spin) {
     const mainImg = document.getElementById('mainImg');
     const toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'pdp-3d-toggle';
     toggle.setAttribute('aria-pressed', 'false');
-    toggle.textContent = '3D';
+    toggle.textContent = '360°';
     mainImg.appendChild(toggle);
 
-    let viewer = null;
-    const loadViewerLib = () => { if (window.krshLoadModelViewer) return window.krshLoadModelViewer();
-      if (customElements.get('model-viewer')) return;
-      const s = document.createElement('script');
-      s.type = 'module';
-      s.src = 'https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js';
-      document.head.appendChild(s);
-    };
-
+    // 360° image sequence (rendered offline from the full-quality model, see spin360.js)
+    let spin = null;
     toggle.addEventListener('click', () => {
       const on = toggle.getAttribute('aria-pressed') !== 'true';
-      if (on && !viewer) {
-        loadViewerLib();
-        viewer = document.createElement('model-viewer');
-        viewer.className = 'pdp-3d';
-        viewer.setAttribute('src', product.model);
-        viewer.setAttribute('poster', product.img);
-        viewer.setAttribute('alt', product.name + ' — 3D model, drag to rotate');
-        viewer.setAttribute('camera-controls', '');
-        viewer.setAttribute('camera-orbit', '-30deg 75deg 105%');
-        viewer.setAttribute('touch-action', 'pan-y');
-        viewer.setAttribute('interaction-prompt', 'none');
-        viewer.setAttribute('shadow-intensity', '0.8');
-        if (!prefersReducedMotion) {
-          viewer.setAttribute('auto-rotate', '');
-          viewer.setAttribute('auto-rotate-delay', '0');
-          viewer.setAttribute('rotation-per-second', '12deg');
-        }
-        viewer.addEventListener('load', () => mainImg.classList.remove('is-loading-3d'));
-        viewer.addEventListener('error', () => mainImg.classList.remove('is-loading-3d'));
-        mainImg.classList.add('is-loading-3d');
-        mainImg.insertBefore(viewer, toggle);
+      if (on && !spin && window.KrshSpin) {
+        const box = document.createElement('div');
+        box.className = 'pdp-3d';
+        box.innerHTML = '<img src="' + product.spin.base + '00.webp" alt="" width="960" height="960">';
+        mainImg.insertBefore(box, toggle);
+        spin = KrshSpin.mount(box, { base: product.spin.base, count: product.spin.count,
+          label: product.name + ', 360° view. Drag or use the arrow keys to turn.' });
       }
       mainImg.classList.toggle('show-3d', on);
       toggle.setAttribute('aria-pressed', String(on));
-      toggle.textContent = on ? 'PHOTO' : '3D';
-      toggle.setAttribute('aria-label', on ? 'Show product photo' : 'Show 3D model');
+      toggle.textContent = on ? 'PHOTO' : '360°';
+      toggle.setAttribute('aria-label', on ? 'Show product photo' : 'Show 360° view');
     });
-    toggle.setAttribute('aria-label', 'Show 3D model');
+    toggle.setAttribute('aria-label', 'Show 360° view');
     // callouts: the first two facts from the product's materials list
     (product.materials || []).slice(0, 2).forEach((m, i) => {
       const c = document.createElement('span');
