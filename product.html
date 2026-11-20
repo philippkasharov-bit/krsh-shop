@@ -20,7 +20,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👟</text></svg>">
 <script type="application/ld+json" id="productSchema">{}</script>
 <script>window.addEventListener('unhandledrejection',e=>{if(e.reason&&e.reason.name==='AbortError')e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=52">
+<link rel="stylesheet" href="style.css?v=55">
 </head>
 <body>
 
@@ -85,7 +85,7 @@
     </div>
     <div class="cart-subtotal">
       <span>Subtotal</span>
-      <span id="cartSubtotal">$530</span>
+      <span id="cartSubtotal">0&nbsp;₽</span>
     </div>
     <a href="checkout.html" class="btn-primary cart-checkout-btn">Checkout</a>
   </div>
@@ -148,7 +148,7 @@
     <button class="add-to-bag" id="addToBag">Add to Bag</button>
 
     <div class="pdp-trust-mini">
-      <span>&#9989; Free shipping over $200</span>
+      <span>&#9989; Free shipping over 15&nbsp;000&nbsp;₽</span>
       <span>&#9989; 14-day returns</span>
       <span>&#9989; Authenticity guaranteed</span>
     </div>
@@ -166,7 +166,7 @@
       <details class="pdp-accordion">
         <summary>Shipping & Returns</summary>
         <div class="accordion-body">
-          <p>Free shipping on orders over $200. Standard delivery 3-5 business days. Express delivery 1-2 business days ($15).</p>
+          <p>Free shipping on orders over 15&nbsp;000&nbsp;₽. Standard delivery 3-5 business days. Express delivery 1-2 business days (1&nbsp;490&nbsp;₽).</p>
           <p>Returns accepted within 14 days of delivery. Items must be unworn and in original packaging.</p>
         </div>
       </details>
@@ -196,7 +196,7 @@
   <div class="trust-strip">
     <div class="trust-item">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="14" height="11"/><path d="M15 9h4l3 3.5V17h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
-      <span>Free shipping over $200</span>
+      <span>Free shipping over 15&nbsp;000&nbsp;₽</span>
     </div>
     <div class="trust-item">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V5.5z"/><path d="M8.5 12l2.3 2.3L16 9.5"/></svg>
@@ -252,8 +252,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
-<script src="script.js?v=38"></script>
-<script src="products-data.js?v=8"></script>
+<script src="script.js?v=39"></script>
+<script src="products-data.js?v=9"></script>
 <script>
 window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTransition.ready.catch(() => {}); });
 (function() {
@@ -355,9 +355,9 @@ window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTrans
   document.getElementById('pdpName').textContent = product.name;
   const priceEl = document.getElementById('pdpPrice');
   if (product.oldPrice) {
-    priceEl.innerHTML = '<span class="price-old">$' + product.oldPrice + '</span> $' + product.price;
+    priceEl.innerHTML = '<span class="price-old">' + krshPrice(product.oldPrice) + '</span> ' + krshPrice(product.price);
   } else {
-    priceEl.textContent = '$' + product.price;
+    priceEl.textContent = krshPrice(product.price);
   }
   const stockEl = document.getElementById('pdpStock');
   if (product.stock) {
@@ -432,7 +432,7 @@ window.addEventListener('pagereveal', (e) => { if (e.viewTransition) e.viewTrans
       (p.badge ? '<span class="p-card-badge ' + badgeCls + '">' + badgeText + '</span>' : '') +
       '<div class="p-card-img"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy"></div>' +
       '<div class="p-card-info"><span class="p-card-name">' + p.name + '</span>' +
-      '<span class="p-card-price">' + (p.oldPrice ? '<span class="price-old">$' + p.oldPrice + '</span> $' + p.price : '$' + p.price) + '</span></div></a>';
+      '<span class="p-card-price">' + (p.oldPrice ? '<span class="price-old">' + krshPrice(p.oldPrice) + '</span> ' + krshPrice(p.price) : krshPrice(p.price)) + '</span></div></a>';
   }).join('');
 
   // JSON-LD

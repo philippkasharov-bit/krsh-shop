@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>window.addEventListener("unhandledrejection",function(e){if(e.reason&&e.reason.name==="AbortError")e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=52">
+<link rel="stylesheet" href="style.css?v=55">
 </head>
 <body>
 
@@ -73,7 +73,7 @@
     </div>
     <div class="cart-subtotal">
       <span>Subtotal</span>
-      <span id="cartSubtotal">$530</span>
+      <span id="cartSubtotal">0&nbsp;₽</span>
     </div>
     <a href="checkout.html" class="btn-primary cart-checkout-btn">Checkout</a>
   </div>
@@ -178,7 +178,7 @@
               <span class="ship-option-name">Express Shipping</span>
               <span class="ship-option-time">1&ndash;2 business days</span>
             </span>
-            <span class="ship-option-price">$15</span>
+            <span class="ship-option-price">1&nbsp;490&nbsp;₽</span>
           </label>
         </div>
       </div>
@@ -223,19 +223,19 @@
       <div class="order-totals">
         <div class="order-totals-row">
           <span>Subtotal</span>
-          <span id="sumSubtotal">$530</span>
+          <span id="sumSubtotal">0&nbsp;₽</span>
         </div>
         <div class="order-totals-row">
           <span>Shipping</span>
           <span id="sumShipping">Free</span>
         </div>
         <div class="order-totals-row">
-          <span>Tax</span>
-          <span id="sumTax">$42</span>
+          <span>VAT</span>
+          <span id="sumTax">0&nbsp;₽</span>
         </div>
         <div class="order-totals-row order-totals-final">
           <span>Total</span>
-          <span id="sumTotal">$572</span>
+          <span id="sumTotal">0&nbsp;₽</span>
         </div>
       </div>
 
@@ -278,7 +278,7 @@
   <div class="trust-strip">
     <div class="trust-item">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="14" height="11"/><path d="M15 9h4l3 3.5V17h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
-      <span>Free shipping over $200</span>
+      <span>Free shipping over 15&nbsp;000&nbsp;₽</span>
     </div>
     <div class="trust-item">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V5.5z"/><path d="M8.5 12l2.3 2.3L16 9.5"/></svg>
@@ -334,7 +334,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
-<script src="script.js?v=38"></script>
+<script src="script.js?v=39"></script>
 <script>
 (function() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -344,7 +344,8 @@
   const sumTax = document.getElementById('sumTax');
   const sumTotal = document.getElementById('sumTotal');
   const itemCountEl = document.getElementById('checkoutItemCount');
-  const TAX_RATE = 0.08;
+  const TAX_RATE = 0; // Russian retail prices include VAT
+  const EXPRESS = 1490;
 
   const checkoutEmpty = document.getElementById('checkoutEmpty');
   const checkoutSectionEl = document.getElementById('checkoutSection');
@@ -361,11 +362,11 @@
     const tax = Math.round(subtotal * TAX_RATE);
     const selected = document.querySelector('input[name="shipping"]:checked');
     const isExpress = selected && selected.value === 'express';
-    const shippingCost = isExpress ? 15 : 0;
-    if (sumSubtotal) sumSubtotal.textContent = '$' + subtotal;
-    if (sumShipping) sumShipping.textContent = isExpress ? '$15' : 'Free';
-    if (sumTax) sumTax.textContent = '$' + tax;
-    if (sumTotal) sumTotal.textContent = '$' + (subtotal + tax + shippingCost);
+    const shippingCost = isExpress ? EXPRESS : 0;
+    if (sumSubtotal) sumSubtotal.textContent = krshPrice(subtotal);
+    if (sumShipping) sumShipping.textContent = isExpress ? krshPrice(EXPRESS) : 'Free';
+    if (sumTax) sumTax.textContent = 'Included';
+    if (sumTotal) sumTotal.textContent = krshPrice(subtotal + tax + shippingCost);
     if (itemCountEl) itemCountEl.textContent = qty === 0 ? 'Your bag is empty' : `${qty} item${qty === 1 ? '' : 's'} in your bag`;
   }
 
