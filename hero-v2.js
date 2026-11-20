@@ -1,46 +1,25 @@
 /* KRSH v2 hero — floating product stage.
-   Motion system adapted from the GetLayers "Soda" template (commercial licence):
-   cursor tilt (lerp 0.05), parallax layers, pointer repulsion (r 400 / -80),
-   rising particles, and a scene switch with a 720° spin + implode/explode.
-   Everything is skipped under prefers-reduced-motion; the scene switch still works. */
+   Motion system adapted from the GetLayers "Soda" template (commercial licence): cursor lean (lerp 0.05),
+   parallax layers, pointer repulsion (r 400 / -80), rising particles, and a scene switch with a full
+   revolution + implode/explode. The product is a 360° image sequence (spin360.js), freely draggable.
+   Under prefers-reduced-motion everything decorative is skipped; drag, keys and scene switch still work. */
 (function () {
   const hero = document.querySelector('.hero-v2');
   if (!hero) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const center = hero.querySelector('.v2-float');
-  const poster = hero.querySelector('.v2-poster');
   const tagsFront = hero.querySelector('.v2-tags-front');
   const tagsBack = hero.querySelector('.v2-tags-back');
   const tags = [...hero.querySelectorAll('.v2-tag')];
   const SCENES = ['concrete', 'night', 'signal'];
 
-  /* ---- 3D model: poster first, model-viewer + GLB after window load ---- */
-  let mv = null;
-  function mountModel() {
-    if (navigator.connection && navigator.connection.saveData) return;
-    if (window.krshLoadModelViewer) window.krshLoadModelViewer();
-    mv = document.createElement('model-viewer');
-    mv.className = 'v2-model';
-    mv.setAttribute('src', 'media/sneaker.glb');
-    mv.setAttribute('alt', 'KRSH Venom, 3D model');
-    mv.setAttribute('camera-orbit', '-30deg 75deg 105%');
-    mv.setAttribute('field-of-view', '30deg');
-    mv.setAttribute('interaction-prompt', 'none');
-    mv.setAttribute('disable-zoom', '');
-    mv.setAttribute('shadow-intensity', '1');
-    mv.setAttribute('exposure', '1.1');
-    if (reduce || !fine) {
-      // no cursor to follow: let people drag it (and keep it still under reduced motion)
-      mv.setAttribute('camera-controls', '');
-      mv.setAttribute('touch-action', 'pan-y');
-      if (!reduce) { mv.setAttribute('auto-rotate', ''); mv.setAttribute('rotation-per-second', '14deg'); }
-    }
-    mv.addEventListener('load', () => hero.classList.add('is-3d'), { once: true });
-    center.appendChild(mv);
-  }
-  if (document.readyState === 'complete') mountModel();
-  else window.addEventListener('load', mountModel, { once: true });
+  /* ---- 360° stage: pre-rendered sequence (spin360.js), no WebGL ---- */
+  const spinner = window.KrshSpin && KrshSpin.mount(hero.querySelector('.v2-spin'), {
+    base: 'media/venom-360/f', count: 48,
+    label: 'KRSH Venom, 360° view. Drag or use the arrow keys to turn.'
+  });
+  const N = spinner ? spinner.frames : 48;
 
   /* ---- scene switch (works with or without motion) ---- */
   const buttons = [...hero.querySelectorAll('.v2-scene')];
@@ -56,9 +35,9 @@
     if (reduce || !window.gsap) { applyScene(name); return; }
     const tl = gsap.timeline();
     // phase 1: wind up with motion blur, swap the scene at the peak
-    tl.to(spin, { val: 360, blur: 15, duration: 0.6, ease: 'power2.in' })
+    tl.to(spin, { val: N / 2, blur: 12, duration: 0.6, ease: 'power2.in' })
       .add(() => applyScene(name))
-      .to(spin, { val: 720, blur: 0, duration: 1.5, ease: 'back.out(0.7)' })
+      .to(spin, { val: N, blur: 0, duration: 1.5, ease: 'back.out(0.7)' })
       .add(() => { spin.val = 0; });
     // tags implode to centre, hold, explode back out
     tags.forEach(t => {
@@ -87,13 +66,10 @@
   function frame(t) {
     current.x += (target.x - current.x) * 0.05;
     current.y += (target.y - current.y) * 0.05;
-    if (mv && fine) {
-      mv.cameraOrbit = `${-30 + current.x * 40 + spin.val}deg ${75 + current.y * 12}deg 105%`;
-    } else if (mv && spin.val) {
-      mv.cameraOrbit = `${-30 + spin.val}deg 75deg 105%`;
-    }
+    // cursor leans the shoe up to ±3 frames (±22°) on top of the free 360° turn; tilt is a 2D lean
+    if (spinner) spinner.extra = (fine ? current.x * 3 : 0) + spin.val;
+    center.style.transform = fine ? `rotate(${current.y * -2}deg)` : '';
     center.style.filter = spin.blur ? `blur(${spin.blur}px)` : '';
-    if (!mv) poster.style.transform = `rotate(${current.x * 4}deg)`;
     tagsFront.style.transform = `translate(${current.x * 60}px, ${current.y * 60}px)`;
     tagsBack.style.transform = `translate(${current.x * -30}px, ${current.y * -30}px)`;
     tags.forEach((el, i) => {

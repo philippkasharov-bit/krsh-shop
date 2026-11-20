@@ -8,7 +8,7 @@ window.KRSH_PRODUCTS = [
     category: 'low',
     badge: 'limited',
     img: 'images/krsh-venom.webp',
-    model: 'media/sneaker.glb', // 3D view on the product page (loaded on demand)
+    spin: { base: 'media/venom-360/f', count: 48 }, // 360° sequence rendered from the full-quality model
     new: false,
     color: 'Black/White',
     sku: 'KR26-VNM-BW',
