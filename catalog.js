@@ -60,8 +60,8 @@
   function renderCards(list) {
     return list.map(p => {
       const priceHTML = p.oldPrice
-        ? `<span class="price-old">$${p.oldPrice}</span> <span class="price-now">$${p.price}</span>`
-        : `$${p.price}`;
+        ? `<span class="price-old">${krshPrice(p.oldPrice)}</span> <span class="price-now">${krshPrice(p.price)}</span>`
+        : krshPrice(p.price);
       return `
         <a class="p-card" href="product.html?id=${p.id}">
           ${badgeHTML(p)}
@@ -71,7 +71,7 @@
             <span class="p-card-price">${priceHTML}</span>
           </div>
           <dl class="p-card-spec mono">
-            <div><dt>Ref.</dt><dd>KR-${String(p.id).padStart(3, '0')}</dd></div>
+            <div><dt>SKU</dt><dd>${p.sku}</dd></div>
             <div><dt>Cut</dt><dd>${p.category}</dd></div>
             <div><dt>Colour</dt><dd>${p.color || '—'}</dd></div>
           </dl>

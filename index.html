@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>window.addEventListener("unhandledrejection",function(e){if(e.reason&&e.reason.name==="AbortError")e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=52">
+<link rel="stylesheet" href="style.css?v=55">
 </head>
 <body>
 
@@ -88,7 +88,7 @@
     </div>
     <div class="cart-subtotal">
       <span>Subtotal</span>
-      <span id="cartSubtotal">$530</span>
+      <span id="cartSubtotal">0&nbsp;₽</span>
     </div>
     <a href="checkout.html" class="btn-primary cart-checkout-btn">Checkout</a>
   </div>
@@ -97,28 +97,45 @@
 <!-- Toast container -->
 <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
-<!-- Hero: Venom spec sheet (B) -->
-<section class="hero hero-b" id="hero">
-  <p class="hb-meta mono"><span>Drop 07</span><span>Summer 2026</span><span>200 pairs, hand-numbered</span></p>
-  <h1 class="hb-name">Venom<span class="hb-dot" aria-hidden="true">.</span></h1>
-  <div class="hb-stage" data-model="media/sneaker.glb" data-poster="images/krsh-venom.webp" data-alt="KRSH Venom, 3D model. Drag to rotate.">
-    <img class="hb-poster" src="images/krsh-venom.webp" alt="KRSH Venom, black leather platform sneaker" width="1000" height="1000" fetchpriority="high">
-    <span class="hb-callout c1 mono">Full-grain leather upper</span>
-    <span class="hb-callout c2 mono">Platform EVA midsole</span>
-    <span class="hb-callout c3 mono">Drag to rotate</span>
+<!-- Hero v2: floating product stage (motion system adapted from the GetLayers "Soda" template) -->
+<section class="hero hero-v2" id="hero" data-scene="concrete" aria-labelledby="v2Title">
+  <video class="hero-img hero-video v2-video" data-src="media/hero-alley-web.mp4" poster="images/hero-bg.webp" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+  <div class="v2-dust" aria-hidden="true"></div>
+  <div class="v2-tags v2-tags-back" aria-hidden="true">
+    <span class="v2-tag" style="--x:15%;--y:48%;--s:.9;--d:5s">EVA</span>
+    <span class="v2-tag" style="--x:62%;--y:20%;--s:.7;--d:7s">&times;</span>
+    <span class="v2-tag" style="--x:80%;--y:62%;--s:.8;--d:6s">07/26</span>
+    <span class="v2-tag" style="--x:40%;--y:82%;--s:.7;--d:8s">&times;</span>
   </div>
-  <figure class="hb-field">
-    <video class="hero-img hero-video" data-src="media/hero-alley-web.mp4" poster="images/hero-bg.webp" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
-    <img class="hb-field-still" src="images/hero-bg.webp" alt="" loading="lazy">
-    <figcaption class="mono">Field recording / East Alley, 02:14</figcaption>
-  </figure>
-  <dl class="hb-specs mono">
-    <div><dt>Ref.</dt><dd>KR-000</dd></div>
-    <div><dt>Upper</dt><dd>Full-grain</dd></div>
-    <div><dt>Run</dt><dd>200 pr</dd></div>
-    <div><dt>Price</dt><dd>$310</dd></div>
-    <a class="hb-buy" href="product.html?id=0">Select size <span aria-hidden="true">&rarr;</span></a>
-  </dl>
+  <div class="v2-left">
+    <p class="v2-badge mono"><span>Drop 07</span><span>200 pairs</span></p>
+    <h1 class="v2-title" id="v2Title">Your feet.<br><em>Your rules.</em></h1>
+    <p class="v2-sub">The Venom in full-grain leather on a platform EVA sole. Hand-numbered, no hype tax.</p>
+    <a class="v2-cta" href="product.html?id=0">Shop the Venom <span aria-hidden="true">&rarr;</span></a>
+  </div>
+  <div class="v2-center">
+    <div class="v2-float">
+      <img class="v2-poster" src="images/krsh-venom.webp" alt="" width="1000" height="1000" fetchpriority="high">
+    </div>
+  </div>
+  <div class="v2-tags v2-tags-front" aria-hidden="true">
+    <span class="v2-tag" style="--x:24%;--y:28%;--s:1;--d:5.5s">KR26</span>
+    <span class="v2-tag" style="--x:72%;--y:38%;--s:.9;--d:6.5s">&times;</span>
+    <span class="v2-tag" style="--x:52%;--y:70%;--s:1.1;--d:9s">LTD</span>
+    <span class="v2-tag" style="--x:86%;--y:22%;--s:.8;--d:11s">&times;</span>
+    <span class="v2-tag" style="--x:30%;--y:66%;--s:.8;--d:10s">200</span>
+  </div>
+  <div class="v2-right">
+    <div class="v2-scenes" role="group" aria-label="Scene">
+      <button type="button" class="v2-scene" data-scene="concrete" aria-pressed="true"><span class="v2-swatch"></span><span><b>Concrete</b><small class="mono">Studio</small></span></button>
+      <button type="button" class="v2-scene" data-scene="night" aria-pressed="false"><span class="v2-swatch"></span><span><b>Night</b><small class="mono">East Alley</small></span></button>
+      <button type="button" class="v2-scene" data-scene="signal" aria-pressed="false"><span class="v2-swatch"></span><span><b>Signal</b><small class="mono">Drop light</small></span></button>
+    </div>
+    <div class="v2-side">
+      <p class="v2-side-title">Venom</p>
+      <dl class="v2-spec mono"><div><dt>SKU</dt><dd>KR26-VNM-BW</dd></div><div><dt>Price</dt><dd>28&nbsp;990&nbsp;₽</dd></div></dl>
+    </div>
+  </div>
 </section>
 
 <!-- Lookbook -->
@@ -158,7 +175,7 @@
       <h2 class="featured-name">KRSH<br>VENOM</h2>
       <p class="featured-desc">Limited edition. Hand-numbered. 200 pairs worldwide. Built for the streets, designed for the culture.</p>
       <div class="featured-meta">
-        <span class="featured-price">$310</span>
+        <span class="featured-price">28&nbsp;990&nbsp;₽</span>
         <span class="featured-limited p-card-badge badge-ltd">Limited — 47 left</span>
       </div>
       <a href="product.html?id=0" class="btn-primary">SHOP THE VENOM</a>
@@ -186,7 +203,7 @@
       <div class="p-card-img"><img src="images/krsh-venom.webp" alt="KRSH Venom" loading="lazy"></div>
       <div class="p-card-info">
         <span class="p-card-name">KRSH Venom</span>
-        <span class="p-card-price">$310</span>
+        <span class="p-card-price">28&nbsp;990&nbsp;₽</span>
       </div>
     </a>
     <a href="product.html?id=1" class="p-card" data-color="White">
@@ -194,7 +211,7 @@
       <div class="p-card-img"><img src="images/krsh-ghost.webp" alt="KRSH Ghost" loading="lazy"></div>
       <div class="p-card-info">
         <span class="p-card-name">KRSH Ghost</span>
-        <span class="p-card-price">$220</span>
+        <span class="p-card-price">20&nbsp;990&nbsp;₽</span>
       </div>
     </a>
     <a href="product.html?id=4" class="p-card" data-color="White/Black">
@@ -202,7 +219,7 @@
       <div class="p-card-img"><img src="images/krsh-gothic.webp" alt="KRSH Gothic" loading="lazy"></div>
       <div class="p-card-info">
         <span class="p-card-name">KRSH Gothic</span>
-        <span class="p-card-price">$245</span>
+        <span class="p-card-price">22&nbsp;990&nbsp;₽</span>
       </div>
     </a>
     <a href="product.html?id=5" class="p-card" data-color="Black">
@@ -210,7 +227,7 @@
       <div class="p-card-img"><img src="images/krsh-fury.webp" alt="KRSH Fury" loading="lazy"></div>
       <div class="p-card-info">
         <span class="p-card-name">KRSH Fury</span>
-        <span class="p-card-price">$280</span>
+        <span class="p-card-price">26&nbsp;990&nbsp;₽</span>
       </div>
     </a>
   </div>
@@ -230,7 +247,7 @@
   <div class="trust-strip">
     <div class="trust-item">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="6" width="14" height="11"/><path d="M15 9h4l3 3.5V17h-7z"/><circle cx="6" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg>
-      <span>Free shipping over $200</span>
+      <span>Free shipping over 15&nbsp;000&nbsp;₽</span>
     </div>
     <div class="trust-item">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V5.5z"/><path d="M8.5 12l2.3 2.3L16 9.5"/></svg>
@@ -288,7 +305,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
-<script src="script.js?v=38"></script>
+<script src="script.js?v=39"></script>
+<script src="hero-v2.js?v=1" defer></script>
 </body>
 </html>
 <!-- KRSH v20260820105922 -->

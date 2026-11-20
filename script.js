@@ -3,6 +3,9 @@ window.addEventListener('unhandledrejection', (e) => {
   if (e.reason && e.reason.name === 'AbortError') e.preventDefault();
 });
 
+/* Prices are roubles; one formatter for every surface */
+window.krshPrice = (n) => Number(n || 0).toLocaleString('ru-RU') + '\u00a0₽';
+
 /* ========== KRSH — Editorial Streetwear ========== */
 (function () {
   const isTouchDevice = window.matchMedia('(hover: none)').matches;
@@ -163,6 +166,7 @@ window.addEventListener('unhandledrejection', (e) => {
       if (!item) return;
       const key = lineKey(item);
       const qty = Math.max(1, Number(item.qty) || 1);
+      if (Number(item.price) > 0 && Number(item.price) < 1000) item = Object.assign({}, item, { price: Math.round(item.price * 95 / 1000) * 1000 - 10 });
       if (byKey.has(key)) byKey.get(key).qty += qty;
       else { const line = Object.assign({}, item, { qty }); byKey.set(key, line); lines.push(line); }
     });
@@ -208,7 +212,7 @@ window.addEventListener('unhandledrejection', (e) => {
       '<span class="cart-item-name">' + item.name + '</span>' +
       (meta ? '<span class="cart-item-meta">' + meta + '</span>' : '') +
       qtyControl + '</div>' +
-      '<span class="cart-item-price">$' + (Number(item.price) * item.qty) + '</span>' +
+      '<span class="cart-item-price">' + krshPrice(Number(item.price) * item.qty) + '</span>' +
       (editable ? '<button class="cart-item-remove" aria-label="Remove ' + item.name + ' from cart">&times;</button>' : '') +
       '</div>';
   }
@@ -227,7 +231,7 @@ window.addEventListener('unhandledrejection', (e) => {
     if (cartBadge) cartBadge.textContent = qty;
     if (cartBtn) cartBtn.setAttribute('aria-label', `Open cart, ${qty} item${qty === 1 ? '' : 's'}`);
     if (cartCount) cartCount.textContent = `(${qty})`;
-    if (cartSubtotal) cartSubtotal.textContent = `$${cartTotal(items)}`;
+    if (cartSubtotal) cartSubtotal.textContent = krshPrice(cartTotal(items));
     const isEmpty = items.length === 0;
     if (cartEmpty) cartEmpty.hidden = !isEmpty;
     if (cartFooter) cartFooter.style.display = isEmpty ? 'none' : '';
@@ -496,7 +500,7 @@ window.addEventListener('unhandledrejection', (e) => {
         const product = idMatch && window.KRSH_PRODUCTS ? window.KRSH_PRODUCTS.find(p => p.id === Number(idMatch[1])) : null;
         const cartItem = product
           ? { name: product.name, price: product.price, size: sizeBtn ? sizeBtn.dataset.size : '9', color: product.color || '', img: product.img.replace(/w=\d+&h=\d+/, 'w=160&h=160') }
-          : { name, price: parseInt((price.match(/\$?(\d+)\s*$/) || [])[1] || '0', 10), size: sizeBtn ? sizeBtn.dataset.size : '9', color: card.dataset.color || '', img: img ? img.src.replace(/w=\d+&h=\d+/, 'w=160&h=160') : '' };
+          : { name, price: parseInt(price.replace(/\D/g, '') || '0', 10), size: sizeBtn ? sizeBtn.dataset.size : '9', color: card.dataset.color || '', img: img ? img.src.replace(/w=\d+&h=\d+/, 'w=160&h=160') : '' };
         closeQuickView();
         if (window.krshAddToCart) window.krshAddToCart(cartItem);
       };
