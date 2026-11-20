@@ -1960,7 +1960,7 @@ body.cart-open .toast-container { right: calc(min(420px, 100vw) + 24px); }
 body.scene-night .header:not(.scrolled), body.scene-night .header:not(.scrolled) .nav a,
 body.scene-night .header:not(.scrolled) .logo, body.scene-night .header:not(.scrolled) .header-right { color: #EEEBE6; }
 body.scene-night .header:not(.scrolled) .header-right a, body.scene-night .header:not(.scrolled) .header-right button { color: #EEEBE6; }
-body.scene-night .header:not(.scrolled) .header-cta { background: #EEEBE6; color: #141414; }
+body.scene-night .header:not(.scrolled) .header-right .header-cta { background: #EEEBE6; color: #141414; }
 .v2-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0 !important; transition: opacity 1.2s; filter: grayscale(0.4); z-index: 0; }
 .hero-v2[data-scene="night"] .v2-video.is-playing { opacity: 0.28 !important; }
 .v2-left, .v2-right { position: relative; z-index: 3; }
@@ -2013,7 +2013,7 @@ body.scene-night .header:not(.scrolled) .header-cta { background: #EEEBE6; color
   .v2-center { position: relative; inset: auto; height: 300px; margin: 4px -20px 0; }
   .v2-center { display: block; }
   .v2-float { width: 100%; height: 300px; }
-  .v2-poster { width: auto; height: 70%; }
+  .v2-spin { width: min(100%, 360px); }
   .v2-right { grid-column: 1; justify-self: stretch; align-items: stretch; gap: 16px; }
   .v2-scenes { flex-direction: row; } .v2-scene { min-width: 0; flex: 1; padding: 6px; gap: 8px; } .v2-swatch { width: 28px; height: 28px; }
   .v2-scene small { display: none; }
@@ -2027,3 +2027,13 @@ body.scene-night .header:not(.scrolled) .header-cta { background: #EEEBE6; color
   .v2-dust { display: none; }
   .hero.hero-v2, .v2-poster, .v2-model, .v2-video { transition: none; }
 }
+
+/* ========== 360° viewer (spin360.js) ========== */
+.spin360 { position: relative; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; outline: none; }
+.spin360.is-dragging { cursor: grabbing; }
+.spin360 img { display: block; width: 100%; height: auto; pointer-events: none; -webkit-user-drag: none; }
+.spin360:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.v2-spin { width: min(100%, 600px, 46vw); pointer-events: auto; color: var(--fg); }
+.pdp-3d.spin360 { aspect-ratio: 1; height: auto; display: none; color: var(--white); }
+.pdp-main-img.show-3d .pdp-3d.spin360 { display: block; }
+.pdp-3d.spin360 img { width: 100%; height: 100%; object-fit: contain; }
