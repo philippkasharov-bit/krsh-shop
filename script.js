@@ -584,15 +584,22 @@ window.krshPrice = (n) => Number(n || 0).toLocaleString('ru-RU') + '\u00a0₽';
     const saveData = navigator.connection && navigator.connection.saveData;
     if (heroVideo && !prefersReducedMotion && !saveData) {
       heroVideo.addEventListener('playing', () => heroVideo.classList.add('is-playing'), { once: true });
+      const scrub = 'scrub' in heroVideo.dataset; // scroll drives the time (hero-scrub.js)
+      if (scrub) heroVideo.addEventListener('loadeddata', () => heroVideo.classList.add('is-playing'), { once: true });
       let heroVisible = true;
       const syncPlayback = () => {
-        if (!heroVideo.src) return;
+        if (!heroVideo.src) return; if (scrub) return;
         if (heroVisible && !document.hidden) heroVideo.play().catch(() => {});
         else heroVideo.pause();
       };
       // The still is the LCP image; the 1 MB loop only starts downloading once
       // the page has loaded, so it never competes with first paint.
-      const startVideo = () => { heroVideo.src = heroVideo.dataset.src; syncPlayback(); };
+      const startVideo = () => {
+        if (scrub) heroVideo.preload = 'auto';
+        heroVideo.src = heroVideo.dataset.src;
+        if (scrub) heroVideo.load();
+        syncPlayback();
+      };
       if (document.readyState === 'complete') startVideo();
       else window.addEventListener('load', startVideo, { once: true });
       if ('IntersectionObserver' in window) {
@@ -658,11 +665,11 @@ window.krshPrice = (n) => Number(n || 0).toLocaleString('ru-RU') + '\u00a0₽';
             t.style.stroke = '#E8FF00';
             t.style.strokeWidth = '2';
 
-            const delay = idx * 0.6;
+            const delay = idx * 0.25;
             gsap.to(t, {
               strokeDashoffset: 0,
-              duration: 1.4,
-              delay: 0.3 + delay,
+              duration: 0.8,
+              delay: 0.1 + delay,
               ease: 'power2.inOut',
               onComplete: () => {
                 gsap.to(t, {
@@ -674,8 +681,8 @@ window.krshPrice = (n) => Number(n || 0).toLocaleString('ru-RU') + '\u00a0₽';
               }
             });
           });
-          gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 2.8, ease: 'power3.out' });
-          gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.7, delay: 3.0, ease: 'power3.out' });
+          gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.5, delay: 1.2, ease: 'power3.out' });
+          gsap.to('.hero-link', { opacity: 1, y: 0, duration: 0.5, delay: 1.35, ease: 'power3.out' });
         });
       } else {
         gsap.to('.hero-sub', { opacity: 1, y: 0, duration: 0.7, delay: 0.5, ease: 'power3.out' });
