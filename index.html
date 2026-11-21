@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>window.addEventListener("unhandledrejection",function(e){if(e.reason&&e.reason.name==="AbortError")e.preventDefault()});</script>
-<link rel="stylesheet" href="style.css?v=55">
+<link rel="stylesheet" href="style.css?v=56">
 </head>
 <body>
 
@@ -98,8 +98,8 @@
 <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
 <!-- Hero v2: floating product stage (motion system adapted from the GetLayers "Soda" template) -->
-<section class="hero hero-v2" id="hero" data-scene="concrete" aria-labelledby="v2Title">
-  <video class="hero-img hero-video v2-video" data-src="media/hero-alley-web.mp4" poster="images/hero-bg.webp" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+<section class="hero hero-v2" id="hero" data-scene="night" aria-labelledby="v2Title">
+  <video class="hero-img hero-video v2-video" data-src="media/hero-sneaker-scrub.mp4" data-scrub poster="images/hero-bg.webp" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
   <div class="v2-dust" aria-hidden="true"></div>
   <div class="v2-tags v2-tags-back" aria-hidden="true">
     <span class="v2-tag" style="--x:15%;--y:48%;--s:.9;--d:5s">EVA</span>
@@ -125,10 +125,15 @@
     <span class="v2-tag" style="--x:86%;--y:22%;--s:.8;--d:11s">&times;</span>
     <span class="v2-tag" style="--x:30%;--y:66%;--s:.8;--d:10s">200</span>
   </div>
+  <div class="v2-beats" aria-hidden="true">
+    <p class="v2-beat" data-from="0.06" data-to="0.30"><span>Upper</span>Full-grain leather</p>
+    <p class="v2-beat" data-from="0.34" data-to="0.58"><span>Sole</span>Platform EVA</p>
+    <p class="v2-beat" data-from="0.62" data-to="0.86"><span>Drop 07</span>Hand-numbered. 200 pairs.</p>
+  </div>
   <div class="v2-right">
     <div class="v2-scenes" role="group" aria-label="Scene">
-      <button type="button" class="v2-scene" data-scene="concrete" aria-pressed="true"><span class="v2-swatch"></span><span><b>Concrete</b><small class="mono">Studio</small></span></button>
-      <button type="button" class="v2-scene" data-scene="night" aria-pressed="false"><span class="v2-swatch"></span><span><b>Night</b><small class="mono">East Alley</small></span></button>
+      <button type="button" class="v2-scene" data-scene="concrete" aria-pressed="false"><span class="v2-swatch"></span><span><b>Concrete</b><small class="mono">Studio</small></span></button>
+      <button type="button" class="v2-scene" data-scene="night" aria-pressed="true"><span class="v2-swatch"></span><span><b>Night</b><small class="mono">East Alley</small></span></button>
       <button type="button" class="v2-scene" data-scene="signal" aria-pressed="false"><span class="v2-swatch"></span><span><b>Signal</b><small class="mono">Drop light</small></span></button>
     </div>
     <div class="v2-side">
@@ -305,8 +310,9 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
-<script src="script.js?v=39"></script>
-<script src="hero-v2.js?v=1" defer></script>
+<script src="script.js?v=40"></script>
+<script src="hero-v2.js?v=2" defer></script>
+<script src="hero-scrub.js?v=1" defer></script>
 </body>
 </html>
 <!-- KRSH v20260820105922 -->

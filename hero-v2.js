@@ -1,6 +1,6 @@
 /* KRSH v2 hero — floating product stage.
    Motion system adapted from the GetLayers "Soda" template (commercial licence):
-   cursor tilt (lerp 0.05), parallax layers, pointer repulsion (r 400 / -80),
+   cursor tilt (lerp 0.12), parallax layers, pointer repulsion (r 400 / -80),
    rising particles, and a scene switch with a 720° spin + implode/explode.
    Everything is skipped under prefers-reduced-motion; the scene switch still works. */
 (function () {
@@ -24,19 +24,28 @@
     mv.className = 'v2-model';
     mv.setAttribute('src', 'media/sneaker.glb');
     mv.setAttribute('alt', 'KRSH Venom, 3D model');
-    mv.setAttribute('camera-orbit', '-30deg 75deg 105%');
+    const cine = !reduce && window.gsap;
+    mv.setAttribute('camera-orbit', cine ? '-110deg 84deg 150%' : '-30deg 75deg 105%');
+    mv.setAttribute('tone-mapping', 'agx');
+    mv.setAttribute('shadow-softness', '0.7');
     mv.setAttribute('field-of-view', '30deg');
     mv.setAttribute('interaction-prompt', 'none');
     mv.setAttribute('disable-zoom', '');
-    mv.setAttribute('shadow-intensity', '1');
-    mv.setAttribute('exposure', '1.1');
+    mv.setAttribute('shadow-intensity', '1.6');
+    mv.setAttribute('exposure', '1.0');
     if (reduce || !fine) {
       // no cursor to follow: let people drag it (and keep it still under reduced motion)
       mv.setAttribute('camera-controls', '');
       mv.setAttribute('touch-action', 'pan-y');
       if (!reduce) { mv.setAttribute('auto-rotate', ''); mv.setAttribute('rotation-per-second', '14deg'); }
     }
-    mv.addEventListener('load', () => hero.classList.add('is-3d'), { once: true });
+    mv.addEventListener('load', () => {
+      hero.classList.add('is-3d');
+      if (!cine) return;
+      const o = { t: -110, p: 84, r: 150 };
+      gsap.to(o, { t: -30, p: 75, r: 105, duration: 1.6, ease: 'expo.out',
+        onUpdate: () => { mv.cameraOrbit = o.t + 'deg ' + o.p + 'deg ' + o.r + '%'; } });
+    }, { once: true });
     center.appendChild(mv);
   }
   if (document.readyState === 'complete') mountModel();
@@ -50,21 +59,22 @@
     document.body.classList.toggle('scene-night', name === 'night');
     buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.scene === name)));
   }
+  applyScene(hero.dataset.scene); // sync body theme with the default scene
   buttons.forEach(btn => btn.addEventListener('click', () => {
     const name = btn.dataset.scene;
     if (hero.dataset.scene === name) return;
     if (reduce || !window.gsap) { applyScene(name); return; }
     const tl = gsap.timeline();
     // phase 1: wind up with motion blur, swap the scene at the peak
-    tl.to(spin, { val: 360, blur: 15, duration: 0.6, ease: 'power2.in' })
+    tl.to(spin, { val: 360, blur: 15, duration: 0.35, ease: 'power2.in' })
       .add(() => applyScene(name))
-      .to(spin, { val: 720, blur: 0, duration: 1.5, ease: 'back.out(0.7)' })
+      .to(spin, { val: 720, blur: 0, duration: 0.8, ease: 'expo.out' })
       .add(() => { spin.val = 0; });
     // tags implode to centre, hold, explode back out
     tags.forEach(t => {
       gsap.timeline()
-        .to(t, { '--k': 0.1, opacity: 0, duration: 0.5, ease: 'power2.in' })
-        .to(t, { '--k': 1, opacity: 1, duration: 0.9, ease: 'back.out(1.5)', delay: 0.3,
+        .to(t, { '--k': 0.1, opacity: 0, duration: 0.3, ease: 'power2.in' })
+        .to(t, { '--k': 1, opacity: 1, duration: 0.55, ease: 'back.out(1.5)', delay: 0.15,
                  '--jx': (Math.random() - 0.5) * 200 + 'px', '--jy': (Math.random() - 0.5) * 200 + 'px' });
     });
   }));
@@ -85,8 +95,8 @@
 
   let visible = true, raf = 0;
   function frame(t) {
-    current.x += (target.x - current.x) * 0.05;
-    current.y += (target.y - current.y) * 0.05;
+    current.x += (target.x - current.x) * 0.12;
+    current.y += (target.y - current.y) * 0.12;
     if (mv && fine) {
       mv.cameraOrbit = `${-30 + current.x * 40 + spin.val}deg ${75 + current.y * 12}deg 105%`;
     } else if (mv && spin.val) {
