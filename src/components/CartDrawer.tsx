@@ -1,21 +1,16 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { useStore } from '../lib/store'
 import { FREE_SHIPPING_AT, edition, money, slugOf } from '../lib/products'
 import { EASE } from '../lib/motion'
+import { useDialog } from '../lib/useDialog'
 
 export default function CartDrawer() {
   const { drawer, setDrawer, lines, subtotal, setQty, remove, count } = useStore()
-  const closeRef = useRef<HTMLButtonElement>(null)
-  useEffect(() => {
-    if (!drawer) return
-    closeRef.current?.focus()
-    const esc = (e: KeyboardEvent) => e.key === 'Escape' && setDrawer(false)
-    window.addEventListener('keydown', esc)
-    document.body.style.overflow = 'hidden'
-    return () => { window.removeEventListener('keydown', esc); document.body.style.overflow = '' }
-  }, [drawer, setDrawer])
+  const panel = useRef<HTMLElement>(null)
+  const close = useCallback(() => setDrawer(false), [setDrawer])
+  useDialog(drawer, close, panel)
   const left = Math.max(0, FREE_SHIPPING_AT - subtotal)
 
   return (
@@ -24,12 +19,12 @@ export default function CartDrawer() {
         <>
           <motion.div className="fixed inset-0 z-[60] bg-black/60" onClick={() => setDrawer(false)}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
-          <motion.aside role="dialog" aria-modal="true" aria-label="Shopping bag"
+          <motion.aside ref={panel} role="dialog" aria-modal="true" aria-label="Shopping bag"
             className="fixed right-0 top-0 z-[70] flex h-full w-full max-w-[480px] flex-col bg-ink-2 border-l border-line"
             initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ duration: 0.7, ease: EASE }}>
             <div className="flex items-center justify-between px-8 h-[72px] border-b border-line">
               <h2 className="display text-3xl">Bag <span className="text-gold">({count})</span></h2>
-              <button ref={closeRef} className="eyebrow !text-ivory" onClick={() => setDrawer(false)}>Close</button>
+              <button className="eyebrow !text-ivory py-3 pl-4" onClick={close}>Close</button>
             </div>
             {lines.length === 0 ? (
               <div className="flex-1 grid place-content-center text-center px-8">

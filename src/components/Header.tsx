@@ -23,7 +23,7 @@ export default function Header() {
     const on = () => {
       const y = window.scrollY
       setSolid(y > 40)
-      if (Math.abs(y - last) > 8) { setHidden(y > last && y > 240); last = y }
+      if (Math.abs(y - last) > 8) { const h = y > last && y > 240; setHidden(h); document.documentElement.style.setProperty('--hdr', h ? '0px' : '72px'); last = y }
     }
     on(); window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
@@ -35,7 +35,7 @@ export default function Header() {
         <nav aria-label="Primary" className="hidden md:flex gap-10">
           {links.slice(0, 3).map((l) => <NavItem key={l.to} {...l} />)}
         </nav>
-        <button className="md:hidden eyebrow !text-ivory justify-self-start" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
+        <button className="md:hidden eyebrow !text-ivory justify-self-start py-4 pr-6" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
           {menu ? 'Close' : 'Menu'}
         </button>
         <Link to="/" aria-label="KRSH — home" className="font-display text-[28px] tracking-[0.42em] pl-[0.42em]">KRSH</Link>
@@ -43,8 +43,8 @@ export default function Header() {
           <nav aria-label="Secondary" className="hidden md:flex">
             {links.slice(3).map((l) => <NavItem key={l.to} {...l} />)}
           </nav>
-          <Link to="/wishlist" className="eyebrow !text-ivory hidden sm:block" aria-label={`Wishlist, ${wish.length} saved`}>Saved{wish.length ? ` (${wish.length})` : ''}</Link>
-          <button className="eyebrow !text-ivory" onClick={() => setDrawer(true)} aria-label={`Open bag, ${count} items`}>
+          <Link to="/wishlist" className="eyebrow !text-ivory hidden sm:block py-4" aria-label={`Wishlist, ${wish.length} saved`}>Saved{wish.length ? ` (${wish.length})` : ''}</Link>
+          <button className="eyebrow !text-ivory py-4 pl-3" onClick={() => setDrawer(true)} aria-label={`Open bag, ${count} items`}>
             Bag <span className="text-gold">({count})</span>
           </button>
         </div>

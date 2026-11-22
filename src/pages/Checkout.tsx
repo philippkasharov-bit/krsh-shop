@@ -67,7 +67,8 @@ export default function Checkout() {
   return (
     <div className="wrap pt-36 grid gap-16 lg:grid-cols-[1.3fr_1fr]">
       <form onSubmit={submit} noValidate>
-        <h1 className="display t-1">Checkout</h1>
+        <Link to="/shop" className="link-u nav-u">← Continue shopping</Link>
+        <h1 className="display t-1 mt-8">Checkout</h1>
         <p className="mt-4 border border-gold/40 bg-gold/5 p-4 text-sm text-ivory-dim">Demo store. Please do not enter real payment details. Any 16-digit number works.</p>
 
         <fieldset className="mt-14 grid gap-x-8 sm:grid-cols-2">

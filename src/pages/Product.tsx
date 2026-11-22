@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { SIZES, bySlug, edition, money, products, soldOut, FREE_SHIPPING_AT } from '../lib/products'
+import { SIZES, bySlug, categoryLabel, edition, money, products, soldOut, FREE_SHIPPING_AT } from '../lib/products'
 import { useStore } from '../lib/store'
 import ModelViewer from '../components/ModelViewer'
 import ProductCard from '../components/ProductCard'
@@ -14,12 +14,13 @@ import NotFound from './NotFound'
 export default function Product() {
   const { slug = '' } = useParams()
   const p = bySlug(slug)
-  useTitle(p?.name)
+  useTitle(p?.name.replace('KRSH ', ''))
   const { add, wish, toggleWish } = useStore()
   const [size, setSize] = useState<number | null>(null)
   const [err, setErr] = useState(false)
   const [view, setView] = useState<'photo' | '3d'>('photo')
   const [guide, setGuide] = useState(false)
+  const sizeRef = useRef<HTMLFieldSetElement>(null)
   const [zoom, setZoom] = useState<{ x: number; y: number } | null>(null)
   if (!p) return <NotFound />
 
@@ -34,7 +35,7 @@ export default function Product() {
       <div className="wrap pt-28 grid gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
         {/* Gallery */}
         <div className="lg:sticky lg:top-28 self-start">
-          <nav aria-label="Breadcrumb" className="eyebrow mb-6"><Link to="/shop" className="hover:text-gold">Collection</Link> / {p.name}</nav>
+          <nav aria-label="Breadcrumb" className="eyebrow mb-6 flex flex-wrap gap-x-2"><Link to="/shop" className="link-u nav-u">Collection</Link>/<Link to={`/shop?cat=${p.category}`} className="link-u nav-u">{categoryLabel[p.category]}</Link>/<span aria-current="page" className="text-ivory">{p.name.replace('KRSH ', '')}</span></nav>
           <div className="relative aspect-square lg:aspect-[5/6] bg-ink-2 overflow-hidden">
             <AnimatePresence mode="wait">
               {view === 'photo' || !p.model ? (
@@ -67,12 +68,12 @@ export default function Product() {
           <h1 className="display t-1">{p.name.replace('KRSH ', '')}</h1>
           <div className="mt-6 flex items-center justify-between">
             <p className="font-mono text-2xl">{money(p.price)}</p>
-            <a href="#reviews" className="eyebrow hover:text-gold" aria-label={`${p.rating} out of 5 from ${p.reviewCount} reviews`}>★ {p.rating} · {p.reviewCount} reviews</a>
+            <a href="#reviews" className="eyebrow hover:text-gold py-3" aria-label={`${p.rating} out of 5 from ${p.reviewCount} reviews`}>★ {p.rating} · {p.reviewCount} reviews</a>
           </div>
           <p className="mt-6 text-ivory-dim leading-relaxed">{p.desc}</p>
           <p className="eyebrow mt-6">{p.color} · {p.sku}</p>
 
-          <fieldset className="mt-10">
+          <fieldset ref={sizeRef} className="mt-10 scroll-mt-28">
             <legend className="flex w-full justify-between eyebrow mb-4"><span>Select size (US)</span><button type="button" className="link-u !text-[10px]" onClick={() => setGuide(true)}>Size guide</button></legend>
             <div className="grid grid-cols-4 gap-px bg-line border border-line">
               {SIZES.map((s) => {
@@ -123,12 +124,13 @@ export default function Product() {
         <div className="grid gap-8 sm:grid-cols-3">{related.map((r, i) => <ProductCard key={r.id} p={r} index={i} />)}</div>
       </section>
 
+      <div className="h-24 lg:hidden" aria-hidden />
       <SizeGuide open={guide} onClose={() => setGuide(false)} />
 
       {/* Sticky mobile buy bar */}
       <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 flex items-center gap-4 border-t border-line bg-ink/90 backdrop-blur-xl p-4">
         <div className="flex-1 min-w-0"><p className="display text-lg truncate">{p.name}</p><p className="font-mono text-sm text-ivory-dim">{size ? `US ${size}` : 'Select size above'}</p></div>
-        <button className="btn btn-gold !px-6 !py-4" onClick={() => { if (size === null) { setErr(true); window.scrollTo({ top: 400, behavior: 'smooth' }) } else add(p.id, size) }}>Add · {money(p.price)}</button>
+        <button className="btn btn-gold !px-6 !py-4" onClick={() => { if (size === null) { setErr(true); sizeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }) } else add(p.id, size) }}>Add · {money(p.price)}</button>
       </div>
     </>
   )

@@ -19,7 +19,7 @@ export default function Footer() {
             <div className="flex items-end gap-4">
               <input id="nl" type="email" autoComplete="email" className="field" value={email}
                 aria-invalid={state === 'error'} aria-describedby="nl-msg" onChange={(e) => { setEmail(e.target.value); setState('idle') }} />
-              <button className="link-u pb-4 shrink-0" type="submit">Subscribe</button>
+              <button className="link-u mb-4 shrink-0" type="submit">Subscribe</button>
             </div>
             <p id="nl-msg" role="status" className={`mt-3 text-sm ${state === 'error' ? 'text-[#e58a80]' : 'text-ivory-dim'}`}>
               {state === 'ok' ? 'Thank you. This is a demo, so nothing was sent.' : state === 'error' ? 'Please enter a valid email address.' : 'Two letters a year. No hype.'}
@@ -47,8 +47,8 @@ function FooterCol({ title, items }: { title: string; items: [string, string][] 
   return (
     <div>
       <p className="eyebrow mb-6">{title}</p>
-      <ul className="space-y-3 text-[15px]">
-        {items.map(([to, l]) => <li key={to}><Link to={to} className="hover:text-gold transition-colors">{l}</Link></li>)}
+      <ul className="text-[15px]">
+        {items.map(([to, l]) => <li key={to}><Link to={to} className="inline-block py-2.5 hover:text-gold transition-colors">{l}</Link></li>)}
       </ul>
     </div>
   )

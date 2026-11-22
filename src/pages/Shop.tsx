@@ -37,7 +37,7 @@ export default function Shop() {
       <p className="eyebrow mb-4">The collection</p>
       <SplitReveal className="display t-1" text="All footwear." />
 
-      <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-y border-line py-5 sticky top-[72px] z-30 bg-ink/85 backdrop-blur-xl">
+      <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-y border-line py-5 sticky top-[var(--hdr,72px)] transition-[top] duration-700 z-30 bg-ink/85 backdrop-blur-xl">
         <div className="flex flex-wrap gap-x-8 gap-y-2" role="group" aria-label="Filter by silhouette">
           {cats.map((c) => (
             <button key={c} aria-pressed={cat === c} onClick={() => set('cat', c)}
@@ -46,9 +46,9 @@ export default function Shop() {
         </div>
         <div className="flex flex-wrap items-center gap-6">
           <label className="sr-only" htmlFor="q">Search</label>
-          <input id="q" className="field !w-40 !py-1 !text-sm" placeholder="Search" value={q} onChange={(e) => setQ(e.target.value)} />
+          <input id="q" className="field !w-40 !py-3 !text-sm" placeholder="Search" value={q} onChange={(e) => setQ(e.target.value)} />
           <label className="sr-only" htmlFor="sort">Sort</label>
-          <select id="sort" value={sort} onChange={(e) => set('sort', e.target.value)} className="bg-transparent text-[12px] tracking-[0.18em] uppercase outline-none">
+          <select id="sort" value={sort} onChange={(e) => set('sort', e.target.value)} className="bg-transparent py-3 text-[12px] tracking-[0.18em] uppercase outline-none">
             {Object.entries(SORTS).map(([k, v]) => <option key={k} value={k} className="bg-ink">{v}</option>)}
           </select>
           <button className="link-u hidden sm:block" aria-pressed={dense} onClick={() => setDense(!dense)}>{dense ? '3 up' : '4 up'}</button>
