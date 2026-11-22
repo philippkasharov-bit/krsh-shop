@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { useStore } from '../lib/store'
-import { FREE_SHIPPING_AT, money, slugOf } from '../lib/products'
+import { FREE_SHIPPING_AT, edition, money, slugOf } from '../lib/products'
 import { EASE } from '../lib/motion'
 
 export default function CartDrawer() {
@@ -52,6 +52,7 @@ export default function CartDrawer() {
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between gap-3"><h3 className="display text-xl">{p.name}</h3><span className="font-mono text-sm">{money(p.price * qty)}</span></div>
                         <p className="eyebrow mt-1">{p.color} · US {size}</p>
+                        {edition(p) && <p className="eyebrow mt-1 text-gold">{edition(p)}</p>}
                         <div className="mt-4 flex items-center justify-between">
                           <div className="flex items-center border border-line" role="group" aria-label={`Quantity for ${p.name}`}>
                             <button className="h-9 w-9" aria-label="Decrease quantity" onClick={() => setQty(p.id, size, qty - 1)} disabled={qty <= 1}>−</button>
@@ -68,6 +69,7 @@ export default function CartDrawer() {
                   <div className="flex justify-between"><span className="eyebrow">Subtotal</span><span className="font-mono">{money(subtotal)}</span></div>
                   <p className="mt-2 text-xs text-ivory-dim">Shipping and duties are shown at checkout. Demo only.</p>
                   <Link to="/checkout" onClick={() => setDrawer(false)} className="btn btn-gold w-full mt-6">Checkout</Link>
+                  <button className="link-u mt-5 mx-auto block" onClick={() => setDrawer(false)}>Continue shopping</button>
                 </div>
               </>
             )}

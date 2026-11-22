@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { SIZES, bySlug, money, products, soldOut, FREE_SHIPPING_AT } from '../lib/products'
+import { SIZES, bySlug, edition, money, products, soldOut, FREE_SHIPPING_AT } from '../lib/products'
 import { useStore } from '../lib/store'
 import ModelViewer from '../components/ModelViewer'
 import ProductCard from '../components/ProductCard'
+import SizeGuide from '../components/SizeGuide'
 import { AccordionItem } from '../components/Accordion'
 import { Fade } from '../lib/motion'
 import { useTitle } from '../lib/seo'
@@ -18,6 +19,8 @@ export default function Product() {
   const [size, setSize] = useState<number | null>(null)
   const [err, setErr] = useState(false)
   const [view, setView] = useState<'photo' | '3d'>('photo')
+  const [guide, setGuide] = useState(false)
+  const [zoom, setZoom] = useState<{ x: number; y: number } | null>(null)
   if (!p) return <NotFound />
 
   const saved = wish.includes(p.id)
@@ -35,8 +38,12 @@ export default function Product() {
           <div className="relative aspect-square lg:aspect-[5/6] bg-ink-2 overflow-hidden">
             <AnimatePresence mode="wait">
               {view === 'photo' || !p.model ? (
-                <motion.img key="photo" src={`/${p.img}`} alt={`${p.name} in ${p.color}`} className="h-full w-full object-cover"
-                  initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.7 }} />
+                <motion.div key="photo" className="h-full w-full cursor-zoom-in overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.7 }}
+                  onPointerMove={(e) => { if (e.pointerType !== 'mouse') return; const r = e.currentTarget.getBoundingClientRect(); setZoom({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 }) }}
+                  onPointerLeave={() => setZoom(null)}>
+                  <img src={`/${p.img}`} alt={`${p.name} in ${p.color}`} className="h-full w-full object-cover transition-transform duration-300 ease-out"
+                    style={zoom ? { transform: 'scale(2.2)', transformOrigin: `${zoom.x}% ${zoom.y}%` } : undefined} />
+                </motion.div>
               ) : (
                 <motion.div key="3d" className="h-full w-full" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                   <ModelViewer src={`/${p.model}`} poster={`/${p.img}`} alt={`Interactive 3D model of the ${p.name}`} className="h-full w-full" />
@@ -56,7 +63,7 @@ export default function Product() {
 
         {/* Buy box — sticky */}
         <div>
-          {p.badge && <p className="eyebrow text-gold mb-4">{p.badge === 'new' ? 'New arrival' : `Limited · ${p.stock} remaining`}</p>}
+          {p.badge && <p className="eyebrow text-gold mb-4 flex justify-between"><span>{p.badge === 'new' ? 'New arrival' : `Limited · ${p.stock} remaining`}</span>{edition(p) && <span>{edition(p)}</span>}</p>}
           <h1 className="display t-1">{p.name.replace('KRSH ', '')}</h1>
           <div className="mt-6 flex items-center justify-between">
             <p className="font-mono text-2xl">{money(p.price)}</p>
@@ -66,7 +73,7 @@ export default function Product() {
           <p className="eyebrow mt-6">{p.color} · {p.sku}</p>
 
           <fieldset className="mt-10">
-            <legend className="flex w-full justify-between eyebrow mb-4"><span>Select size (US)</span><Link to="/faq" className="link-u !text-[10px]">Size guide</Link></legend>
+            <legend className="flex w-full justify-between eyebrow mb-4"><span>Select size (US)</span><button type="button" className="link-u !text-[10px]" onClick={() => setGuide(true)}>Size guide</button></legend>
             <div className="grid grid-cols-4 gap-px bg-line border border-line">
               {SIZES.map((s) => {
                 const out = soldOut(p, s)
@@ -115,6 +122,8 @@ export default function Product() {
         <Fade><h2 className="display t-2 mb-14">You may also <em>like.</em></h2></Fade>
         <div className="grid gap-8 sm:grid-cols-3">{related.map((r, i) => <ProductCard key={r.id} p={r} index={i} />)}</div>
       </section>
+
+      <SizeGuide open={guide} onClose={() => setGuide(false)} />
 
       {/* Sticky mobile buy bar */}
       <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 flex items-center gap-4 border-t border-line bg-ink/90 backdrop-blur-xl p-4">

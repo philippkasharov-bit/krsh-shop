@@ -15,16 +15,22 @@ export default function Header() {
   const { count, wish, setDrawer } = useStore()
   const [solid, setSolid] = useState(false)
   const [menu, setMenu] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const { pathname } = useLocation()
   useEffect(() => { setMenu(false) }, [pathname])
   useEffect(() => {
-    const on = () => setSolid(window.scrollY > 40)
+    let last = window.scrollY
+    const on = () => {
+      const y = window.scrollY
+      setSolid(y > 40)
+      if (Math.abs(y - last) > 8) { setHidden(y > last && y > 240); last = y }
+    }
     on(); window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
   }, [])
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${solid || menu ? 'bg-ink/80 backdrop-blur-xl border-b border-line' : 'border-b border-transparent'}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${hidden && !menu ? '-translate-y-full' : 'translate-y-0'} ${solid || menu ? 'bg-ink/80 backdrop-blur-xl border-b border-line' : 'border-b border-transparent'}`}>
       <div className="wrap grid h-[72px] grid-cols-[1fr_auto_1fr] items-center">
         <nav aria-label="Primary" className="hidden md:flex gap-10">
           {links.slice(0, 3).map((l) => <NavItem key={l.to} {...l} />)}

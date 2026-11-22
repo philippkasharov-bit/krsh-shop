@@ -21,3 +21,11 @@ export const soldOut = (p: Product, size: number) => (p.id * 7 + size * 3) % 11 
 export const money = (n: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n)
 export const FREE_SHIPPING_AT = 250
+
+/** Edition mark for limited releases. */
+export const edition = (p: Product) => (p.badge === 'limited' ? 'Edition of 200' : null)
+
+/** Approximate conversions for the size guide (US men's). */
+export const sizeRow = (us: number) => ({
+  us, eu: us + 33, uk: us - 1, cm: Math.round((25 + (us - 7) * 0.85) * 10) / 10,
+})

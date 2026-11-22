@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { money, slugOf, type Product } from '../lib/products'
+import { edition, money, slugOf, type Product } from '../lib/products'
 import { useStore } from '../lib/store'
 import { EASE } from '../lib/motion'
 
@@ -23,7 +23,7 @@ export default function ProductCard({ p, index = 0 }: { p: Product; index?: numb
           <h3 className="display t-4">{p.name.replace('KRSH ', '')}</h3>
           <span className="font-mono text-sm text-ivory-dim">{money(p.price)}</span>
         </div>
-        <p className="eyebrow mt-1">{p.color}</p>
+        <p className="eyebrow mt-1 flex justify-between gap-4"><span>{p.color}</span>{edition(p) && <span className="text-gold">{edition(p)}</span>}</p>
       </Link>
       <button onClick={() => toggleWish(p.id)} aria-pressed={saved} aria-label={`${saved ? 'Remove' : 'Save'} ${p.name} ${saved ? 'from' : 'to'} wishlist`}
         className="absolute right-3 top-3 grid h-10 w-10 place-items-center bg-ink transition-colors hover:bg-ink-3">
