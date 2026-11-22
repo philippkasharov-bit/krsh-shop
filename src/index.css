@@ -19,7 +19,7 @@
   --color-gold: #c9a96a;
   --color-gold-deep: #9c7f45;
   --color-oxblood: #7a2e2a;
-  --font-display: 'Tanker', 'Rozha One', 'Times New Roman', serif; /* alt: 'Melodrama' */
+  --font-display: 'Tanker', 'Rozha One', 'Times New Roman', serif;
   --font-sans: 'Switzer', 'Familjen Grotesk Variable', system-ui, sans-serif;
   --font-mono: 'Martian Mono Variable', ui-monospace, monospace;
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
