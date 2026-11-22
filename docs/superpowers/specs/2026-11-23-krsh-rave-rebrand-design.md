@@ -1,6 +1,6 @@
 # KRSH rave-wear rebrand: design
 
-Status: awaiting approval. Size: project. Builder check: read by the author (no subagent, per user's token rules).
+Status: approved 2026-11-23. Size: project. Builder check: read by the author (no subagent, per user's token rules).
 
 ## Intent
 KRSH stops being a sneaker house and becomes a **rave clothing brand** with a real, unique identity. The user found the old catalog (clean black/white sneakers) generic. Fictional/demo disclaimers stay.
