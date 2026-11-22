@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Vanilla HTML/CSS/JS, no build step, no framework — deliberate, to keep DOM/CSS/JS reasoning fully visible for review. GSAP + ScrollTrigger for scroll animation, Lenis for smooth scroll, Fontshare (Clash Display + Satoshi) for type.
+Vite + React 19 + TypeScript + Tailwind CSS v4, React Router, Motion (animation), Lenis (smooth scroll), `@google/model-viewer` (lazy-loaded 3D). Fraunces / Inter / JetBrains Mono self-hosted via Fontsource. The previous vanilla HTML/CSS/JS build is archived in `legacy/`.
 
 ## Users
 
@@ -31,7 +31,7 @@ Live structure: `index.html` → `catalog.html` → `product.html?id=N` → cart
 - No backend: cart, checkout, and wishlist are demo-only — no real payment processing, no cross-device persistence.
 - Product imagery is Unsplash stock, not a real catalog shoot.
 - Built solo, not shipped to real users, so some flows (e.g. checkout) are intentionally simplified vs. a production store.
-- No framework/build step is a permanent constraint, not a temporary one — future work should keep reasoning visible in plain HTML/CSS/JS rather than introducing tooling.
+- The stack changed from vanilla to Vite + React in the v3 rebuild (decision by the author). Keep the build lean and lazy-load heavy chunks (3D).
 
 ## Brand Commitments
 

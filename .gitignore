@@ -1,3 +1,4 @@
-.impeccable/
 node_modules/
+dist/
+.impeccable/
 tools/case-study/*.pptx

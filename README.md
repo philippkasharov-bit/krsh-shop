@@ -1,71 +1,27 @@
-# KRSH — Streetwear & Sneakers
+# KRSH — Footwear, finished by hand
 
-A self-initiated e-commerce portfolio project: a fictional streetwear/sneaker
-brand built to demonstrate front-end craft — visual design system, full
-purchase flow, and production-grade polish (accessibility, performance,
-SEO) — with no backend and no framework.
+A fictional luxury sneaker house, built as a front-end portfolio piece. **v3** is a ground-up rebuild: Vite, React 19, TypeScript and Tailwind v4, with a luxury design system (see `DESIGN.md`).
 
-**Live structure:** `index.html` → `catalog.html` → `product.html?id=N` →
-cart drawer → `checkout.html`. Also: `about.html`, `faq.html`, `contact.html`,
-`404.html`.
+```
+npm install
+npm run dev      # local dev server
+npm run build    # type-check + production build to dist/
+npm run preview  # serve the production build
+```
 
-## Why this exists
+## Journey
+Home → Collection (filter, sort, search, 3/4-up) → Product (photo + 3D view, sizes with sold-out states, sticky buy bar, reviews) → Bag drawer → Checkout (inline validation, order confirmation). Also: Saved pairs, Maison, Ateliers (illustrative map + contact form), Care & FAQ, 404.
 
-Most junior portfolios show a homepage mockup. This project instead builds
-the whole customer journey — browse, filter, view a product, add to cart,
-check out — because that's where real UX problems live (empty states, cart
-math, form validation, a confusing step), not on the hero.
+## Honesty
+No backend. Cart and wishlist persist in `localStorage`. Checkout takes no payment. Products, reviews and stores are fictional and labelled as such. Prices are in USD (previously roubles ÷ 100).
 
-## Design system
-
-**Visual identity:** stencil/spray-cut aesthetic — every interactive
-surface (buttons, cards, badges) uses a hand-tuned `clip-path: polygon()`
-to read as spray-stencilled rather than a soft rounded rectangle. Paired
-with a disciplined grid underneath so the "chaos" stays readable.
-
-**Motion:** a custom canvas-based graffiti engine (`graffiti.js`) — floating
-icon particles, an interactive spray-paint cursor, and scroll-triggered SVG
-"tag" art — layered on top of GSAP + ScrollTrigger + Lenis for scroll-linked
-reveals. All of it is gated behind `prefers-reduced-motion`: the continuous
-canvas loops don't start at all, GSAP tweens collapse to instant via
-`gsap.globalTimeline.timeScale(50)`, and Lenis's inertia scroll is skipped
-in favor of native scroll.
-
-**Data:** all 15 products live in one place, `products-data.js`
-(`window.KRSH_PRODUCTS`), consumed by both the catalog grid (`catalog.js`)
-and the dynamic product page (`product.html?id=N`). One source of truth
-instead of duplicating product HTML per page.
+## Structure
+- `src/lib/products.ts` + `src/data/products.json`: single source of truth for the 13 products.
+- `src/lib/store.tsx`: cart + wishlist context. `src/lib/motion.tsx`: shared reveal primitives.
+- `legacy/`: the previous vanilla site, kept for reference.
 
 ## Accessibility
+Skip link, focus-visible rings, labelled controls, `aria-live` quantity and status regions, modal cart drawer with Escape and focus handling, and full `prefers-reduced-motion` support.
 
-Audited with Lighthouse (mobile + desktop) to a clean 100/100/100/100
-(Accessibility / Best Practices / SEO / agentic-browsing). Notable fixes
-made during that pass, kept here because the *why* is easy to lose:
-
-- **Clip-path clips outlines.** Any element with a stencil `clip-path` was
-  silently swallowing its own focus ring — a positive-offset outline gets
-  clipped by the same polygon as the element. Fixed with a global
-  `:focus-visible` rule that uses a *negative* `outline-offset` on those
-  elements so the ring draws inside the cut shape instead of outside it.
-- **Decorative marquee text failed contrast.** The scrolling brand strip
-  used low-opacity text for a "ghosted" look; contrast-checked opacities
-  against the actual background color instead of eyeballing it.
-- **Cart badge vs. aria-label mismatch.** The cart button's `aria-label`
-  ("Open cart") didn't include the visible item-count badge, which axe
-  flags as a screen-reader/visual mismatch. Fixed by syncing the label with
-  the live count (`Open cart, 2 items`) whenever the cart updates.
-
-## Known trade-offs (being upfront, not hiding them)
-
-- No backend — cart/checkout/wishlist are demo-only (localStorage,
-  no real payment or persistence across devices).
-- Product imagery is Unsplash stock, not a real catalog shoot.
-- Built solo as a portfolio piece, not shipped to real users — so some
-  decisions (e.g. checkout flow) are simplified vs. a production store.
-
-## Stack
-
-Vanilla HTML/CSS/JS. GSAP + ScrollTrigger for scroll animation, Lenis for
-smooth scroll, Fontshare (Clash Display + Satoshi) for type. No build step,
-no framework — deliberate, to keep the DOM/CSS/JS reasoning fully visible
-for review.
+## Inspiration
+The rebuild borrows ideas from the sites below. Several could not be fetched live in the build environment (network allowlist), so those influences come from prior knowledge rather than a fresh read: Motion, Anime.js, Motion Primitives, React Bits, Aceternity UI, Magic UI, 21st.dev, shadcn/ui, Mobbin, Httpster, Land-book, Component Gallery, getdesign.md, Refero Styles, awesome-design-md, Open Peeps, 3dicons, unDraw, Spline, mapcn, Uiverse. Only awesome-design-md was read live.

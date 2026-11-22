@@ -1,0 +1,127 @@
+import { Link } from 'react-router-dom'
+import { motion, useScroll, useTransform } from 'motion/react'
+import { useRef } from 'react'
+import { products, money, slugOf, categoryLabel, type Category } from '../lib/products'
+import { Fade, SplitReveal } from '../lib/motion'
+import ModelViewer from '../components/ModelViewer'
+import Marquee from '../components/Marquee'
+import ProductCard from '../components/ProductCard'
+import { useTitle } from '../lib/seo'
+
+const featured = products.filter((p) => p.badge === 'limited' || p.new).slice(0, 6)
+const cats: Category[] = ['low', 'high', 'boot', 'runner']
+
+export default function Home() {
+  useTitle()
+  const hero = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: hero, offset: ['start start', 'end start'] })
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
+  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const dune = products.find((p) => p.name === 'KRSH Dunk')!
+  const nums = [['2019', 'Founded in a garage'], ['200', 'Pairs per numbered release'], ['14', 'Days to return, no questions']]
+
+  return (
+    <>
+      {/* HERO — pinned type + 3D shoe (Spline-style interactive scene via model-viewer) */}
+      <section ref={hero} className="relative min-h-[100svh] overflow-hidden pt-[72px]">
+        <motion.img src="/images/hero-bg.webp" alt="" aria-hidden style={{ y }} className="absolute inset-0 h-[115%] w-full object-cover opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink" />
+        <motion.div style={{ opacity: fade }} className="wrap relative grid min-h-[calc(100svh-72px)] items-center gap-8 lg:grid-cols-[1.1fr_1fr]">
+          <div className="pt-16 lg:pt-0">
+            <p className="eyebrow mb-8">Spring / Summer 2026 · Numbered releases</p>
+            <SplitReveal className="display text-[clamp(56px,9.5vw,148px)]" text="Made to be worn slowly." />
+            <Fade delay={0.9}>
+              <p className="mt-10 max-w-md text-lg text-ivory-dim leading-relaxed">Full-grain leather, hand-finished soles and a quiet kind of confidence. Footwear from a house that started in a garage and never rushed since.</p>
+              <div className="mt-10 flex flex-wrap items-center gap-8">
+                <Link to="/shop" className="btn btn-gold">Explore the collection</Link>
+                <Link to="/maison" className="link-u">The Maison</Link>
+              </div>
+            </Fade>
+          </div>
+          <div className="relative h-[52vh] lg:h-[78vh]">
+            <div className="absolute left-1/2 top-1/2 h-[70%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-line" aria-hidden />
+            <ModelViewer src="/media/sneaker.glb" poster="/images/krsh-venom.webp" alt="Rotating 3D view of a KRSH sneaker" className="relative z-10 h-full w-full" />
+            <p className="eyebrow absolute bottom-0 right-0">Drag to rotate</p>
+          </div>
+        </motion.div>
+      </section>
+
+      <Marquee items={['Hand-numbered', 'Full-grain leather', 'Resoleable', 'Made in small runs']} />
+
+      {/* NEW & LIMITED */}
+      <section className="wrap mt-40">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-16">
+          <div>
+            <p className="eyebrow mb-4">01 — The edit</p>
+            <SplitReveal as="h2" className="display text-[clamp(40px,6vw,88px)]" text="New & limited." />
+          </div>
+          <Link to="/shop" className="link-u">View all {products.length} pairs</Link>
+        </div>
+        <div className="grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((p, i) => <ProductCard key={p.id} p={p} index={i} tall />)}
+        </div>
+      </section>
+
+      {/* STATEMENT / NUMBERS */}
+      <section className="wrap mt-48 grid gap-16 lg:grid-cols-[1fr_1.2fr] items-center">
+        <Fade><img src="/images/about-story.webp" alt="The KRSH workshop" loading="lazy" className="aspect-[4/5] w-full object-cover" /></Fade>
+        <div>
+          <p className="eyebrow mb-6">02 — The Maison</p>
+          <SplitReveal as="h2" className="display text-[clamp(36px,5vw,72px)]" text="Not louder. Better made." />
+          <Fade><p className="mt-8 max-w-lg text-ivory-dim leading-relaxed text-lg">We cut fewer styles, in smaller runs, and finish each pair by hand. The result is footwear that gets better the longer you own it.</p></Fade>
+          <dl className="mt-16 grid grid-cols-3 gap-6 border-t border-line pt-8">
+            {nums.map(([n, l]) => (
+              <div key={n}><dt className="display text-5xl text-gold">{n}</dt><dd className="eyebrow mt-3 leading-relaxed">{l}</dd></div>
+            ))}
+          </dl>
+          <Link to="/maison" className="link-u mt-12 inline-block">Read our story</Link>
+        </div>
+      </section>
+
+      {/* SHOP BY SILHOUETTE */}
+      <section className="wrap mt-48">
+        <p className="eyebrow mb-4">03 — Silhouettes</p>
+        <SplitReveal as="h2" className="display text-[clamp(40px,6vw,88px)] mb-16" text="Find your shape." />
+        <ul className="border-t border-line">
+          {cats.map((c) => {
+            const sample = products.find((p) => p.category === c)!
+            const n = products.filter((p) => p.category === c).length
+            return (
+              <li key={c} className="border-b border-line">
+                <Link to={`/shop?cat=${c}`} className="group flex items-center justify-between gap-6 py-8 md:py-10">
+                  <span className="display text-4xl md:text-7xl transition-all duration-700 group-hover:pl-6 group-hover:text-gold">{categoryLabel[c]}</span>
+                  <span className="flex items-center gap-8">
+                    <span className="eyebrow hidden sm:block">{n} pairs</span>
+                    <img src={`/${sample.img}`} alt="" loading="lazy" className="h-20 w-28 md:h-28 md:w-40 object-cover opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700" />
+                  </span>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
+
+      {/* LOOKBOOK */}
+      <section className="wrap mt-48">
+        <p className="eyebrow mb-4">04 — Lookbook</p>
+        <SplitReveal as="h2" className="display text-[clamp(40px,6vw,88px)] mb-16" text="Seen in the city." />
+        <div className="grid gap-6 md:grid-cols-12">
+          <Fade className="md:col-span-7"><img src="/images/lookbook-1.webp" alt="Lookbook: KRSH on the street" loading="lazy" className="aspect-[4/3] w-full object-cover" /></Fade>
+          <Fade className="md:col-span-5 md:mt-24" delay={0.1}><img src="/images/lookbook-2.webp" alt="Lookbook: detail of a leather upper" loading="lazy" className="aspect-[4/5] w-full object-cover" /></Fade>
+          <Fade className="md:col-span-5" delay={0.05}><img src="/images/lookbook-3.webp" alt="Lookbook: pair at dusk" loading="lazy" className="aspect-[4/5] w-full object-cover" /></Fade>
+          <Fade className="md:col-span-7 flex flex-col justify-end" delay={0.15}>
+            <p className="display text-3xl md:text-5xl max-w-xl">“{dune.name.replace('KRSH ', '')}” — {money(dune.price)}. Gum sole, quiet grey, loud presence.</p>
+            <Link to={`/shop/${slugOf(dune)}`} className="link-u mt-8 self-start">Shop the look</Link>
+          </Fade>
+        </div>
+      </section>
+
+      {/* SERVICE STRIP */}
+      <section className="wrap mt-48 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line">
+        {[['Complimentary shipping', 'On orders over $250'], ['14-day returns', 'Unworn, in the box'], ['Lifetime resoling', 'Send them back, we rebuild'], ['Authenticity card', 'Numbered and signed']].map(([t, d]) => (
+          <div key={t} className="bg-ink p-8"><h3 className="display text-2xl">{t}</h3><p className="mt-2 text-sm text-ivory-dim">{d}</p></div>
+        ))}
+      </section>
+    </>
+  )
+}

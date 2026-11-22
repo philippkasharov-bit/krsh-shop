@@ -1,17 +1,1 @@
-{
-  "version": "0.0.1",
-  "configurations": [
-    {
-      "name": "krsh-dev",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3004", "--no-clipboard", "."],
-      "port": 3004
-    },
-    {
-      "name": "pcash-dev",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3005", "--no-clipboard", "D:\\PCash\\Claude\\PCASHWEB"],
-      "port": 3005
-    }
-  ]
-}
+{ "version": "0.0.1", "configurations": [ { "name": "krsh-dev", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev", "--", "--port", "3004"], "port": 3004 } ] }
