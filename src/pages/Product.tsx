@@ -30,7 +30,7 @@ export default function Product() {
     <>
       <div className="wrap pt-28 grid gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
         {/* Gallery */}
-        <div>
+        <div className="lg:sticky lg:top-28 self-start">
           <nav aria-label="Breadcrumb" className="eyebrow mb-6"><Link to="/shop" className="hover:text-gold">Collection</Link> / {p.name}</nav>
           <div className="relative aspect-square lg:aspect-[5/6] bg-ink-2 overflow-hidden">
             <AnimatePresence mode="wait">
@@ -55,7 +55,7 @@ export default function Product() {
         </div>
 
         {/* Buy box — sticky */}
-        <div className="lg:sticky lg:top-28 self-start">
+        <div>
           {p.badge && <p className="eyebrow text-gold mb-4">{p.badge === 'new' ? 'New arrival' : `Limited · ${p.stock} remaining`}</p>}
           <h1 className="display t-1">{p.name.replace('KRSH ', '')}</h1>
           <div className="mt-6 flex items-center justify-between">

@@ -25,6 +25,7 @@
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+@layer base {
 html { background: var(--color-ink); color-scheme: dark; }
 body {
   margin: 0; font-family: var(--font-sans); color: var(--color-ivory);
@@ -33,6 +34,7 @@ body {
 ::selection { background: var(--color-gold); color: var(--color-ink); }
 img { display: block; max-width: 100%; }
 button { cursor: pointer; font: inherit; color: inherit; }
+}
 
 .display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; line-height: 0.98; text-wrap: balance; }
 .display em { font-style: normal; color: var(--color-gold); }

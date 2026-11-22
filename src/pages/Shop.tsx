@@ -65,7 +65,7 @@ export default function Shop() {
       ) : (
         <motion.div layout className={`mt-10 grid gap-x-8 gap-y-20 sm:grid-cols-2 ${dense ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
           <AnimatePresence mode="popLayout">
-            {list.map((p, i) => <ProductCard key={p.id} p={p} index={i} tall={!dense} />)}
+            {list.map((p, i) => <ProductCard key={p.id} p={p} index={i} />)}
           </AnimatePresence>
         </motion.div>
       )}

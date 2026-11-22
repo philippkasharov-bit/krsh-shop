@@ -19,7 +19,7 @@ export default function Wishlist() {
           <Link to="/shop" className="btn btn-gold mt-10">Browse the collection</Link>
         </div>
       ) : (
-        <div className="mt-16 grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">{list.map((p, i) => <ProductCard key={p.id} p={p} index={i} tall />)}</div>
+        <div className="mt-16 grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">{list.map((p, i) => <ProductCard key={p.id} p={p} index={i} />)}</div>
       )}
     </div>
   )

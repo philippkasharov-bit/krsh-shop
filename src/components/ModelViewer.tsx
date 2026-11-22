@@ -15,6 +15,6 @@ export default function ModelViewer({ src, poster, alt, autoRotate = true, class
     src, alt, poster, class: className, 'camera-controls': true, 'auto-rotate': autoRotate || undefined,
     'auto-rotate-delay': 0, 'rotation-per-second': '14deg', 'shadow-intensity': '1.2', 'shadow-softness': '1',
     exposure: '1.05', 'interaction-prompt': 'none', 'environment-image': 'neutral', loading: 'eager',
-    style: { width: '100%', height: '100%', background: 'transparent', '--poster-color': 'transparent' },
+    style: { width: '100%', height: '100%', background: 'transparent', '--poster-color': 'transparent', '--progress-bar-height': '0px', outline: 'none' },
   })
 }

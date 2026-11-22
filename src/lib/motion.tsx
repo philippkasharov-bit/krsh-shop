@@ -15,7 +15,7 @@ export function SplitReveal({ text, className = '', as = 'h1', delay = 0 }: {
       transition={{ staggerChildren: reduce ? 0 : 0.07, delayChildren: delay }}>
       {words.map((w, i) => (
         <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]">
-          <motion.span className="inline-block" style={{ marginRight: '0.26em' }}
+          <motion.span className="inline-block" style={{ marginRight: i < words.length - 1 ? '0.26em' : 0 }}
             variants={{ hidden: { y: reduce ? 0 : '110%' }, show: { y: 0 } } as Variants}
             transition={{ duration: 1.1, ease: EASE }}>{w}</motion.span>
         </span>

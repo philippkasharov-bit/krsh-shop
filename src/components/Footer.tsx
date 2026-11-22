@@ -12,6 +12,7 @@ export default function Footer() {
     <footer className="border-t border-line mt-section">
       <div className="wrap py-24 grid gap-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
+          <p className="eyebrow mb-6">Newsletter</p>
           <p className="display t-3 max-w-md">Letters from <em>the atelier.</em></p>
           <form onSubmit={submit} noValidate className="mt-10 max-w-md">
             <label htmlFor="nl" className="eyebrow">Email address</label>

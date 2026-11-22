@@ -21,13 +21,13 @@ export default function Ateliers() {
     <div className="wrap pt-40">
       <p className="eyebrow mb-4">Ateliers</p>
       <SplitReveal className="display t-1" text="Visit the houses." />
-      <div className="mt-20 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+      <div className="mt-20 grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-stretch">
         <Fade>
-          <div className="relative aspect-[16/10] border border-line bg-ink-2 overflow-hidden">
-            <svg viewBox="0 0 100 62" className="absolute inset-0 h-full w-full opacity-25" aria-hidden>
-              {Array.from({ length: 11 }).map((_, i) => <line key={'v' + i} x1={i * 10} x2={i * 10} y1="0" y2="62" stroke="#f3eee6" strokeWidth=".1" />)}
-              {Array.from({ length: 7 }).map((_, i) => <line key={'h' + i} y1={i * 10} y2={i * 10} x1="0" x2="100" stroke="#f3eee6" strokeWidth=".1" />)}
-              <path d="M8 22c6-8 18-10 26-6 6 3 8 9 4 15-5 7-10 10-16 8-8-3-18-5-14-17zM42 14c8-4 16-2 20 3 5 6 2 12 4 20 1 7-4 14-10 16-7 2-9-6-10-12-1-8-8-8-8-16 0-5 0-8 4-11zM66 18c8-4 22-4 28 4 4 6 1 14-6 17-9 3-12-2-18-4-6-3-10-12-4-17z" fill="none" stroke="#f3eee6" strokeWidth=".25" />
+          <div className="relative aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[420px] border border-line bg-ink-2 overflow-hidden">
+            <svg viewBox="0 0 100 62" preserveAspectRatio="none" className="absolute inset-0 h-full w-full opacity-30" aria-hidden>
+              {Array.from({ length: 11 }).map((_, i) => <line key={'v' + i} x1={i * 10} x2={i * 10} y1="0" y2="62" stroke="#f3eee6" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
+              {Array.from({ length: 7 }).map((_, i) => <line key={'h' + i} y1={i * 10} y2={i * 10} x1="0" x2="100" stroke="#f3eee6" strokeWidth="1" vectorEffect="non-scaling-stroke" />)}
+
             </svg>
             {stores.map((s, i) => (
               <button key={s.n} onClick={() => setSel(i)} aria-label={`${s.n} atelier`} aria-pressed={sel === i}
@@ -41,11 +41,11 @@ export default function Ateliers() {
             </div>
           </div>
         </Fade>
-        <ul className="border-t border-line self-start">
+        <ul className="border-t border-line flex flex-col">
           {stores.map((s, i) => (
-            <li key={s.n} className="border-b border-line">
-              <button onClick={() => setSel(i)} className={`flex w-full items-baseline justify-between py-5 text-left transition-colors ${sel === i ? 'text-gold' : ''}`}>
-                <span className="display text-3xl">{s.n}</span><span className="eyebrow">{s.h}</span>
+            <li key={s.n} className="border-b border-line flex-1">
+              <button onClick={() => setSel(i)} className={`flex h-full w-full items-center justify-between py-5 text-left transition-colors ${sel === i ? 'text-gold' : ''}`}>
+                <span className="display t-3">{s.n}</span><span className="eyebrow">{s.h}</span>
               </button>
             </li>
           ))}

@@ -8,7 +8,7 @@ const links = [
   { to: '/shop', label: 'Collection' },
   { to: '/maison', label: 'Maison' },
   { to: '/ateliers', label: 'Ateliers' },
-  { to: '/faq', label: 'Care & FAQ' },
+  { to: '/faq', label: 'Care' },
 ]
 
 export default function Header() {
@@ -25,17 +25,17 @@ export default function Header() {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-700 ${solid || menu ? 'bg-ink/80 backdrop-blur-xl border-b border-line' : 'border-b border-transparent'}`}>
-      <div className="wrap flex h-[72px] items-center justify-between">
+      <div className="wrap grid h-[72px] grid-cols-[1fr_auto_1fr] items-center">
         <nav aria-label="Primary" className="hidden md:flex gap-10">
-          {links.slice(0, 2).map((l) => <NavItem key={l.to} {...l} />)}
+          {links.slice(0, 3).map((l) => <NavItem key={l.to} {...l} />)}
         </nav>
-        <button className="md:hidden eyebrow !text-ivory" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
+        <button className="md:hidden eyebrow !text-ivory justify-self-start" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
           {menu ? 'Close' : 'Menu'}
         </button>
-        <Link to="/" aria-label="KRSH — home" className="absolute left-1/2 -translate-x-1/2 font-display text-[28px] tracking-[0.42em] pl-[0.42em]">KRSH</Link>
-        <div className="flex items-center gap-7">
-          <nav aria-label="Secondary" className="hidden md:flex gap-10">
-            {links.slice(2).map((l) => <NavItem key={l.to} {...l} />)}
+        <Link to="/" aria-label="KRSH — home" className="font-display text-[28px] tracking-[0.42em] pl-[0.42em]">KRSH</Link>
+        <div className="flex items-center justify-end gap-10">
+          <nav aria-label="Secondary" className="hidden md:flex">
+            {links.slice(3).map((l) => <NavItem key={l.to} {...l} />)}
           </nav>
           <Link to="/wishlist" className="eyebrow !text-ivory hidden sm:block" aria-label={`Wishlist, ${wish.length} saved`}>Saved{wish.length ? ` (${wish.length})` : ''}</Link>
           <button className="eyebrow !text-ivory" onClick={() => setDrawer(true)} aria-label={`Open bag, ${count} items`}>
