@@ -20,7 +20,7 @@ export default function Ateliers() {
   return (
     <div className="wrap pt-40">
       <p className="eyebrow mb-4">Ateliers</p>
-      <SplitReveal className="display text-[clamp(48px,8vw,120px)]" text="Visit the houses." />
+      <SplitReveal className="display t-1" text="Visit the houses." />
       <div className="mt-20 grid gap-10 lg:grid-cols-[1.5fr_1fr]">
         <Fade>
           <div className="relative aspect-[16/10] border border-line bg-ink-2 overflow-hidden">
@@ -53,8 +53,8 @@ export default function Ateliers() {
       </div>
       <p className="eyebrow mt-4">Fictional locations · Illustrative map</p>
 
-      <section className="mt-40 grid gap-16 lg:grid-cols-2">
-        <div><h2 className="display text-5xl md:text-7xl">Write to <em>us.</em></h2><p className="mt-6 text-ivory-dim max-w-sm">Questions about sizing, care or a release? Demo form: nothing is sent.</p></div>
+      <section className="mt-section grid gap-16 lg:grid-cols-2">
+        <div><h2 className="display t-2">Write to <em>us.</em></h2><p className="mt-6 text-ivory-dim max-w-sm">Questions about sizing, care or a release? Demo form: nothing is sent.</p></div>
         <form onSubmit={submit} noValidate className="space-y-6">
           <div><label className="eyebrow" htmlFor="cn">Name</label><input id="cn" className="field" autoComplete="name" /></div>
           <div><label className="eyebrow" htmlFor="ce">Email</label><input id="ce" className="field" type="email" value={e} onChange={(x) => setE(x.target.value)} autoComplete="email" /></div>

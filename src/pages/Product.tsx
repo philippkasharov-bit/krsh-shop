@@ -57,7 +57,7 @@ export default function Product() {
         {/* Buy box — sticky */}
         <div className="lg:sticky lg:top-28 self-start">
           {p.badge && <p className="eyebrow text-gold mb-4">{p.badge === 'new' ? 'New arrival' : `Limited · ${p.stock} remaining`}</p>}
-          <h1 className="display text-[clamp(44px,5.5vw,84px)]">{p.name.replace('KRSH ', '')}</h1>
+          <h1 className="display t-1">{p.name.replace('KRSH ', '')}</h1>
           <div className="mt-6 flex items-center justify-between">
             <p className="font-mono text-2xl">{money(p.price)}</p>
             <a href="#reviews" className="eyebrow hover:text-gold" aria-label={`${p.rating} out of 5 from ${p.reviewCount} reviews`}>★ {p.rating} · {p.reviewCount} reviews</a>
@@ -95,9 +95,9 @@ export default function Product() {
       </div>
 
       {/* Reviews */}
-      <section id="reviews" className="wrap mt-40 scroll-mt-28">
+      <section id="reviews" className="wrap mt-section scroll-mt-28">
         <p className="eyebrow mb-4">Reviews</p>
-        <h2 className="display text-5xl md:text-7xl">{p.rating} <span className="text-gold">/ 5</span></h2>
+        <h2 className="display t-2">{p.rating} <span className="text-gold">/ 5</span></h2>
         <p className="eyebrow mt-4">Demo reviews, written for this portfolio</p>
         <div className="mt-14 grid gap-px bg-line md:grid-cols-3 border border-line">
           {p.reviews.slice(0, 3).map((r) => (
@@ -111,8 +111,8 @@ export default function Product() {
       </section>
 
       {/* Complete the look */}
-      <section className="wrap mt-40">
-        <Fade><h2 className="display text-5xl md:text-7xl mb-14">You may also <em>like.</em></h2></Fade>
+      <section className="wrap mt-section">
+        <Fade><h2 className="display t-2 mb-14">You may also <em>like.</em></h2></Fade>
         <div className="grid gap-8 sm:grid-cols-3">{related.map((r, i) => <ProductCard key={r.id} p={r} index={i} />)}</div>
       </section>
 

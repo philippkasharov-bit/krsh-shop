@@ -41,14 +41,14 @@ export default function Checkout() {
   if (order) return (
     <div className="wrap pt-44 text-center max-w-2xl">
       <p className="eyebrow text-gold">Order {order}</p>
-      <h1 className="display text-[clamp(48px,8vw,110px)] mt-4">Thank <em>you.</em></h1>
+      <h1 className="display t-1 mt-4">Thank <em>you.</em></h1>
       <p className="mt-6 text-ivory-dim leading-relaxed">This was a demonstration. No payment was taken and nothing will ship, but this is the confirmation a real order would receive.</p>
       <Link to="/shop" className="btn btn-gold mt-10">Continue browsing</Link>
     </div>
   )
   if (lines.length === 0) return (
     <div className="wrap pt-44 text-center">
-      <h1 className="display text-6xl">Your bag is empty.</h1>
+      <h1 className="display t-1">Your bag is empty.</h1>
       <Link to="/shop" className="btn btn-gold mt-10">Browse the collection</Link>
     </div>
   )
@@ -67,7 +67,7 @@ export default function Checkout() {
   return (
     <div className="wrap pt-36 grid gap-16 lg:grid-cols-[1.3fr_1fr]">
       <form onSubmit={submit} noValidate>
-        <h1 className="display text-[clamp(44px,6vw,88px)]">Checkout</h1>
+        <h1 className="display t-1">Checkout</h1>
         <p className="mt-4 border border-gold/40 bg-gold/5 p-4 text-sm text-ivory-dim">Demo store. Please do not enter real payment details. Any 16-digit number works.</p>
 
         <fieldset className="mt-14 grid gap-x-8 sm:grid-cols-2">

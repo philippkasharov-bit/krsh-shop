@@ -6,6 +6,8 @@
 @import '@fontsource-variable/martian-mono';
 
 /* KRSH Maison — tokens (see DESIGN.md) */
+@utility mt-section { margin-top: clamp(96px, 12vw, 176px); }
+
 @theme {
   --color-ink: #0b0a09;
   --color-ink-2: #141210;
@@ -34,21 +36,27 @@ button { cursor: pointer; font: inherit; color: inherit; }
 
 .display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; line-height: 0.98; text-wrap: balance; }
 .display em { font-style: normal; color: var(--color-gold); }
+/* Type scale: one fluid ladder, used everywhere (no ad-hoc sizes) */
+.t-mega { font-size: clamp(56px, 11vw, 168px); }
+.t-1 { font-size: clamp(46px, 7vw, 108px); }
+.t-2 { font-size: clamp(36px, 5.2vw, 80px); }
+.t-3 { font-size: clamp(28px, 3.2vw, 44px); line-height: 1.05; }
+.t-4 { font-size: 24px; line-height: 1.1; }
 .eyebrow { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-ivory-dim); }
 .wrap { width: min(1440px, 100% - 48px); margin-inline: auto; }
 @media (min-width: 900px) { .wrap { width: min(1440px, 100% - 96px); } }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-  padding: 18px 36px; border: 1px solid var(--color-ivory); background: transparent;
-  font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
-  transition: background .5s var(--ease-lux), color .5s var(--ease-lux), border-color .5s var(--ease-lux);
+  padding: 18px 34px; border: 1px solid var(--color-ivory); color: var(--color-ivory);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 500;
+  background: linear-gradient(var(--color-ivory), var(--color-ivory)) no-repeat bottom / 100% 0%;
+  transition: background-size .55s var(--ease-lux), color .45s var(--ease-lux), border-color .45s;
 }
-.btn:hover { background: var(--color-ivory); color: var(--color-ink); }
-.btn-gold { background: var(--color-gold); border-color: var(--color-gold); color: var(--color-ink); }
-.btn-gold:hover { background: var(--color-ivory); border-color: var(--color-ivory); }
+.btn:hover { background-size: 100% 100%; color: var(--color-ink); }
+.btn-gold { background-color: var(--color-gold); border-color: var(--color-gold); color: var(--color-ink); }
 .btn:disabled { opacity: .35; pointer-events: none; }
-.link-u { position: relative; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; padding-bottom: 6px; }
+.link-u { position: relative; font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; padding-bottom: 6px; }
 .link-u::after { content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background: currentColor; transform-origin: right; transition: transform .6s var(--ease-lux); }
 .link-u:hover::after { transform: scaleX(0); }
 .nav-u::after { transform: scaleX(0); transform-origin: left; }

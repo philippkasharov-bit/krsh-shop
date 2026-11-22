@@ -35,7 +35,7 @@ export default function Shop() {
   return (
     <div className="wrap pt-40">
       <p className="eyebrow mb-4">The collection</p>
-      <SplitReveal className="display text-[clamp(48px,8vw,120px)]" text="All footwear." />
+      <SplitReveal className="display t-1" text="All footwear." />
 
       <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-y border-line py-5 sticky top-[72px] z-30 bg-ink/85 backdrop-blur-xl">
         <div className="flex flex-wrap gap-x-8 gap-y-2" role="group" aria-label="Filter by silhouette">

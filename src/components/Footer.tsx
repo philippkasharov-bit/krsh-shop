@@ -9,10 +9,10 @@ export default function Footer() {
     setState(/^\S+@\S+\.\S+$/.test(email) ? 'ok' : 'error')
   }
   return (
-    <footer className="border-t border-line mt-40">
+    <footer className="border-t border-line mt-section">
       <div className="wrap py-24 grid gap-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <p className="display text-4xl md:text-5xl max-w-md">Letters from <em>the atelier.</em></p>
+          <p className="display t-3 max-w-md">Letters from <em>the atelier.</em></p>
           <form onSubmit={submit} noValidate className="mt-10 max-w-md">
             <label htmlFor="nl" className="eyebrow">Email address</label>
             <div className="flex items-end gap-4">

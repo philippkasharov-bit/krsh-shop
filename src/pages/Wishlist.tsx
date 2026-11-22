@@ -11,7 +11,7 @@ export default function Wishlist() {
   return (
     <div className="wrap pt-40">
       <p className="eyebrow mb-4">Saved</p>
-      <h1 className="display text-[clamp(48px,8vw,120px)]">Your <em>shortlist.</em></h1>
+      <h1 className="display t-1">Your <em>shortlist.</em></h1>
       {list.length === 0 ? (
         <div className="py-28">
           <p className="display text-4xl">Nothing saved yet.</p>

@@ -26,7 +26,7 @@ export default function Faq() {
   return (
     <div className="wrap pt-40">
       <p className="eyebrow mb-4">Care & FAQ</p>
-      <SplitReveal className="display text-[clamp(48px,8vw,120px)]" text="Good questions." />
+      <SplitReveal className="display t-1" text="Good questions." />
       <div className="mt-24 space-y-24">
         {groups.map(([g, items]) => (
           <section key={g} className="grid gap-8 lg:grid-cols-[1fr_2fr]" aria-labelledby={g}>
