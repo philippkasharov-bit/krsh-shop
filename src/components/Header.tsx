@@ -32,7 +32,7 @@ export default function Header() {
         <button className="md:hidden eyebrow !text-ivory" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
           {menu ? 'Close' : 'Menu'}
         </button>
-        <Link to="/" aria-label="KRSH — home" className="absolute left-1/2 -translate-x-1/2 font-display text-[28px] tracking-[0.42em] pl-[0.42em]" style={{ fontVariationSettings: "'opsz' 144" }}>KRSH</Link>
+        <Link to="/" aria-label="KRSH — home" className="absolute left-1/2 -translate-x-1/2 font-display text-[28px] tracking-[0.42em] pl-[0.42em]">KRSH</Link>
         <div className="flex items-center gap-7">
           <nav aria-label="Secondary" className="hidden md:flex gap-10">
             {links.slice(2).map((l) => <NavItem key={l.to} {...l} />)}

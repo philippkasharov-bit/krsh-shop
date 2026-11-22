@@ -1,7 +1,9 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/fraunces/standard.css';
-@import '@fontsource-variable/inter';
-@import '@fontsource/jetbrains-mono/400.css';
+/* TEMP stand-ins for direction C "Brutal luxe". Target: Tanker/Melodrama (display) + Switzer (text), from Fontshare.
+   Swap by changing only the three --font-* tokens below. */
+@import '@fontsource/rozha-one';
+@import '@fontsource-variable/familjen-grotesk';
+@import '@fontsource-variable/martian-mono';
 
 /* KRSH Maison — tokens (see DESIGN.md) */
 @theme {
@@ -15,9 +17,9 @@
   --color-gold: #c9a96a;
   --color-gold-deep: #9c7f45;
   --color-oxblood: #7a2e2a;
-  --font-display: 'Fraunces Variable', 'Times New Roman', serif;
-  --font-sans: 'Inter Variable', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-display: 'Rozha One', 'Times New Roman', serif;
+  --font-sans: 'Familjen Grotesk Variable', system-ui, sans-serif;
+  --font-mono: 'Martian Mono Variable', ui-monospace, monospace;
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -25,15 +27,14 @@ html { background: var(--color-ink); color-scheme: dark; }
 body {
   margin: 0; font-family: var(--font-sans); color: var(--color-ivory);
   background: var(--color-ink); -webkit-font-smoothing: antialiased;
-  font-feature-settings: 'ss01', 'cv11';
 }
 ::selection { background: var(--color-gold); color: var(--color-ink); }
 img { display: block; max-width: 100%; }
 button { cursor: pointer; font: inherit; color: inherit; }
 
-.display { font-family: var(--font-display); font-weight: 300; letter-spacing: -0.02em; line-height: 0.95; font-variation-settings: 'opsz' 144, 'SOFT' 30; }
-.display em { font-style: italic; font-weight: 300; color: var(--color-gold); }
-.eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-ivory-dim); }
+.display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.015em; line-height: 0.98; text-wrap: balance; }
+.display em { font-style: normal; color: var(--color-gold); }
+.eyebrow { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-ivory-dim); }
 .wrap { width: min(1440px, 100% - 48px); margin-inline: auto; }
 @media (min-width: 900px) { .wrap { width: min(1440px, 100% - 96px); } }
 

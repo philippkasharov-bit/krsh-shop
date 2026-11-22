@@ -10,9 +10,9 @@ colors:
   gold: "#C9A96A"
   line: "rgba(243,238,230,0.12)"
 typography:
-  display: { fontFamily: "Fraunces Variable", fontWeight: 300, letterSpacing: "-0.02em", lineHeight: 0.95 }
-  body: { fontFamily: "Inter Variable", fontSize: "16px", lineHeight: 1.7 }
-  label: { fontFamily: "JetBrains Mono", fontSize: "11px", letterSpacing: "0.22em", textTransform: uppercase }
+  display: { fontFamily: "Rozha One (stand-in)", fontWeight: 400, letterSpacing: "-0.015em", lineHeight: 0.98 }
+  body: { fontFamily: "Familjen Grotesk Variable (stand-in)", fontSize: "16px", lineHeight: 1.7 }
+  label: { fontFamily: "Martian Mono Variable", fontSize: "10.5px", letterSpacing: "0.16em", textTransform: uppercase }
 rounded: { none: "0px" }
 spacing: { section: "160px", gutter: "48px" }
 motion: { ease: "cubic-bezier(0.22, 1, 0.36, 1)", reveal: "900-1100ms", hover: "500-700ms" }
@@ -30,7 +30,7 @@ Quiet luxury. A warm near-black canvas, ivory type, and a single gold accent use
 - `line`: all dividers and borders (1px).
 
 ## 3. Typography
-Fraunces at weight 300 for display, with an italic gold word as the signature flourish ("Made to be worn *slowly.*"). Inter for all reading text. JetBrains Mono in tracked uppercase for eyebrows, prices and sizes, which gives a catalogue/spec-sheet feel.
+Direction C, "Brutal luxe": heavy, characterful display type against a quiet grotesque, with tracked mono labels. Deliberately avoids popular fonts. **Current fonts are temporary stand-ins** (Rozha One / Familjen Grotesk / Martian Mono, via Fontsource). Target: Tanker or Melodrama (display) + Switzer (text), from Fontshare. Swap by editing only the three `--font-*` tokens in `src/index.css`. One display, one text, one label font; never a fourth. Gold marks emphasis via color, not italics.
 
 ## 4. Components
 Buttons: sharp, 1px border, uppercase 12px with 0.2em tracking; hover inverts. Cards: edge-to-edge image, slide-up "View details" bar, 1.4s slow zoom. Cart drawer: right-side dialog with free-shipping progress hairline. Size selector: 4-column hairline grid, sold-out sizes struck through. Accordion: serif titles, `+` rotates to `×`.
