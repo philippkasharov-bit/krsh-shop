@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Turn KRSH from a sneaker shop into a rave clothing brand: new 16-piece catalog, UV-acid identity, and a scroll-scrubbed video "Drops" piece.
+**Goal:** Turn KRSH into Pragmatic Hippy, a rave clothing brand: new 16-piece catalog, logo-based gold/purple identity, and a scroll-scrubbed video "Drops" piece.
 
 **Architecture:** One data source (`src/data/products.json` + `src/lib/products.ts`) drives every page; the catalog changes from shoe categories to four lines with per-kind sizes. Media is generated with Magnific (stills first, then image-to-video), encoded locally with ffmpeg, served from `public/`. The Drops piece is a pinned section that maps scroll progress to `video.currentTime`.
 
@@ -13,7 +13,7 @@
 ## Global Constraints
 - Lines and prices exactly as in the spec (16 pieces, USD).
 - Sizes: clothing `XS S M L XL`; shoes EU `36..46`; bag/visor `One size`.
-- One accent colour only: UV-acid (replaces gold). Palette graphite + bone.
+- Brand name Pragmatic Hippy; palette from logo: black, gold accent (#d4a64a), deep purple (#3a2350), crimson detail only. Logo files in public/brand/.
 - No fabricated reviews, ratings, press or real brands. Keep demo disclaimers.
 - Fonts stay on the Fontshare API; never commit font files (public repo, FFL).
 - Every Magnific video call: `simulate_cost` first; one test clip and user OK before the rest; total video budget agreed with the user before Task 6.
@@ -67,16 +67,16 @@
 
 **Files:** Modify `src/index.css`, all `*.tsx` using `gold`, `index.html` meta, `src/lib/seo.ts`, `src/pages/Maison.tsx`, `Faq.tsx`, `Ateliers.tsx`, `Home.tsx` copy, `src/components/Marquee.tsx`.
 
-- [ ] **Step 1:** Rename tokens `--color-gold` → `--color-acid` (value `#c6ff3d`), `--color-gold-deep` → `--color-acid-deep` (`#8fbf1f`); class `.btn-gold` → `.btn-acid`; replace every `gold` usage (`grep -rn gold src` must return 0). Check acid-on-ink and ink-on-acid contrast ≥ 4.5:1 for text sizes used.
+- [ ] **Step 1:** Keep `--color-gold` (retune to `#d4a64a`), add `--color-purple: #3a2350` and `--color-purple-2: #5b3a7a`; replace `--color-oxblood` by `--color-crimson: #8e1b2b`; logo in Header (dark version, ~44px) and Footer; wordmark "Pragmatic Hippy" replaces "KRSH" everywhere in copy/meta. Check gold-on-ink and ink-on-gold contrast ≥ 4.5:1 for text sizes used.
 - [ ] **Step 2:** Copy: tagline "Dress for the floor, wear it to the street."; meta title "KRSH — Rave wear, made after dark"; description keeps "fictional … portfolio build" disclaimer; Maison/Ateliers rewritten as a fictional warehouse-party label; FAQ: sizing (apparel + shoes), drops, returns; marquee items are line names and drop numbers.
 - [ ] **Step 3:** `npx tsc -b`; browser pass on Home, Maison, FAQ at 1280 and 375 px; one screenshot each width.
-- [ ] **Step 4:** Commit `feat: KRSH rave identity (acid accent, copy)`.
+- [ ] **Step 4:** Commit `feat: Pragmatic Hippy identity (logo, palette, copy)`.
 
 ### Task 4: Reference stills (16 product shots)
 
 **Files:** Create `public/images/drops/<slug>.webp` ×16, `docs/media-prompts.md` (prompts used, for reproducibility).
 
-- [ ] **Step 1:** Write one master style prompt in `docs/media-prompts.md`: studio packshot on graphite seamless, hard side light, acid rim light, garment on invisible form, square 1:1, no logos/text except "KRSH" where a print is called for, no people. Per piece: one line describing it from the spec catalog.
+- [ ] **Step 1:** Write one master style prompt in `docs/media-prompts.md`: studio packshot on graphite seamless, hard side light, gold rim light, faint purple haze, garment on invisible form, square 1:1, no logos/text except "KRSH" where a print is called for, no people. Per piece: one line describing it from the spec catalog.
 - [ ] **Step 2:** `simulate_cost` for `images_generate` with that prompt; report credits for 16 to the user.
 - [ ] **Step 3:** Generate Strobe Jacket only; `creations_read`; show the user; adjust prompt until approved.
 - [ ] **Step 4:** Generate the other 15; `creations_read` each; regenerate any that miss (max 2 retries each, then ask).
@@ -121,5 +121,5 @@
 
 - [ ] **Step 1:** Mobile menu uses `useDialog` (focus trap, Esc, scroll lock); verify with keyboard at 375 px.
 - [ ] **Step 2:** Regenerate `sitemap.xml` from `products` (16 product URLs + pages).
-- [ ] **Step 3:** Update DESIGN.md (acid token, lines), PRODUCT.md (rave wear), HANDOFF.md status.
+- [ ] **Step 3:** Update DESIGN.md (gold/purple tokens, logo, lines), PRODUCT.md (rave wear), HANDOFF.md status.
 - [ ] **Step 4:** `npm test && npx tsc -b && npm run build` all pass; commit `chore: menu a11y, sitemap, docs`.

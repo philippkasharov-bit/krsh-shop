@@ -7,8 +7,8 @@ KRSH stops being a sneaker house and becomes a **rave clothing brand** with a re
 
 ## Identity (proposal, user approved direction)
 - Tagline: "Dress for the floor, wear it to the street."
-- Mood: warehouse party, flyer culture, Y2K tech. Palette: graphite + bone + ONE UV-acid accent (replaces gold). Type: Tanker display + Switzer text (done).
-- Keep the name KRSH (user did not ask to change it).
+- Mood: warehouse party, flyer culture, Y2K tech. Palette from the logo: black + gold (primary accent) + deep purple (secondary tone) + crimson (rare detail only). UV-acid dropped. Type: Tanker display + Switzer text (done).
+- Brand name: **Pragmatic Hippy** (user, 2026-11-23). Logo: `public/brand/logo-dark.webp` (on black) and `logo-light.webp` (on white): sun/moon face, headphones, bat wings.
 
 ## Catalog (16 pieces, USD, user approved)
 - **Flash**: Strobe Jacket $320, Laser Corset Top $180, Glow Cargo $210, Chain Mail Tank $150
