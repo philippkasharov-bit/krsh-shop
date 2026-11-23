@@ -7,13 +7,16 @@
   "kind": "apparel",
   "badge": "limited",
   "img": "images/drops/strobe-jacket.webp",
-  "color": "Mirror silver",
+  "base": "Washed black",
+  "accent": "red",
+  "logo": "back",
+  "color": "Washed black / Red",
   "sku": "PH26-STJ",
   "stock": 20,
-  "desc": "Reflective shell that throws the strobe back at the room. Boxy, cropped at the hip, two-way zip.",
+  "desc": "Boxy cropped work jacket in washed black, red-stitched yoke and the sun-and-moon mark on the back. Built for a long night and the walk home.",
   "materials": [
-   "Retro-reflective bonded shell",
-   "Mesh lining",
+   "Heavy cotton canvas",
+   "Contrast red topstitching",
    "Two-way metal zip"
   ],
   "fit": "Boxy, cropped"
@@ -26,14 +29,17 @@
   "kind": "apparel",
   "badge": "limited",
   "img": "images/drops/laser-corset-top.webp",
-  "color": "Holo violet",
+  "base": "Charcoal",
+  "accent": "pink",
+  "logo": "lower-back",
+  "color": "Charcoal / Hot pink",
   "sku": "PH26-LCT",
   "stock": 57,
-  "desc": "Holographic mesh corset with adjustable straps. Catches every laser in the room.",
+  "desc": "Soft corset top in charcoal stretch twill with hot-pink lacing. Small mark on the lower back.",
   "materials": [
-   "Holographic stretch mesh",
-   "Boning in channels",
-   "Adjustable straps"
+   "Stretch cotton twill",
+   "Flat boning in channels",
+   "Pink lacing"
   ],
   "fit": "Fitted"
  },
@@ -45,13 +51,16 @@
   "kind": "apparel",
   "badge": "limited",
   "img": "images/drops/glow-cargo.webp",
-  "color": "UV bone",
+  "base": "Dark olive",
+  "accent": "acid",
+  "logo": "thigh",
+  "color": "Dark olive / Acid yellow",
   "sku": "PH26-GLC",
   "stock": 34,
-  "desc": "Cargo pants with UV-reactive panels that light up under blacklight. Six pockets, cinched ankles.",
+  "desc": "Loose cargo pants in dark olive ripstop. Acid-yellow pull tabs and a small mark on the left thigh.",
   "materials": [
    "Cotton ripstop",
-   "UV-reactive print panels",
+   "Acid-yellow pull tabs",
    "Toggle ankle cinch"
   ],
   "fit": "Relaxed, tapered"
@@ -64,13 +73,16 @@
   "kind": "apparel",
   "badge": "limited",
   "img": "images/drops/chain-mail-tank.webp",
-  "color": "Antique gold",
+  "base": "Washed black",
+  "accent": "orange",
+  "logo": "lower-back",
+  "color": "Washed black / Orange",
   "sku": "PH26-CMT",
   "stock": 71,
-  "desc": "Light metallic mesh vest that moves like chain mail. Wear it over nothing or over a tee.",
+  "desc": "Open-knit tank in washed black with an orange binding. Layers over a tee or on its own when it is hot.",
   "materials": [
-   "Metallic knit mesh",
-   "Soft bound edges"
+   "Open cotton knit",
+   "Orange bound edges"
   ],
   "fit": "Draped"
  },
@@ -82,13 +94,16 @@
   "kind": "apparel",
   "badge": null,
   "img": "images/drops/warehouse-hoodie.webp",
-  "color": "Washed black",
+  "base": "Charcoal",
+  "accent": "orange",
+  "logo": "back",
+  "color": "Charcoal / Orange",
   "sku": "PH26-WHH",
   "stock": 48,
-  "desc": "Heavy fleece, boxy cut, tonal sun and moon print on the back.",
+  "desc": "Heavy boxy hoodie in charcoal with orange drawcords. The mark sits on the back between the shoulders.",
   "materials": [
    "480 gsm cotton fleece",
-   "Tonal puff print",
+   "Orange flat drawcords",
    "Double-layer hood"
   ],
   "fit": "Boxy, dropped shoulder"
@@ -101,13 +116,16 @@
   "kind": "apparel",
   "badge": null,
   "img": "images/drops/flyer-tee.webp",
-  "color": "Bone",
+  "base": "Washed black",
+  "accent": "acid",
+  "logo": "back",
+  "color": "Washed black / Acid yellow",
   "sku": "PH26-FLT",
   "stock": 25,
-  "desc": "Heavyweight tee with a photocopied party-flyer graphic. Every print slightly different.",
+  "desc": "Heavyweight washed tee. One acid-yellow mark on the back, nothing on the front.",
   "materials": [
    "240 gsm cotton jersey",
-   "Screen print"
+   "Water-based print"
   ],
   "fit": "Regular"
  },
@@ -119,13 +137,16 @@
   "kind": "apparel",
   "badge": null,
   "img": "images/drops/utility-pant.webp",
-  "color": "Charcoal",
+  "base": "Deep plum",
+  "accent": "red",
+  "logo": "thigh",
+  "color": "Deep plum / Red",
   "sku": "PH26-UTP",
   "stock": 62,
-  "desc": "Wide-leg pant with strap details and a hidden zip pocket for the night out.",
+  "desc": "Wide-leg pant in deep plum twill with red webbing straps and a small mark on the thigh.",
   "materials": [
    "Cotton twill",
-   "Webbing straps",
+   "Red webbing straps",
    "Hidden zip pocket"
   ],
   "fit": "Wide leg"
@@ -138,13 +159,16 @@
   "kind": "apparel",
   "badge": null,
   "img": "images/drops/night-shell.webp",
-  "color": "Matte black",
+  "base": "Matte black",
+  "accent": "blue",
+  "logo": "back",
+  "color": "Matte black / Electric blue",
   "sku": "PH26-NSH",
   "stock": 39,
-  "desc": "Matte anorak with 3M reflective piping. Packs into its own pocket.",
+  "desc": "Light anorak in matte black with electric-blue zip pulls and the mark on the back. Packs into its own pocket.",
   "materials": [
    "Nylon taslan",
-   "3M reflective piping",
+   "Electric-blue zip pulls",
    "Packable"
   ],
   "fit": "Oversized"
@@ -157,13 +181,16 @@
   "kind": "apparel",
   "badge": "new",
   "img": "images/drops/baby-tee-2000.webp",
-  "color": "Purple chrome",
+  "base": "Charcoal",
+  "accent": "pink",
+  "logo": "chest",
+  "color": "Charcoal / Hot pink",
   "sku": "PH26-BT2",
   "stock": 76,
-  "desc": "Cropped baby tee with a metallic sun and moon print.",
+  "desc": "Cropped baby tee in charcoal rib with a small hot-pink mark on the chest.",
   "materials": [
    "Cotton-elastane rib",
-   "Metallic foil print"
+   "Pink chest print"
   ],
   "fit": "Cropped, fitted"
  },
@@ -175,13 +202,16 @@
   "kind": "apparel",
   "badge": "new",
   "img": "images/drops/low-rise-flare.webp",
-  "color": "Mid wash",
+  "base": "Black wash",
+  "accent": "blue",
+  "logo": "thigh",
+  "color": "Black wash / Electric blue",
   "sku": "PH26-LRF",
   "stock": 53,
-  "desc": "Washed denim flare that sits low, with gold hardware.",
+  "desc": "Low flared denim in a black wash with electric-blue back-pocket stitching and a small thigh mark.",
   "materials": [
    "12 oz denim",
-   "Gold-tone hardware"
+   "Blue contrast stitching"
   ],
   "fit": "Low rise, flared"
  },
@@ -193,12 +223,16 @@
   "kind": "apparel",
   "badge": "new",
   "img": "images/drops/chrome-puffer.webp",
-  "color": "Liquid gold",
+  "base": "Matte black",
+  "accent": "red",
+  "logo": "back",
+  "color": "Matte black / Red",
   "sku": "PH26-CHP",
   "stock": 30,
-  "desc": "Cropped puffer in a mirror finish. Warm enough for the queue, short enough for the floor.",
+  "desc": "Cropped puffer in matte black with a red lining that shows at the cuffs and hood. Mark on the back.",
   "materials": [
-   "Metallic coated shell",
+   "Matte nylon shell",
+   "Red lining",
    "Recycled fill"
   ],
   "fit": "Cropped, boxy"
@@ -211,13 +245,16 @@
   "kind": "apparel",
   "badge": "new",
   "img": "images/drops/velour-set.webp",
-  "color": "Deep purple",
+  "base": "Deep plum",
+  "accent": "orange",
+  "logo": "back",
+  "color": "Deep plum / Orange",
   "sku": "PH26-VLS",
   "stock": 67,
-  "desc": "Track top and pant in soft velour with gold piping.",
+  "desc": "Track top and pant in deep plum velour with orange piping. Mark on the back of the top.",
   "materials": [
    "Cotton velour",
-   "Gold piping",
+   "Orange piping",
    "Zip track top + pant"
   ],
   "fit": "Relaxed"
@@ -230,13 +267,16 @@
   "kind": "shoe",
   "badge": null,
   "img": "images/drops/strobe-sneaker.webp",
-  "color": "Chrome/clear",
+  "base": "Black",
+  "accent": "acid",
+  "logo": "heel",
+  "color": "Black / Acid yellow",
   "sku": "PH26-STS",
   "stock": 44,
-  "desc": "Chrome low-top on a translucent sole.",
+  "desc": "Low black skate-court sneaker with an acid-yellow heel tab carrying the mark.",
   "materials": [
-   "Metallic leather upper",
-   "Translucent rubber sole",
+   "Suede and leather upper",
+   "Rubber cupsole",
    "Padded collar"
   ]
  },
@@ -248,14 +288,17 @@
   "kind": "shoe",
   "badge": null,
   "img": "images/drops/court-hi.webp",
-  "color": "Black/gold",
+  "base": "Charcoal",
+  "accent": "red",
+  "logo": "heel",
+  "color": "Charcoal / Red",
   "sku": "PH26-CTH",
   "stock": 21,
-  "desc": "Oversized high-top built for a full night on your feet.",
+  "desc": "Chunky charcoal high-top with a red heel tab and ankle strap. Built for a full night on your feet.",
   "materials": [
    "Leather and mesh upper",
    "Cushioned midsole",
-   "Ankle strap"
+   "Red ankle strap"
   ]
  },
  {
@@ -266,13 +309,17 @@
   "kind": "onesize",
   "badge": null,
   "img": "images/drops/mini-shoulder-bag.webp",
-  "color": "Reflective black",
+  "base": "Black",
+  "accent": "blue",
+  "logo": "front",
+  "color": "Black / Electric blue",
   "sku": "PH26-MSB",
   "stock": 58,
-  "desc": "Small reflective bag on a chain. Fits phone, keys, earplugs.",
+  "desc": "Small black bag on a cord strap, electric-blue zip and a small mark on the front. Fits phone, keys, earplugs.",
   "materials": [
-   "Reflective coated nylon",
-   "Metal chain strap"
+   "Coated canvas",
+   "Blue zip",
+   "Cord strap"
   ]
  },
  {
@@ -283,13 +330,16 @@
   "kind": "onesize",
   "badge": null,
   "img": "images/drops/visor.webp",
-  "color": "Smoke/gold",
+  "base": "Smoke",
+  "accent": "pink",
+  "logo": "temple",
+  "color": "Smoke / Hot pink",
   "sku": "PH26-VSR",
   "stock": 35,
-  "desc": "Wraparound shield glasses with a gold frame.",
+  "desc": "Wraparound shield glasses, smoke lens, hot-pink mark on the temple arm.",
   "materials": [
    "Polycarbonate shield",
-   "Metal frame"
+   "Pink temple print"
   ]
  }
 ]
