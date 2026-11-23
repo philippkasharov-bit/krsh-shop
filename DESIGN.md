@@ -1,53 +1,62 @@
 ---
-name: KRSH Maison
-description: Luxury footwear house. Warm near-black canvas, ivory type, one restrained gold accent, light serif display.
+name: Pragmatic Hippy — Festival HUD
+description: Psy/rave festival shop. Black canvas, one gold accent, deep purple surfaces, thin HUD grid lines, ticket and wristband UI, motion on every detail.
 colors:
   ink: "#0B0A09"
   ink-2: "#141210"
   ink-3: "#1D1A17"
   ivory: "#F3EEE6"
   ivory-dim: "rgba(243,238,230,0.62)"
-  gold: "#C9A96A"
+  gold: "#D4A64A"
+  gold-deep: "#A57C2C"
+  purple: "#3A2350"
+  purple-2: "#5B3A7A"
+  crimson: "#8E1B2B"
   line: "rgba(243,238,230,0.12)"
+  garment-accents: { red: "#E0352B", orange: "#FF7A1A", acid: "#D7FF3A", blue: "#2F6BFF", pink: "#FF3D9A" }
 typography:
-  display: { fontFamily: "Rozha One (stand-in)", fontWeight: 400, letterSpacing: "-0.015em", lineHeight: 0.98 }
-  body: { fontFamily: "Familjen Grotesk Variable (stand-in)", fontSize: "16px", lineHeight: 1.7 }
+  display: { fontFamily: "Tanker (Fontshare API)", fontWeight: 400, letterSpacing: "-0.015em", lineHeight: 0.98 }
+  body: { fontFamily: "Switzer (Fontshare API)", fontSize: "16px", lineHeight: 1.7 }
   label: { fontFamily: "Martian Mono Variable", fontSize: "10.5px", letterSpacing: "0.16em", textTransform: uppercase }
 rounded: { none: "0px" }
 spacing: { section: "160px", gutter: "48px" }
-motion: { ease: "cubic-bezier(0.22, 1, 0.36, 1)", reveal: "900-1100ms", hover: "500-700ms" }
+motion: { see: "docs/MOTION-SPEC.md", easeOut: "cubic-bezier(0.16, 1, 0.3, 1)", snap: "cubic-bezier(0.34, 1.56, 0.64, 1)", beat: "128 BPM (469 ms)" }
 ---
 
-# Design System: KRSH Maison
+# Design System: Pragmatic Hippy — Festival HUD
 
 ## 1. Visual theme
-Quiet luxury. A warm near-black canvas, ivory type, and a single gold accent used only for emphasis (italic words, active states, primary CTA, numerals). Photography does the selling; the interface stays out of the way. No gradients on UI, no rounded corners, no shadows. Depth comes from hairline borders and blurred glass on fixed bars.
+A psytrance festival at night, seen through a heads-up display. Black canvas, gold light, purple haze, one bright accent per garment. Logo: sun/moon face, headphones, bat wings (`public/brand/`).
 
 ## 2. Color roles
-- `ink / ink-2 / ink-3`: page, raised surface, hover surface.
-- `ivory`: primary text and outline buttons. `ivory-dim`: body copy, secondary labels.
-- `gold`: the only accent. Keep scarce: one gold CTA per view.
-- `line`: all dividers and borders (1px).
+- **Gold** `#D4A64A` — the site's only accent: active states, prices on hover, stamps, progress. 8.8:1 on ink.
+- **Purple** — surfaces and haze only, never text (purple-2 is 2.2:1 on ink).
+- **Crimson** — rare detail.
+- **Garment accents** (red, orange, acid, blue, pink) — only on product-specific UI: wristband tags, hotspots, card sweeps. Never as site chrome.
 
 ## 3. Typography
-Direction C, "Brutal luxe": heavy, characterful display type against a quiet grotesque, with tracked mono labels. Deliberately avoids popular fonts. **Current fonts are temporary stand-ins** (Rozha One / Familjen Grotesk / Martian Mono, via Fontsource). Target: Tanker or Melodrama (display) + Switzer (text), from Fontshare. Swap by editing only the three `--font-*` tokens in `src/index.css`. One display, one text, one label font; never a fourth. Gold marks emphasis via color, not italics.
+Tanker for display (uppercase-feeling, heavy), Switzer for text, Martian Mono for HUD labels. Fonts load from the Fontshare API (licence forbids committing the files to this public repo).
 
-## 4. Components
-Buttons: sharp, 1px border, uppercase 12px with 0.2em tracking; hover inverts. Cards: edge-to-edge image, slide-up "View details" bar, 1.4s slow zoom. Cart drawer: right-side dialog with free-shipping progress hairline. Size selector: 4-column hairline grid, sold-out sizes struck through. Accordion: serif titles, `+` rotates to `×`.
+## 4. Components (`src/components/hud/`)
+- **HudGrid** — 120 px hairline grid + mono coordinates; draws in, drifts toward the cursor, skews with scroll speed.
+- **Wristband** — notched tag with an accent strip; used for lines, prices, counts.
+- **Ticket card** (`ProductCard`) — perforated stub, cursor tilt, accent sweep, price flip.
+- **Stamp** — rotating circular "Drop 01" mark, pulses on the beat.
+- **CutFrame** — image in a step / arch / diagonal frame that opens on view.
+- **Journey** — pinned 5-scene scroll piece on Home (`src/components/Journey.tsx`, data in `src/data/journey.ts`).
 
 ## 5. Layout
-12-column feel, max width 1440px, 48px mobile / 96px desktop gutters, 160px between sections. Numbered section eyebrows (01, 02…). Asymmetric image grids for editorial pages.
+Break the uniform grid: staggered columns, overlapping frames, cut-out shapes, numbered sections (01–04) with typed-in mono eyebrows. The plain `/shop` grid stays for fast, accessible browsing.
 
 ## 6. Motion
-All motion uses the single `ease-lux` curve. Headlines rise word-by-word from a mask; sections fade up once. Lenis smooth scroll; hero parallax. `prefers-reduced-motion` disables Lenis, parallax, grain and collapses all transitions.
+Every UI change moves; the full contract is `docs/MOTION-SPEC.md`. Transform/opacity/clip-path only; one particle canvas; reduced motion removes pin, scrub, particles, cursor and beat pulse.
 
 ## 7. Do / Don't
-- Do keep one accent, large serif headlines, generous space, real photography.
-- Don't add rounded corners, drop shadows, neon, or more than one gold element per fold.
-- Don't invent products, reviews or press. Everything on the site is fictional and labelled so.
+- Do: one gold accent in chrome; garment accents only near their garment; hairlines, not shadows.
+- Don't: gradients as decoration, rounded cards, more than two design elements on a garment, fake reviews or real brands.
 
 ## 8. Responsive
-Single-column under 768px. Header collapses to Menu. Product page gets a sticky bottom buy bar. Touch targets ≥ 40px.
+Under 768 px: journey tags become a bottom rail (dots stay on people), no custom cursor, half the particles, mobile menu is a focus-trapped dialog.
 
-## 9. Sources of ideas
-Token/section structure follows the awesome-design-md format. Luxury restraint (single scarce accent, sharp CTAs, uppercase tracked labels, full-bleed imagery) follows the Ferrari-style DESIGN.md example. Motion and component patterns are adapted from Motion, React Bits, Aceternity, Magic UI and shadcn conventions; map pins follow mapcn's marker idea. See README.
+## 9. Sources
+Logo (user). Motion references: spatialsites.co reel (state swap, look-closer zoom, labels), "boring hero sections" reel (stepped/arch/diagonal cuts, glowing arc), tech-fashion reel (HUD grid, push-in details).

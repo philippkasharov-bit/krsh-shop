@@ -8,52 +8,52 @@ web
 
 ## Stack
 
-Vite + React 19 + TypeScript + Tailwind CSS v4, React Router, Motion (animation), Lenis (smooth scroll), `@google/model-viewer` (lazy-loaded 3D). Fraunces / Inter / JetBrains Mono self-hosted via Fontsource. The previous vanilla HTML/CSS/JS build is archived in `legacy/`.
+Vite + React 19 + TypeScript + Tailwind CSS v4, React Router, Motion (`motion/react`), Lenis (smooth scroll), Vitest. Fonts: Tanker + Switzer via the Fontshare API, Martian Mono via Fontsource. Media tooling: `tools/catalog.mjs` (catalog JSON), `tools/composite-logo.mjs` (real logo onto packshots, with perspective), `tools/sitemap.mjs`.
 
 ## Users
 
-Front-end craft evaluators: recruiters/hiring managers, potential clients, and peer developers assessing UI/UX skill — not real shoppers. They're judging visual design system quality, full purchase-flow completeness, and production-grade polish (accessibility, performance, SEO), typically by clicking through the whole journey rather than skimming a single screen.
+Front-end craft evaluators: recruiters, hiring managers, potential clients and peer developers judging UI, UX and motion skill — not real shoppers.
 
 ## Product Purpose
 
-KRSH is a self-initiated, fictional streetwear/sneaker e-commerce brand built as a front-end portfolio piece. It exists to demonstrate that the author can execute a complete customer journey — browse, filter, view a product, add to cart, check out — not just a polished hero mockup, because that's where real UX problems (empty states, cart math, form validation, confusing steps) actually surface. Success means an evaluator experiences a coherent, accessible, production-quality flow end to end.
+Pragmatic Hippy is a fictional psy/rave festival clothing label built as a portfolio piece. The home page is a scroll journey through a festival (gate, main stage, market, close-up, tent shop) that ends in a shop where every piece is on display. Motion is the main differentiator.
 
 ## Positioning
 
-Most junior/portfolio front-end work stops at a homepage mockup. KRSH's differentiator is depth: a full, working purchase flow (home → catalog → product → cart → checkout) plus deliberate accessibility engineering (documented Lighthouse 100/100/100/100, specific fixes for clip-path-clipped focus rings, marquee contrast, cart-badge/aria-label sync) that a neighboring "pretty landing page" portfolio piece could not truthfully claim.
+Most portfolio shops stop at a homepage mockup. This one has depth (full purchase flow, real cart math, validation, empty states) and a signature scroll experience with motion on every detail.
 
 ## Operating Context
 
-Live structure: `index.html` → `catalog.html` → `product.html?id=N` → cart drawer → `checkout.html`, plus `about.html`, `faq.html`, `contact.html`, `404.html`. Cart and wishlist persist via `localStorage` only. All 15 products live in one source of truth, `products-data.js` (`window.KRSH_PRODUCTS`), consumed by `catalog.js` and the dynamic `product.html`.
+Routes: `/` (journey + edit + story + lines + lookbook), `/shop` (lines filter, search, sort), `/shop/:slug` (product), bag drawer, `/checkout`, `/wishlist`, `/maison` (Story), `/ateliers` (Pop-ups), `/faq`, 404. Data: `src/data/products.json` (16 pieces) and `src/data/journey.ts` (5 scenes).
 
 ## Capabilities and Constraints
 
-- No backend: cart, checkout, and wishlist are demo-only — no real payment processing, no cross-device persistence.
-- Product imagery is Unsplash stock, not a real catalog shoot.
-- Built solo, not shipped to real users, so some flows (e.g. checkout) are intentionally simplified vs. a production store.
-- The stack changed from vanilla to Vite + React in the v3 rebuild (decision by the author). Keep the build lean and lazy-load heavy chunks (3D).
+- No backend: cart, checkout and wishlist are demo-only (localStorage `ph-cart`, `ph-wish`), no payment, nothing ships.
+- Product shots and scene stills are AI-generated (Magnific); the logo on garments is the real logo composited in post, not generated.
+- Journey clips are made by the owner and dropped into `public/media/journey/`; until then scenes animate their stills.
+- Fontshare fonts must not be committed (licence, public repo).
 
 ## Brand Commitments
 
-- Name: KRSH. Tagline: "Your feet. Your rules." Founding story: started in a garage in 2019.
-- Voice: streetwear/underground-culture register — "No hype tax", "real kicks for the culture", direct and unpolished rather than corporate.
-- Visual identity (established, treat as binding unless a redesign is explicitly requested): stencil/spray-cut aesthetic — interactive surfaces (buttons, cards, badges) use hand-tuned `clip-path: polygon()` to read as spray-stencilled, on a disciplined grid so the "chaos" stays readable. Motion layer is a custom canvas graffiti engine (floating icon particles, interactive spray-paint cursor, scroll-triggered SVG "tag" art) layered on GSAP/ScrollTrigger/Lenis.
-- All motion is gated behind `prefers-reduced-motion`: canvas loops don't start, GSAP tweens collapse via `gsap.globalTimeline.timeScale(50)`, Lenis inertia scroll is skipped in favor of native scroll. This gating is a durable requirement for any future motion work.
+- Name: Pragmatic Hippy. Tagline: "Dress for the floor, wear it to the street."
+- Garments: hippy x streetwear, about 80% dark base + one bright accent, max two design elements, the logo placed per garment type (see `docs/media-prompts.md`).
+- Site palette: black, one gold accent, purple surfaces, crimson rarely (see DESIGN.md).
+- Keep the fictional/demo disclaimers visible.
 
 ## Evidence on Hand
 
-- 15 real product entries with prices, names, and images in `products-data.js` — treat as the only legitimate product catalog; do not invent additional products without adding them there.
-- No real customer testimonials, press, or sales data exist — do not fabricate any.
-- Trust-strip claims (free shipping over $200, secure checkout, 14-day returns, authenticity guaranteed) and the newsletter signup are fictional storefront conventions consistent with the portfolio premise, not verified business facts.
+- 16 catalog pieces in `src/data/products.json` — the only legitimate catalog; do not invent more.
+- No real customers, reviews, press or sales data exist — never fabricate any.
+- Pop-up cities are fictional nights named by district, not real addresses.
 
 ## Product Principles
 
-1. Depth over polish-only: every feature must work end to end (real cart math, real empty states, real validation), not just look right in a screenshot.
-2. Identity is disciplined chaos: the stencil/spray aesthetic and graffiti motion layer express the brand, but a strict grid and motion gating keep it usable and accessible — never let expression break function.
-3. No backend is a feature of the premise, not a gap to hide: be upfront in visible copy/docs about what's real vs. simulated.
-4. Accessibility is production-grade, not an afterthought: WCAG 2.2 AA is the durable bar; motion, contrast, and focus-visibility fixes made during the Lighthouse-100 pass must not regress.
-5. One source of truth for data (`products-data.js`) — never duplicate product HTML per page.
+1. Depth over screenshots: every feature works end to end.
+2. Motion everywhere, but purposeful and within the budget in `docs/MOTION-SPEC.md`.
+3. Be upfront about what is simulated.
+4. Accessibility is production-grade: WCAG 2.2 AA, keyboard reachable, reduced-motion path for everything.
+5. One source of truth for data.
 
 ## Accessibility & Inclusion
 
-WCAG 2.2 AA is the durable target. Preserve existing fixes: negative `outline-offset` focus rings on `clip-path`-cut elements (positive offsets get clipped by the polygon), contrast-checked marquee opacity against actual background color, and cart badge count synced into the cart button's `aria-label`. Full `prefers-reduced-motion` gating (canvas loops, GSAP timescale, Lenis native-scroll fallback) must be preserved in any motion work.
+WCAG 2.2 AA. Reduced motion removes pin, scrub, particles, custom cursor and beat pulses. Drawers and the mobile menu trap focus, close on Escape and return focus. Journey scenes are reachable by keyboard through the progress buttons; every product is also in `/shop`.
