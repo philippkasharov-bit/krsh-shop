@@ -1,6 +1,6 @@
 # Pragmatic Hippy: festival shop design (v2)
 
-Status: awaiting approval. Supersedes the "Drops" scroll piece, packshot style and Tasks 4–8 of `2026-11-23-krsh-rave-rebrand-design.md`. Tasks 1–3 there (catalog data, pages, logo, palette, copy) stay.
+Status: approved 2026-11-23. Supersedes the "Drops" scroll piece, packshot style and Tasks 4–8 of `2026-11-23-krsh-rave-rebrand-design.md`. Tasks 1–3 there (catalog data, pages, logo, palette, copy) stay.
 
 ## Intent
 The shop should feel like walking through a psy/rave festival and ending up at its market tent, where every piece is on display. Clothing is hippy mixed with streetwear, not flashy. Motion is the main differentiator.
