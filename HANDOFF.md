@@ -2,7 +2,7 @@
 Brand is now **Pragmatic Hippy** (logo in public/brand/). Branch ccr-7a56163f-n0juph, nothing pushed.
 - Spec: docs/superpowers/specs/2026-11-23-pragmatic-hippy-festival-design.md (approved). Plan: docs/superpowers/plans/2026-11-23-pragmatic-hippy-festival.md. Motion contract: docs/MOTION-SPEC.md. Ledger + rulings: .superpowers/sdd/2026-11-23-pragmatic-hippy-festival/progress.md (git-ignored).
 - Done: Tasks 1-5 (two-colour catalog + logo spots; 16 packshots with real logo via tools/composite-logo.mjs incl. --quad perspective; 5 journey stills; motion foundation; Journey on Home; HUD components + ticket cards on Home). Tests: npm test (18).
-- Clips: the user makes them. Drop mp4 (and optional webm/480p) in public/media/journey/ and set  on the scene in src/data/journey.ts; scrubbing + rest-breathing is already coded (untested without a file).
+- Clips: the user makes them. Drop mp4 (and optional webm/480p) in public/media/journey/ and set `clip` on the scene in src/data/journey.ts; scrubbing + rest-breathing is already coded (untested without a file).
 - Next: Task 6 = MOTION-SPEC rows for Product (add-to-bag morph + fly to bag, size sweep/shake, logo-spot push-in), Bag drawer (stepped edge, qty roll), Checkout (stamp), Story/Pop-ups/FAQ/Saved/404 in HUD style (Story still uses old images/about-story.webp), mobile menu focus trap via useDialog, sitemap.xml, DESIGN.md/PRODUCT.md, then final whole-branch review.
 - Unverified: reduced-motion paths (no toggle in the browser pane); clip scrub path.
 - Credits: ~3,600 Magnific credits spent of ~20,000.
