@@ -12,8 +12,9 @@ export default function Footer() {
     <footer className="border-t border-line mt-section">
       <div className="wrap py-24 grid gap-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
+          <img src="/brand/logo-dark.webp" alt="Pragmatic Hippy" width="160" height="160" loading="lazy" className="mb-10 h-40 w-40 object-contain" />
           <p className="eyebrow mb-6">Newsletter</p>
-          <p className="display t-3 max-w-md">Letters from <em>the atelier.</em></p>
+          <p className="display t-3 max-w-md">Hear about <em>the next drop.</em></p>
           <form onSubmit={submit} noValidate className="mt-10 max-w-md">
             <label htmlFor="nl" className="eyebrow">Email address</label>
             <div className="flex items-end gap-4">
@@ -22,20 +23,20 @@ export default function Footer() {
               <button className="link-u mb-4 shrink-0" type="submit">Subscribe</button>
             </div>
             <p id="nl-msg" role="status" className={`mt-3 text-sm ${state === 'error' ? 'text-[#e58a80]' : 'text-ivory-dim'}`}>
-              {state === 'ok' ? 'Thank you. This is a demo, so nothing was sent.' : state === 'error' ? 'Please enter a valid email address.' : 'Two letters a year. No hype.'}
+              {state === 'ok' ? 'Thank you. This is a demo, so nothing was sent.' : state === 'error' ? 'Please enter a valid email address.' : 'Drop alerts only. No spam.'}
             </p>
           </form>
         </div>
         <FooterCol title="Collection" items={[['/shop', 'All pieces'], ['/shop?line=flash', 'Flash'], ['/shop?line=street', 'Street'], ['/shop?line=y2k', 'Y2K'], ['/shop?line=gear', 'Gear']]} />
-        <FooterCol title="House" items={[['/maison', 'Maison KRSH'], ['/ateliers', 'Ateliers'], ['/faq', 'Care & FAQ'], ['/wishlist', 'Saved pairs']]} />
+        <FooterCol title="House" items={[['/maison', 'Our story'], ['/ateliers', 'Pop-ups'], ['/faq', 'Care & FAQ'], ['/wishlist', 'Saved pieces']]} />
         <div>
           <p className="eyebrow mb-6">About this site</p>
-          <p className="text-sm text-ivory-dim leading-relaxed">KRSH is a fictional brand and a front-end portfolio build. Products, reviews and stores are invented. There is no backend, payment or shipping.</p>
+          <p className="text-sm text-ivory-dim leading-relaxed">Pragmatic Hippy is a fictional brand and a front-end portfolio build. Products, reviews and stores are invented. There is no backend, payment or shipping.</p>
         </div>
       </div>
       <div className="border-t border-line">
         <div className="wrap py-6 flex flex-wrap justify-between gap-4 eyebrow">
-          <span>© 2026 KRSH Maison — Demo</span>
+          <span>© 2026 Pragmatic Hippy — Demo</span>
           <span>Fictional brand</span>
         </div>
       </div>

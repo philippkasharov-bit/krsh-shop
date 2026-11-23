@@ -6,8 +6,8 @@ import { EASE } from '../lib/motion'
 
 const links = [
   { to: '/shop', label: 'Collection' },
-  { to: '/maison', label: 'Maison' },
-  { to: '/ateliers', label: 'Ateliers' },
+  { to: '/maison', label: 'Story' },
+  { to: '/ateliers', label: 'Pop-ups' },
   { to: '/faq', label: 'Care' },
 ]
 
@@ -38,7 +38,7 @@ export default function Header() {
         <button className="md:hidden eyebrow !text-ivory justify-self-start py-4 pr-6" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
           {menu ? 'Close' : 'Menu'}
         </button>
-        <Link to="/" aria-label="KRSH — home" className="font-display text-[28px] tracking-[0.42em] pl-[0.42em]">KRSH</Link>
+        <Link to="/" aria-label="Pragmatic Hippy — home" className="flex items-center gap-3"><img src="/brand/logo-dark.webp" alt="" width="44" height="44" className="h-11 w-11 object-contain" /><span className="font-display text-[20px] tracking-[0.2em] uppercase hidden sm:inline">Pragmatic Hippy</span></Link>
         <div className="flex items-center justify-end gap-10">
           <nav aria-label="Secondary" className="hidden md:flex">
             {links.slice(3).map((l) => <NavItem key={l.to} {...l} />)}

@@ -18,7 +18,7 @@ export default function Home() {
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
   const dune = products.find((p) => p.name === "Chrome Puffer")!
-  const nums = [['2019', 'Founded in a garage'], ['200', 'Pairs per numbered release'], ['14', 'Days to return, no questions']]
+  const nums = [['16', 'Pieces this season'], ['200', 'Per numbered drop'], ['14', 'Days to return, tags on']]
 
   return (
     <>
@@ -28,25 +28,25 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink" />
         <motion.div style={{ opacity: fade }} className="wrap relative grid min-h-[calc(100svh-72px)] items-center gap-8 lg:grid-cols-[1.1fr_1fr]">
           <div className="pt-16 lg:pt-0">
-            <p className="eyebrow mb-8">Spring / Summer 2026 · Numbered releases</p>
-            <SplitReveal className="display t-1" text="Made to be worn slowly." />
+            <p className="eyebrow mb-8">Season 01 · Numbered drops</p>
+            <SplitReveal className="display t-1" text="Dress for the floor." />
             <Fade delay={0.9}>
-              <p className="mt-10 max-w-md text-lg text-ivory-dim leading-relaxed">Full-grain leather, hand-finished soles and a quiet kind of confidence. Footwear from a house that started in a garage and never rushed since.</p>
+              <p className="mt-10 max-w-md text-lg text-ivory-dim leading-relaxed">Reflective, metallic and built to move. Rave wear for the floor, the after and the walk home. Wear it to the street.</p>
               <div className="mt-10 flex flex-wrap items-center gap-8">
                 <Link to="/shop" className="btn btn-gold">Explore the collection</Link>
-                <Link to="/maison" className="link-u">The Maison</Link>
+                <Link to="/maison" className="link-u">Our story</Link>
               </div>
             </Fade>
           </div>
           <div className="relative h-[52vh] lg:h-[78vh]">
             <div className="absolute left-1/2 top-1/2 h-[70%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-line" aria-hidden />
-            <ModelViewer src="/media/sneaker.glb" poster="/images/krsh-venom.webp" alt="Rotating 3D view of a KRSH sneaker" className="relative z-10 h-full w-full" />
+            <ModelViewer src="/media/sneaker.glb" poster="/images/krsh-venom.webp" alt="Rotating 3D view of the Strobe Sneaker" className="relative z-10 h-full w-full" />
             <p className="eyebrow absolute bottom-0 inset-x-0 text-center">Drag to rotate</p>
           </div>
         </motion.div>
       </section>
 
-      <Marquee items={['Hand-numbered', 'Full-grain leather', 'Resoleable', 'Made in small runs']} />
+      <Marquee items={['Flash', 'Street', 'Y2K', 'Gear', 'Numbered drops', 'Made after dark']} />
 
       {/* NEW & LIMITED */}
       <section className="wrap mt-section">
@@ -64,10 +64,10 @@ export default function Home() {
 
       {/* STATEMENT / NUMBERS */}
       <section className="wrap mt-section grid gap-16 lg:grid-cols-[1fr_1.2fr] items-center">
-        <Fade><img src="/images/about-story.webp" alt="The KRSH workshop" loading="lazy" className="aspect-[4/5] w-full object-cover" /></Fade>
+        <Fade><img src="/images/about-story.webp" alt="Pragmatic Hippy studio" loading="lazy" className="aspect-[4/5] w-full object-cover" /></Fade>
         <div>
-          <p className="eyebrow mb-6">02 — The Maison</p>
-          <SplitReveal as="h2" className="display t-2" text="Not louder. Better made." />
+          <p className="eyebrow mb-6">02 — The story</p>
+          <SplitReveal as="h2" className="display t-2" text="Sun up, moon down." />
           <Fade><p className="mt-8 max-w-lg text-ivory-dim leading-relaxed text-lg">We cut fewer styles, in smaller runs, and finish each pair by hand. The result is footwear that gets better the longer you own it.</p></Fade>
           <dl className="mt-16 grid grid-cols-3 gap-6 border-t border-line pt-8">
             {nums.map(([n, l]) => (
@@ -104,9 +104,9 @@ export default function Home() {
       {/* LOOKBOOK */}
       <section className="wrap mt-section">
         <p className="eyebrow mb-4">04 — Lookbook</p>
-        <SplitReveal as="h2" className="display t-2 mb-16" text="Seen in the city." />
+        <SplitReveal as="h2" className="display t-2 mb-16" text="Seen after dark." />
         <div className="grid gap-6 md:grid-cols-3">
-          {[['lookbook-1', 'Lookbook: KRSH on the roof'], ['lookbook-2', 'Lookbook: detail of a leather upper'], ['lookbook-3', 'Lookbook: pair at dusk']].map(([f, alt], i) => (
+          {[['lookbook-1', 'Lookbook: Pragmatic Hippy at night'], ['lookbook-2', 'Lookbook: detail of a reflective panel'], ['lookbook-3', 'Lookbook: the walk home at dawn']].map(([f, alt], i) => (
             <Fade key={f} delay={i * 0.08}><img src={`/images/${f}.webp`} alt={alt} loading="lazy" className="aspect-[4/5] w-full object-cover" /></Fade>
           ))}
         </div>
@@ -118,7 +118,7 @@ export default function Home() {
 
       {/* SERVICE STRIP */}
       <section className="wrap mt-section grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-4 border border-line">
-        {[['Free shipping', 'On orders over $250'], ['14-day returns', 'Unworn, in the box'], ['Lifetime resoling', 'Send them back, we rebuild'], ['Numbered & signed', 'An authenticity card in every box']].map(([t, d]) => (
+        {[['Free shipping', 'On orders over $250'], ['14-day returns', 'Unworn, tags on'], ['Small drops', 'Made in runs of 200'], ['Numbered', 'A drop card in every box']].map(([t, d]) => (
           <div key={t} className="bg-ink p-8"><h3 className="display t-4">{t}</h3><p className="mt-2 text-sm text-ivory-dim">{d}</p></div>
         ))}
       </section>

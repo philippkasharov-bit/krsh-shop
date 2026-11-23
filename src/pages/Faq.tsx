@@ -5,19 +5,19 @@ import { useTitle } from '../lib/seo'
 const groups: [string, [string, string][]][] = [
   ['Orders & shipping', [
     ['How long does shipping take?', 'Standard delivery takes 3–5 business days. Express takes 1–2 business days for $15. Orders over $250 ship standard for free.'],
-    ['Can I track my order?', 'Yes. A tracking link is emailed when your pair leaves the atelier.'],
+    ['Can I track my order?', 'Yes. A tracking link is emailed when your order leaves the studio.'],
   ]],
   ['Returns', [
-    ['What is the return policy?', 'Return any pair within 14 days if it is unworn and in the original box.'],
-    ['Are limited releases returnable?', 'Numbered releases can be exchanged for size, but not refunded, once the run has closed.'],
+    ['What is the return policy?', 'Return any piece within 14 days if it is unworn with tags on.'],
+    ['Are numbered drops returnable?', 'Numbered drops can be exchanged for size, but not refunded, once the drop has closed.'],
   ]],
   ['Sizing', [
-    ['How do KRSH sizes run?', 'True to size in US men’s sizing. If you are between sizes, go up half a size. Boots run slightly narrow.'],
-    ['What if my size is sold out?', 'Sold-out sizes are struck through. Join the letters list and we will tell you when a run is restocked.'],
+    ['How do Pragmatic Hippy sizes run?', 'Clothing runs XS–XL and most pieces are cut boxy: size down for a closer fit. Shoes are EU sizes; between sizes, go up one.'],
+    ['What if my size is sold out?', 'Sold-out sizes are struck through. Join the list and we will tell you if a drop comes back.'],
   ]],
-  ['Care & resoling', [
-    ['How do I care for leather?', 'Brush after wear, condition monthly, and rest pairs for a day between wears with cedar trees.'],
-    ['Do you resole?', 'Every pair can be resoled by the atelier. This is a fictional promise made for a demo.'],
+  ['Care', [
+    ['How do I wash reflective and metallic pieces?', 'Cold, inside out, gentle cycle. Hang dry. No dryer, no iron: heat ruins reflective and foil finishes.'],
+    ['Will UV-reactive prints fade?', 'They soften slowly with washing. Wash less, air more. This is a fictional promise made for a demo.'],
   ]],
 ]
 
