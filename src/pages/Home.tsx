@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom'
-import { motion, useScroll, useTransform } from 'motion/react'
-import { useRef } from 'react'
 import { products, money, slugOf, lineLabel, LINES } from '../lib/products'
 import { Fade, SplitReveal } from '../lib/motion'
-import ModelViewer from '../components/ModelViewer'
+import Journey from '../components/Journey'
 import Marquee from '../components/Marquee'
 import ProductCard from '../components/ProductCard'
 import { useTitle } from '../lib/seo'
@@ -13,38 +11,13 @@ const cats = LINES
 
 export default function Home() {
   useTitle()
-  const hero = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({ target: hero, offset: ['start start', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
-  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
   const dune = products.find((p) => p.name === "Chrome Puffer")!
   const nums = [['16', 'Pieces this season'], ['200', 'Per numbered drop'], ['14', 'Days to return, tags on']]
 
   return (
     <>
-      {/* HERO — pinned type + 3D shoe (Spline-style interactive scene via model-viewer) */}
-      <section ref={hero} className="relative min-h-[100svh] overflow-hidden pt-[72px]">
-        <motion.img src="/images/hero-bg.webp" alt="" aria-hidden style={{ y }} className="absolute inset-0 h-[115%] w-full object-cover opacity-30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-transparent to-ink" />
-        <motion.div style={{ opacity: fade }} className="wrap relative grid min-h-[calc(100svh-72px)] items-center gap-8 lg:grid-cols-[1.1fr_1fr]">
-          <div className="pt-16 lg:pt-0">
-            <p className="eyebrow mb-8">Season 01 · Numbered drops</p>
-            <SplitReveal className="display t-1" text="Dress for the floor." />
-            <Fade delay={0.9}>
-              <p className="mt-10 max-w-md text-lg text-ivory-dim leading-relaxed">Reflective, metallic and built to move. Rave wear for the floor, the after and the walk home. Wear it to the street.</p>
-              <div className="mt-10 flex flex-wrap items-center gap-8">
-                <Link to="/shop" className="btn btn-gold">Explore the collection</Link>
-                <Link to="/maison" className="link-u">Our story</Link>
-              </div>
-            </Fade>
-          </div>
-          <div className="relative h-[52vh] lg:h-[78vh]">
-            <div className="absolute left-1/2 top-1/2 h-[70%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-line" aria-hidden />
-            <ModelViewer src="/media/sneaker.glb" poster="/images/drops/strobe-sneaker.webp" alt="Rotating 3D view of the Strobe Sneaker" className="relative z-10 h-full w-full" />
-            <p className="eyebrow absolute bottom-0 inset-x-0 text-center">Drag to rotate</p>
-          </div>
-        </motion.div>
-      </section>
+      {/* FESTIVAL JOURNEY — 5 scroll scenes (docs/MOTION-SPEC.md) */}
+      <Journey />
 
       <Marquee items={['Flash', 'Street', 'Y2K', 'Gear', 'Numbered drops', 'Made after dark']} />
 
