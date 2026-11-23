@@ -40,7 +40,7 @@ export default function Home() {
           </div>
           <div className="relative h-[52vh] lg:h-[78vh]">
             <div className="absolute left-1/2 top-1/2 h-[70%] aspect-square -translate-x-1/2 -translate-y-1/2 rounded-full border border-line" aria-hidden />
-            <ModelViewer src="/media/sneaker.glb" poster="/images/krsh-venom.webp" alt="Rotating 3D view of the Strobe Sneaker" className="relative z-10 h-full w-full" />
+            <ModelViewer src="/media/sneaker.glb" poster="/images/drops/strobe-sneaker.webp" alt="Rotating 3D view of the Strobe Sneaker" className="relative z-10 h-full w-full" />
             <p className="eyebrow absolute bottom-0 inset-x-0 text-center">Drag to rotate</p>
           </div>
         </motion.div>
