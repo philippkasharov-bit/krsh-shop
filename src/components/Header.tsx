@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useDialog } from '../lib/useDialog'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useTransform } from 'motion/react'
 import { useScrollVelocity } from '../lib/useVelocity'
@@ -16,6 +17,9 @@ export default function Header() {
   const { count, wish, setDrawer } = useStore()
   const [solid, setSolid] = useState(false)
   const [menu, setMenu] = useState(false)
+  const menuRef = useRef<HTMLElement>(null)
+  const closeMenu = useCallback(() => setMenu(false), [])
+  useDialog(menu, closeMenu, menuRef)
   const [hidden, setHidden] = useState(false)
   const { pathname } = useLocation()
   const vel = useScrollVelocity()
@@ -54,11 +58,12 @@ export default function Header() {
       </div>
       <AnimatePresence>
         {menu && (
-          <motion.nav id="mobile-menu" aria-label="Mobile" className="md:hidden overflow-hidden border-t border-line bg-ink"
+          <motion.nav ref={menuRef} id="mobile-menu" aria-label="Mobile" className="md:hidden overflow-hidden border-t border-line bg-ink"
             initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} transition={{ duration: 0.6, ease: EASE }}>
             <div className="wrap py-8 flex flex-col gap-6">
-              {[...links, { to: '/wishlist', label: 'Saved' }].map((l) => (
-                <NavLink key={l.to} to={l.to} className="display text-4xl">{l.label}</NavLink>
+              <button className="eyebrow !text-ivory self-end py-2" onClick={closeMenu}>Close menu</button>
+              {[...links, { to: '/wishlist', label: 'Saved' }].map((l, i) => (
+                <motion.div key={l.to} initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.48, ease: EASE, delay: 0.1 + i * 0.06 }}><NavLink to={l.to} className="display text-4xl">{l.label}</NavLink></motion.div>
               ))}
             </div>
           </motion.nav>
