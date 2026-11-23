@@ -46,7 +46,7 @@ export default function CartDrawer() {
                       </Link>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between gap-3"><h3 className="display text-xl">{p.name}</h3><span className="font-mono text-sm">{money(p.price * qty)}</span></div>
-                        <p className="eyebrow mt-1">{p.color} · US {size}</p>
+                        <p className="eyebrow mt-1">{p.color} · {size}</p>
                         {edition(p) && <p className="eyebrow mt-1 text-gold">{edition(p)}</p>}
                         <div className="mt-4 flex items-center justify-between">
                           <div className="flex items-center border border-line" role="group" aria-label={`Quantity for ${p.name}`}>

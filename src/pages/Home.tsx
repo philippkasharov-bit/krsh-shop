@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'motion/react'
 import { useRef } from 'react'
-import { products, money, slugOf, categoryLabel, type Category } from '../lib/products'
+import { products, money, slugOf, lineLabel, LINES } from '../lib/products'
 import { Fade, SplitReveal } from '../lib/motion'
 import ModelViewer from '../components/ModelViewer'
 import Marquee from '../components/Marquee'
 import ProductCard from '../components/ProductCard'
 import { useTitle } from '../lib/seo'
 
-const featured = products.filter((p) => p.badge === 'limited' || p.new).slice(0, 6)
-const cats: Category[] = ['low', 'high', 'boot', 'runner']
+const featured = products.filter((p) => p.badge !== null).slice(0, 6)
+const cats = LINES
 
 export default function Home() {
   useTitle()
@@ -17,7 +17,7 @@ export default function Home() {
   const { scrollYProgress } = useScroll({ target: hero, offset: ['start start', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-  const dune = products.find((p) => p.name === 'KRSH Dunk')!
+  const dune = products.find((p) => p.name === "Chrome Puffer")!
   const nums = [['2019', 'Founded in a garage'], ['200', 'Pairs per numbered release'], ['14', 'Days to return, no questions']]
 
   return (
@@ -55,7 +55,7 @@ export default function Home() {
             <p className="eyebrow mb-4">01 — The edit</p>
             <SplitReveal as="h2" className="display t-2" text="New & limited." />
           </div>
-          <Link to="/shop" className="link-u">View all {products.length} pairs</Link>
+          <Link to="/shop" className="link-u">View all {products.length} pieces</Link>
         </div>
         <div className="grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((p, i) => <ProductCard key={p.id} p={p} index={i} />)}
@@ -80,19 +80,19 @@ export default function Home() {
 
       {/* SHOP BY SILHOUETTE */}
       <section className="wrap mt-section">
-        <p className="eyebrow mb-4">03 — Silhouettes</p>
-        <SplitReveal as="h2" className="display t-2 mb-16" text="Find your shape." />
+        <p className="eyebrow mb-4">03 — Lines</p>
+        <SplitReveal as="h2" className="display t-2 mb-16" text="Pick your line." />
         <ul className="border-t border-line">
           {cats.map((c) => {
-            const sample = products.find((p) => p.category === c)!
-            const n = products.filter((p) => p.category === c).length
+            const sample = products.find((p) => p.line === c)!
+            const n = products.filter((p) => p.line === c).length
             return (
               <li key={c} className="border-b border-line">
-                <Link to={`/shop?cat=${c}`} className="group flex items-center justify-between gap-6 py-8 md:py-10">
-                  <span className="display t-2 transition-all duration-700 group-hover:pl-6 group-hover:text-gold">{categoryLabel[c]}</span>
+                <Link to={`/shop?line=${c}`} className="group flex items-center justify-between gap-6 py-8 md:py-10">
+                  <span className="display t-2 transition-all duration-700 group-hover:pl-6 group-hover:text-gold">{lineLabel[c]}</span>
                   <span className="flex items-center gap-8">
                     <img src={`/${sample.img}`} alt="" loading="lazy" className="hidden md:block h-24 w-24 object-cover opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700" />
-                    <span className="eyebrow w-20 text-right">{n} pairs</span>
+                    <span className="eyebrow w-20 text-right">{n} pieces</span>
                   </span>
                 </Link>
               </li>
@@ -111,7 +111,7 @@ export default function Home() {
           ))}
         </div>
         <Fade className="mt-12 flex flex-wrap items-end justify-between gap-6 border-t border-line pt-8">
-          <p className="display t-3 max-w-2xl">“{dune.name.replace('KRSH ', '')}” — {money(dune.price)}. Gum sole, quiet grey, loud presence.</p>
+          <p className="display t-3 max-w-2xl">“{dune.name}” — {money(dune.price)}. Mirror finish, cropped for the floor.</p>
           <Link to={`/shop/${slugOf(dune)}`} className="link-u">Shop the look</Link>
         </Fade>
       </section>

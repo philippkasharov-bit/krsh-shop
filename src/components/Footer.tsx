@@ -26,7 +26,7 @@ export default function Footer() {
             </p>
           </form>
         </div>
-        <FooterCol title="Collection" items={[['/shop', 'All footwear'], ['/shop?cat=low', 'Low tops'], ['/shop?cat=high', 'High tops'], ['/shop?cat=boot', 'Boots'], ['/shop?cat=runner', 'Runners']]} />
+        <FooterCol title="Collection" items={[['/shop', 'All pieces'], ['/shop?line=flash', 'Flash'], ['/shop?line=street', 'Street'], ['/shop?line=y2k', 'Y2K'], ['/shop?line=gear', 'Gear']]} />
         <FooterCol title="House" items={[['/maison', 'Maison KRSH'], ['/ateliers', 'Ateliers'], ['/faq', 'Care & FAQ'], ['/wishlist', 'Saved pairs']]} />
         <div>
           <p className="eyebrow mb-6">About this site</p>

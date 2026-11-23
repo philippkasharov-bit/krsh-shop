@@ -104,7 +104,7 @@ export default function Checkout() {
           {lines.map(({ product: p, size, qty }) => (
             <li key={`${p.id}-${size}`} className="flex gap-4 py-4">
               <img src={`/${p.img}`} alt="" className="h-20 w-20 object-cover" />
-              <div className="flex-1"><p className="display text-lg">{p.name}</p><p className="eyebrow">US {size} · Qty {qty}</p></div>
+              <div className="flex-1"><p className="display text-lg">{p.name}</p><p className="eyebrow">{size} · Qty {qty}</p></div>
               <p className="font-mono text-sm">{money(p.price * qty)}</p>
             </li>
           ))}

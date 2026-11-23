@@ -20,7 +20,7 @@ export default function ProductCard({ p, index = 0 }: { p: Product; index?: numb
           </span>
         </div>
         <div className="mt-5 flex items-baseline justify-between gap-4">
-          <h3 className="display t-4">{p.name.replace('KRSH ', '')}</h3>
+          <h3 className="display t-4">{p.name}</h3>
           <span className="font-mono text-sm text-ivory-dim">{money(p.price)}</span>
         </div>
         <p className="eyebrow mt-1 flex justify-between gap-4"><span>{p.color}</span>{edition(p) && <span className="text-gold">{edition(p)}</span>}</p>

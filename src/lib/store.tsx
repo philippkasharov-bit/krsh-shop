@@ -1,16 +1,29 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { products, type Product } from './products'
+import { products, sizesFor, type Product } from "./products"
 
-export interface CartLine { id: number; size: number; qty: number }
+export interface CartLine { id: number; size: string; qty: number }
 interface Ctx {
-  lines: { product: Product; size: number; qty: number }[]
+  lines: { product: Product; size: string; qty: number }[]
   count: number; subtotal: number
-  add: (id: number, size: number) => void
-  setQty: (id: number, size: number, qty: number) => void
-  remove: (id: number, size: number) => void
+  add: (id: number, size: string) => void
+  setQty: (id: number, size: string, qty: number) => void
+  remove: (id: number, size: string) => void
   clear: () => void
   wish: number[]; toggleWish: (id: number) => void
   drawer: boolean; setDrawer: (v: boolean) => void
+}
+/** Drop cart lines whose product or size no longer exists (old catalog, tampered storage). */
+export function sanitizeCart(raw: unknown): CartLine[] {
+  if (!Array.isArray(raw)) return []
+  return raw.filter((l): l is CartLine => {
+    if (!l || typeof l !== "object") return false
+    const p = products.find((x) => x.id === (l as CartLine).id)
+    return !!p && sizesFor(p).includes((l as CartLine).size) && Number.isInteger((l as CartLine).qty)
+  }).map(({ id, size, qty }) => ({ id, size, qty: Math.max(1, Math.min(9, qty)) }))
+}
+export function sanitizeWish(raw: unknown): number[] {
+  if (!Array.isArray(raw)) return []
+  return raw.filter((id): id is number => products.some((p) => p.id === id))
 }
 const StoreCtx = createContext<Ctx | null>(null)
 
@@ -20,13 +33,13 @@ function load<T>(key: string, fallback: T): T {
 function save(key: string, v: unknown) { try { localStorage.setItem(key, JSON.stringify(v)) } catch { /* storage unavailable */ } }
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [cart, setCart] = useState<CartLine[]>(() => load('krsh3-cart', []))
-  const [wish, setWish] = useState<number[]>(() => load('krsh3-wish', []))
+  const [cart, setCart] = useState<CartLine[]>(() => sanitizeCart(load<unknown>("ph-cart", [])))
+  const [wish, setWish] = useState<number[]>(() => sanitizeWish(load<unknown>("ph-wish", [])))
   const [drawer, setDrawer] = useState(false)
-  useEffect(() => save('krsh3-cart', cart), [cart])
-  useEffect(() => save('krsh3-wish', wish), [wish])
+  useEffect(() => save('ph-cart', cart), [cart])
+  useEffect(() => save('ph-wish', wish), [wish])
 
-  const add = useCallback((id: number, size: number) => {
+  const add = useCallback((id: number, size: string) => {
     setCart((c) => {
       const i = c.findIndex((l) => l.id === id && l.size === size)
       if (i >= 0) return c.map((l, j) => (j === i ? { ...l, qty: Math.min(l.qty + 1, 9) } : l))
@@ -34,9 +47,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     })
     setDrawer(true)
   }, [])
-  const setQty = useCallback((id: number, size: number, qty: number) =>
+  const setQty = useCallback((id: number, size: string, qty: number) =>
     setCart((c) => c.map((l) => (l.id === id && l.size === size ? { ...l, qty: Math.max(1, Math.min(9, qty)) } : l))), [])
-  const remove = useCallback((id: number, size: number) =>
+  const remove = useCallback((id: number, size: string) =>
     setCart((c) => c.filter((l) => !(l.id === id && l.size === size))), [])
   const clear = useCallback(() => setCart([]), [])
   const toggleWish = useCallback((id: number) =>

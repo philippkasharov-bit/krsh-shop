@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard'
 import { useTitle } from '../lib/seo'
 
 export default function Wishlist() {
-  useTitle('Saved pairs')
+  useTitle('Saved pieces')
   const { wish } = useStore()
   const list = products.filter((p) => wish.includes(p.id))
   return (
@@ -15,7 +15,7 @@ export default function Wishlist() {
       {list.length === 0 ? (
         <div className="py-28">
           <p className="display text-4xl">Nothing saved yet.</p>
-          <p className="mt-4 text-ivory-dim">Tap the heart on any pair to keep it here.</p>
+          <p className="mt-4 text-ivory-dim">Tap the heart on any piece to keep it here.</p>
           <Link to="/shop" className="btn btn-gold mt-10">Browse the collection</Link>
         </div>
       ) : (

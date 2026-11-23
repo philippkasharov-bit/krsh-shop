@@ -1,19 +1,20 @@
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import { products, categoryLabel, type Category } from '../lib/products'
+import { products, lineLabel, LINES, type Line } from '../lib/products'
 import ProductCard from '../components/ProductCard'
 import { SplitReveal } from '../lib/motion'
 import { useTitle } from '../lib/seo'
 
 const SORTS = { featured: 'Featured', 'price-asc': 'Price: low to high', 'price-desc': 'Price: high to low', new: 'Newest' } as const
 type Sort = keyof typeof SORTS
-const cats: ('all' | Category)[] = ['all', 'low', 'high', 'boot', 'runner']
+const cats: ("all" | Line)[] = ["all", ...LINES]
 
 export default function Shop() {
   useTitle('Collection')
   const [params, setParams] = useSearchParams()
-  const cat = (params.get('cat') as Category | null) ?? 'all'
+  const raw = params.get("line")
+  const cat: "all" | Line = LINES.includes(raw as Line) ? (raw as Line) : "all"
   const sort = (params.get('sort') as Sort | null) ?? 'featured'
   const [q, setQ] = useState('')
   const [dense, setDense] = useState(false)
@@ -25,23 +26,23 @@ export default function Shop() {
   }
 
   const list = useMemo(() => {
-    let l = products.filter((p) => (cat === 'all' || p.category === cat) && p.name.toLowerCase().includes(q.trim().toLowerCase()))
+    let l = products.filter((p) => (cat === 'all' || p.line === cat) && p.name.toLowerCase().includes(q.trim().toLowerCase()))
     if (sort === 'price-asc') l = [...l].sort((a, b) => a.price - b.price)
     if (sort === 'price-desc') l = [...l].sort((a, b) => b.price - a.price)
-    if (sort === 'new') l = [...l].sort((a, b) => Number(b.new) - Number(a.new))
+    if (sort === 'new') l = [...l].sort((a, b) => Number(b.badge === "new") - Number(a.badge === "new"))
     return l
   }, [cat, sort, q])
 
   return (
     <div className="wrap pt-40">
       <p className="eyebrow mb-4">The collection</p>
-      <SplitReveal className="display t-1" text="All footwear." />
+      <SplitReveal className="display t-1" text="All pieces." />
 
       <div className="mt-16 flex flex-wrap items-center justify-between gap-6 border-y border-line py-5 sticky top-[var(--hdr,72px)] transition-[top] duration-700 z-30 bg-ink/85 backdrop-blur-xl">
-        <div className="flex flex-wrap gap-x-8 gap-y-2" role="group" aria-label="Filter by silhouette">
+        <div className="flex flex-wrap gap-x-8 gap-y-2" role="group" aria-label="Filter by line">
           {cats.map((c) => (
-            <button key={c} aria-pressed={cat === c} onClick={() => set('cat', c)}
-              className={`link-u ${cat === c ? 'text-gold' : 'text-ivory-dim'}`}>{c === 'all' ? 'All' : categoryLabel[c]}</button>
+            <button key={c} aria-pressed={cat === c} onClick={() => set("line", c)}
+              className={`link-u ${cat === c ? 'text-gold' : 'text-ivory-dim'}`}>{c === 'all' ? 'All' : lineLabel[c]}</button>
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-6">
@@ -55,12 +56,12 @@ export default function Shop() {
         </div>
       </div>
 
-      <p className="eyebrow mt-6" role="status">{list.length} {list.length === 1 ? 'pair' : 'pairs'}</p>
+      <p className="eyebrow mt-6" role="status">{list.length} {list.length === 1 ? "piece" : "pieces"}</p>
 
       {list.length === 0 ? (
         <div className="py-32 text-center">
           <p className="display text-4xl">Nothing matches.</p>
-          <button className="btn mt-8" onClick={() => { setQ(''); set('cat', 'all') }}>Clear filters</button>
+          <button className="btn mt-8" onClick={() => { setQ(''); set("line", "all") }}>Clear filters</button>
         </div>
       ) : (
         <motion.div layout className={`mt-10 grid gap-x-8 gap-y-20 sm:grid-cols-2 ${dense ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
