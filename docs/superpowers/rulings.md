@@ -1,0 +1,23 @@
+# Decisions log (rulings) — Pragmatic Hippy build
+
+- Task 1: Ruling: user renamed brand to Pragmatic Hippy with logo; palette switched from UV-acid to logo gold/purple/crimson — spec+plan updated — cost if wrong: Task 3 token values only
+- Task 1: Ruling: removed sizeRow/categoryLabel/SIZES; SizeGuide/Shop/Home/Footer break until Task 2 — planned — cost: tsc red between tasks
+- Task 2: Ruling: storage keys renamed krsh3-* -> ph-* plus sanitize on load — old carts dropped cleanly — cost: users lose old demo carts (none real). Product images 404 until Task 4 (no placeholder existed) — cost: broken thumbnails between tasks.
+- Task 3: Ruling: kept routes /maison and /ateliers, relabelled Story and Pop-ups — avoids broken links — cost: URL wording mismatch. Pop-up cities use district names, not street addresses — avoids real-address implication. --color-purple-2 contrast 2.2:1 → surfaces only, never text.
+- Task 4: Ruling: packshots exported at 1600px q75 (not 2000px) — 2000px metallic texture exceeds 350KB budget; 1600 still covers 2.2x zoom of ~600px box — cost: slightly softer zoom
+- Task 4: Ruling: style v2 'new age' per user; v1 test discarded (135 credits)
+- Task 4: Ruling: style v3 minimal/2 elements per user; v2 discarded (135 credits)
+- Task 1: Ruling: accent distribution red 4, orange 3, acid 3, blue 3, pink 3; product names kept (Strobe/Chrome etc.) though garments are now less flashy — user approved names earlier — cost: name/visual mismatch, easy rename later
+- Task 2: Ruling: logo printed in #111 (dark) when the spot is accent-coloured (sneaker tabs, visor arm) — accent-on-accent would be invisible — cost: those 3 pieces' logos are dark not accent. Flyer Tee has no accent trim; the acid logo is its accent. Hoodie regenerated once (front view + glow): 16 + 1 = 17 images, 2,295 credits incl. jacket test.
+- Task 3: Ruling: user makes the clips; I ship posters + data hooks so clips drop in; scenes animate posters (scroll-driven zoom/pan + breathing + overlays) until clips exist — cost: less motion until clips land. Fixes per user: corset regenerated goth, cargo/tank/flare logos moved, shoes/visor perspective logos. Credits this round 675 (5 images); total ~3,600.
+- Task 4a: Ruling: logo is one raster, so 'sun rays rotate' is a conic-gradient ray ring behind the logo (loader, header) and the whole logo tilts with scroll velocity — cost: rays are not the logo's own rays. Reduced-motion branches written (useReducedMotion + CSS media query) but not emulated in the browser pane (no reduced-motion toggle) — unverified.
+- Task 4: Ruling: tags render only in the active scene; keyboard reaches other scenes via the focusable progress-HUD buttons (jump + then tab into tags); tent links all 16 on desktop — cost: one extra keypress per scene.
+- Task 4: Ruling: phones (<768px) show pinned dots + a bottom tag rail instead of floating tags (floating tags clipped during the sideways pan); tent on phones shows dots + "Browse all" only (16-tag rail covered the button) — cost: no per-piece links in the phone tent.
+- Task 4: Ruling: without user clips, scenes breathe via a 6 s 1.5% scale loop on the poster + lasers/particles; clip scrubbing + ±0.15 s breathing code ships for when clips are added (untested without a clip file) — cost: scrub path unverified.
+- Task 4: Ruling: removed ModelViewer, @google/model-viewer and public/media/sneaker.glb (unused after hero replacement).
+- Task 5: Ruling: CutFrame watches an unclipped wrapper with useInView (whileInView never fired on a fully clipped element in Chrome); arch is a 19-point polygon (inset round did not interpolate) — cost: none visible. Home story/lookbook reuse journey stills instead of old sneaker photos (about-story/lookbook-*.webp now only used by Story page until Task 6).
+- Task 6: Ruling: logo hotspot positions are per-piece (copied from the compositing table) not per logo type — cargo/flare logos sit off the type default — cost: table must be updated if a packshot is regenerated.
+- Task 6: Ruling: checkout field shake uses the Web Animations API on the existing wrapper (re-keying remounted the input and dropped focus) — cost: none.
+- Task 6: Ruling: order-confirmation stamp not exercised in the browser (would need a card number entered) — unverified.
+- Task 6: Ruling: related products became a drag rail of 6 (was a 3-up grid); cards don't tilt with drag velocity (spec row partly done) — cost: one micro-interaction missing.
+- Final review: self-review (no subagent per owner's CLAUDE.md). Fixed: journey re-rendered all scene layers every scroll frame → SceneLayer memoised with stable callbacks; fast-scroll test 99 fps avg, worst frame 49 ms (dev build). Lighthouse not run — unverified.

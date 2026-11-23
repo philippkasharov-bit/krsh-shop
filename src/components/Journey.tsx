@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { scenes, type Scene, type SceneCard } from '../data/journey'
@@ -26,18 +26,21 @@ function JourneyPinned() {
     if (s.index !== active) setActive(s.index)
     setLocal(s.local)
   })
-  const goTo = (i: number) => {
+  const activeRef = useRef(0)
+  activeRef.current = active
+  const goTo = useCallback((i: number) => {
     const el = section.current
     if (!el) return
     const top = el.getBoundingClientRect().top + window.scrollY + (i / N) * (el.offsetHeight - window.innerHeight) + 2
     const l = (window as unknown as { __lenis?: { scrollTo: (y: number, o?: object) => void } }).__lenis
     if (l) l.scrollTo(top, { duration: 1.2 }); else window.scrollTo({ top, behavior: 'smooth' })
-  }
+  }, [])
+  const focusScene = useCallback((i: number) => { if (activeRef.current !== i) goTo(i) }, [goTo])
   return (
     <section ref={section} aria-label="The festival journey" style={{ height: `${N * 150}vh` }} className="relative">
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-black">
         {scenes.map((s, i) => (
-          <SceneLayer key={s.id} scene={s} i={i} active={active === i} progress={scrollYProgress} onCardFocus={() => active !== i && goTo(i)} />
+          <SceneLayer key={s.id} scene={s} i={i} active={active === i} progress={scrollYProgress} onSceneFocus={focusScene} />
         ))}
         <Particles running />
         <Vignette />
@@ -49,9 +52,10 @@ function JourneyPinned() {
   )
 }
 
-function SceneLayer({ scene, i, active, progress, onCardFocus }: {
-  scene: Scene; i: number; active: boolean; progress: MotionValue<number>; onCardFocus: () => void
+const SceneLayer = memo(function SceneLayer({ scene, i, active, progress, onSceneFocus }: {
+  scene: Scene; i: number; active: boolean; progress: MotionValue<number>; onSceneFocus: (i: number) => void
 }) {
+  const onCardFocus = useCallback(() => onSceneFocus(i), [onSceneFocus, i])
   const localMv = useTransform(progress, (p) => Math.max(0, Math.min(1, p * N - i)))
   const x = useTransform(localMv, (l) => transformFor(scene.dir, l).x)
   const y = useTransform(localMv, (l) => transformFor(scene.dir, l).y)
@@ -115,7 +119,7 @@ function SceneLayer({ scene, i, active, progress, onCardFocus }: {
       )}
     </motion.div>
   )
-}
+})
 
 /** Wristband tag pinned to a person, with a leader line that draws in (MOTION-SPEC "Product tags"). */
 function Tag({ card, k, show, inv, onFocus, compact, dotOnly }: { card: SceneCard; k: number; show: boolean; inv: MotionValue<number>; onFocus: () => void; compact?: boolean; dotOnly?: boolean }) {
