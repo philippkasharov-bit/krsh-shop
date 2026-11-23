@@ -1,4 +1,4 @@
-import { animate, motion, useInView, useReducedMotion, type Variants } from 'motion/react'
+import { AnimatePresence, animate, motion, useInView, useReducedMotion, type Variants } from 'motion/react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 /** Motion tokens (docs/MOTION-SPEC.md). */
@@ -70,4 +70,18 @@ export function TypeIn({ text, className = '' }: { text: string; className?: str
     return () => clearInterval(t)
   }, [inView, reduce, text])
   return <p ref={ref} className={className} aria-label={text}><span aria-hidden>{text.slice(0, n)}<span className="opacity-0">{text.slice(n)}</span></span></p>
+}
+
+/** Number/text that rolls up when it grows and down when it shrinks (240 ms). */
+export function Roll({ value, className = '' }: { value: string | number; className?: string }) {
+  const prev = useRef(value)
+  const up = Number(String(value).replace(/[^\d.]/g, '')) >= Number(String(prev.current).replace(/[^\d.]/g, ''))
+  useEffect(() => { prev.current = value }, [value])
+  return (
+    <span className={`relative inline-flex overflow-hidden align-bottom ${className}`}>
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.span key={String(value)} className="inline-block" initial={{ y: up ? '100%' : '-100%' }} animate={{ y: 0 }} exit={{ y: up ? '-100%' : '100%' }} transition={{ duration: 0.24, ease: EASE_OUT }}>{value}</motion.span>
+      </AnimatePresence>
+    </span>
+  )
 }

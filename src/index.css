@@ -79,7 +79,8 @@ button { cursor: pointer; font: inherit; color: inherit; }
   width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--color-line);
   padding: 14px 0; font-size: 15px; color: var(--color-ivory); outline: none; transition: border-color .3s;
 }
-.field:focus { border-color: var(--color-gold); }
+.field { background: linear-gradient(var(--color-gold), var(--color-gold)) no-repeat left bottom / 0% 1px; transition: border-color .3s, background-size var(--d-small) var(--ease-out); }
+.field:focus { border-color: var(--color-line); background-size: 100% 1px; }
 .field[aria-invalid='true'] { border-color: #d96a5e; }
 .grain::after {
   content:''; position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .06; animation: grain-shift 1s steps(8) infinite;

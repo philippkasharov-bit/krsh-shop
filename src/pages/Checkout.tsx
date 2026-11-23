@@ -1,5 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
+import { EASE_OUT, EASE_SNAP } from '../lib/motion'
 import { useStore } from '../lib/store'
 import { FREE_SHIPPING_AT, money } from '../lib/products'
 import { useTitle } from '../lib/seo'
@@ -28,18 +30,22 @@ export default function Checkout() {
   useEffect(() => { if (order) (window as unknown as { __lenis?: { scrollTo: (n: number, o: object) => void } }).__lenis?.scrollTo(0, { immediate: true }) ?? window.scrollTo(0, 0) }, [order])
 
   const check = (k: string, v: string) => (rules[k][0].test(v.trim()) ? '' : rules[k][1])
+  const reduce = useReducedMotion()
   const submit = (e: FormEvent) => {
     e.preventDefault()
     const next: F = {}
     Object.keys(rules).forEach((k) => { const m = check(k, f[k] ?? ''); if (m) next[k] = m })
     setErrs(next)
-    if (Object.keys(next).length) { document.getElementById(Object.keys(next)[0])?.focus(); return }
-    setOrder('KR-' + Math.random().toString(36).slice(2, 8).toUpperCase())
+    if (Object.keys(next).length) { if (!reduce) Object.keys(next).forEach((id) => document.getElementById(id)?.parentElement?.animate([{ transform: "translateX(0)" }, { transform: "translateX(-6px)" }, { transform: "translateX(6px)" }, { transform: "translateX(-6px)" }, { transform: "translateX(6px)" }, { transform: "translateX(0)" }], { duration: 220 })); document.getElementById(Object.keys(next)[0])?.focus(); return }
+    setOrder('PH-' + Math.random().toString(36).slice(2, 8).toUpperCase())
     clear()
   }
 
   if (order) return (
     <div className="wrap pt-44 text-center max-w-2xl">
+      <motion.div aria-hidden className="mx-auto mb-10 grid h-40 w-40 place-items-center rounded-full border-2 border-gold text-gold" initial={reduce ? false : { scale: 1.4, rotate: 4, opacity: 0 }} animate={{ scale: 1, rotate: -8, opacity: 1 }} transition={{ duration: 0.48, ease: EASE_SNAP, delay: 0.3 }}>
+        <span className="font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em]">Order<br />received<br /><span className="opacity-70">(demo)</span></span>
+      </motion.div>
       <p className="eyebrow text-gold">Order {order}</p>
       <h1 className="display t-1 mt-4">Thank <em>you.</em></h1>
       <p className="mt-6 text-ivory-dim leading-relaxed">This was a demonstration. No payment was taken and nothing will ship, but this is the confirmation a real order would receive.</p>
@@ -54,14 +60,14 @@ export default function Checkout() {
   )
 
   const input = (k: string, label: string, props: Record<string, string> = {}) => (
-    <div className={props.span === '2' ? 'sm:col-span-2' : ''}>
+    <motion.div className={props.span === '2' ? 'sm:col-span-2' : ''}>
       <label htmlFor={k} className="eyebrow">{label}</label>
       <input id={k} className="field" value={f[k] ?? ''} aria-invalid={!!errs[k]} aria-describedby={errs[k] ? `${k}-e` : undefined}
         onChange={(e) => { setF({ ...f, [k]: e.target.value }); if (errs[k]) setErrs({ ...errs, [k]: '' }) }}
         onBlur={() => f[k] !== undefined && setErrs({ ...errs, [k]: check(k, f[k]) })}
         autoComplete={props.ac} inputMode={props.mode as 'numeric' | undefined} placeholder={props.ph} />
-      <p id={`${k}-e`} className="mt-1 h-5 text-sm text-[#e58a80]" role="alert">{errs[k]}</p>
-    </div>
+      <motion.p id={`${k}-e`} className="mt-1 h-5 text-sm text-[#e58a80]" role="alert" key={errs[k] || 'none'} initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.24, ease: EASE_OUT }}>{errs[k]}</motion.p>
+    </motion.div>
   )
 
   return (
