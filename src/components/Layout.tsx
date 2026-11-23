@@ -5,6 +5,9 @@ import Lenis from 'lenis'
 import Header from './Header'
 import Footer from './Footer'
 import CartDrawer from './CartDrawer'
+import Cursor from './Cursor'
+import PageTransition from './PageTransition'
+import Loader from './Loader'
 
 export default function Layout() {
   const { pathname, key } = useLocation()
@@ -44,9 +47,12 @@ export default function Layout() {
     <div className="grain">
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-gold focus:text-ink focus:px-4 focus:py-2">Skip to content</a>
       <Header />
-      <motion.main id="main" key={pathname} initial={{ opacity: reduce ? 1 : 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}><Outlet /></motion.main>
+      <motion.main id="main" key={pathname} initial={{ opacity: reduce ? 1 : 0, y: reduce ? 0 : 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: reduce ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}><Outlet /></motion.main>
       <Footer />
       <CartDrawer />
+      <PageTransition />
+      <Cursor />
+      <Loader />
     </div>
   )
 }

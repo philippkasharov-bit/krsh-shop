@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, useTransform } from 'motion/react'
+import { useScrollVelocity } from '../lib/useVelocity'
 import { useStore } from '../lib/store'
 import { EASE } from '../lib/motion'
 
@@ -17,6 +18,8 @@ export default function Header() {
   const [menu, setMenu] = useState(false)
   const [hidden, setHidden] = useState(false)
   const { pathname } = useLocation()
+  const vel = useScrollVelocity()
+  const logoRot = useTransform(vel, [-1, 1], [-20, 20])
   useEffect(() => { setMenu(false) }, [pathname])
   useEffect(() => {
     let last = window.scrollY
@@ -38,14 +41,14 @@ export default function Header() {
         <button className="md:hidden eyebrow !text-ivory justify-self-start py-4 pr-6" aria-expanded={menu} aria-controls="mobile-menu" onClick={() => setMenu((m) => !m)}>
           {menu ? 'Close' : 'Menu'}
         </button>
-        <Link to="/" aria-label="Pragmatic Hippy — home" className="flex items-center gap-3"><img src="/brand/logo-dark.webp" alt="" width="44" height="44" className="h-11 w-11 object-contain" /><span className="font-display text-[20px] tracking-[0.2em] uppercase hidden sm:inline">Pragmatic Hippy</span></Link>
+        <Link to="/" aria-label="Pragmatic Hippy — home" className="flex items-center gap-3" data-cursor="Home"><span className="relative h-11 w-11"><span aria-hidden className="spin-60 absolute inset-[-3px] rounded-full" style={{ background: 'repeating-conic-gradient(rgb(212 166 74 / .5) 0 2deg, transparent 2deg 18deg)', maskImage: 'radial-gradient(circle, transparent 60%, black 62%, black 68%, transparent 70%)' }} /><motion.img src="/brand/logo-dark.webp" alt="" width="44" height="44" className="relative h-11 w-11 object-contain" style={{ rotate: logoRot }} /></span><span className="font-display text-[20px] tracking-[0.2em] uppercase hidden sm:inline">Pragmatic Hippy</span></Link>
         <div className="flex items-center justify-end gap-10">
           <nav aria-label="Secondary" className="hidden md:flex">
             {links.slice(3).map((l) => <NavItem key={l.to} {...l} />)}
           </nav>
           <Link to="/wishlist" className="eyebrow !text-ivory hidden sm:block py-4" aria-label={`Wishlist, ${wish.length} saved`}>Saved{wish.length ? ` (${wish.length})` : ''}</Link>
           <button className="eyebrow !text-ivory py-4 pl-3" onClick={() => setDrawer(true)} aria-label={`Open bag, ${count} items`}>
-            Bag <span className="text-gold">({count})</span>
+            Bag <span className="text-gold inline-flex overflow-hidden align-bottom">(<AnimatePresence mode="popLayout" initial={false}><motion.span key={count} className="inline-block" initial={{ y: '-100%', rotateX: 90 }} animate={{ y: 0, rotateX: 0 }} exit={{ y: '100%', opacity: 0 }} transition={{ duration: 0.24, ease: [0.34, 1.56, 0.64, 1] }}>{count}</motion.span></AnimatePresence>)</span>
           </button>
         </div>
       </div>

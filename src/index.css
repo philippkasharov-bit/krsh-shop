@@ -25,6 +25,11 @@
   --font-sans: 'Switzer', 'Familjen Grotesk Variable', system-ui, sans-serif;
   --font-mono: 'Martian Mono Variable', ui-monospace, monospace;
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Motion tokens (docs/MOTION-SPEC.md) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --d-micro: 120ms; --d-small: 240ms; --d-med: 480ms; --d-large: 800ms; --d-scene: 1200ms;
 }
 
 @layer base {
@@ -58,6 +63,8 @@ button { cursor: pointer; font: inherit; color: inherit; }
   transition: background-size .55s var(--ease-lux), color .45s var(--ease-lux), border-color .45s;
 }
 .btn:hover { background-size: 100% 100%; color: var(--color-ink); }
+.btn:active { transform: scale(.97); transition: transform var(--d-micro) var(--ease-out); }
+.btn { will-change: auto; }
 .btn-gold { background-color: var(--color-gold); border-color: var(--color-gold); color: var(--color-ink); }
 .btn:disabled { opacity: .35; pointer-events: none; }
 .link-u { position: relative; font-family: var(--font-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; padding-bottom: 6px; }
@@ -75,7 +82,7 @@ button { cursor: pointer; font: inherit; color: inherit; }
 .field:focus { border-color: var(--color-gold); }
 .field[aria-invalid='true'] { border-color: #d96a5e; }
 .grain::after {
-  content:''; position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .05;
+  content:''; position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .06; animation: grain-shift 1s steps(8) infinite;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 @keyframes marquee { to { transform: translateX(-50%); } }
@@ -86,3 +93,14 @@ button { cursor: pointer; font: inherit; color: inherit; }
 }
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
+@keyframes grain-shift { 0%{transform:translate(0,0)} 25%{transform:translate(-3%,2%)} 50%{transform:translate(2%,-3%)} 75%{transform:translate(-2%,-1%)} 100%{transform:translate(3%,3%)} }
+/* Image frame cut-outs (MOTION-SPEC "CutFrame"; ref R2) */
+.cut-step { clip-path: polygon(0 8%, 12% 8%, 12% 0, 100% 0, 100% 92%, 88% 92%, 88% 100%, 0 100%); }
+.cut-arch { clip-path: inset(0 round 50% 50% 0 0 / 30% 30% 0 0); }
+.cut-diag { clip-path: polygon(0 0, 100% 0, 100% 86%, 82% 100%, 0 100%); }
+/* Skeleton shimmer (gold) */
+.shimmer { background: linear-gradient(100deg, var(--color-ink-2) 30%, rgb(212 166 74 / .12) 50%, var(--color-ink-2) 70%) 0 0 / 300% 100%; animation: shimmer 1.6s linear infinite; }
+@keyframes shimmer { to { background-position: -150% 0; } }
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.spin-60 { animation: spin-slow 60s linear infinite; }
+@media (pointer: fine) { html.has-cursor, html.has-cursor a, html.has-cursor button { cursor: none; } }
