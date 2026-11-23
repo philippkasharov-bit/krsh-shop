@@ -6,7 +6,9 @@ Status: awaiting approval. Supersedes the "Drops" scroll piece, packshot style a
 The shop should feel like walking through a psy/rave festival and ending up at its market tent, where every piece is on display. Clothing is hippy mixed with streetwear, not flashy. Motion is the main differentiator.
 
 ## Clothing style
-- Hippy x streetwear: washed black, charcoal, deep plum, earth tones; subtle tie-dye or hand-dyed washes at most; clean cuts. Max 2 design elements per piece, one of which is the logo.
+- Hippy x streetwear, clean cuts. Max 2 design elements per piece, one of which is the logo.
+- **Two colours per piece (user):** ~80% a dark base (washed black, charcoal, deep plum or dark olive) + ~20% one bright accent (red, orange, acid yellow, electric blue or hot pink; one accent per piece, varied across the catalog). The accent goes on trims, panels, piping or the second design element.
+- Logo on garments is rendered in the piece's accent colour (single colour, embroidered or printed), so it reads as part of the two-colour scheme. Author's call; the full-colour logo stays for the site itself.
 - **The Pragmatic Hippy logo is the brand mark on every piece**, placed by garment type, never oversized:
 
 | Garment | Logo placement |
