@@ -96,7 +96,7 @@ html.lenis, html.lenis body { height: auto; }
 @keyframes grain-shift { 0%{transform:translate(0,0)} 25%{transform:translate(-3%,2%)} 50%{transform:translate(2%,-3%)} 75%{transform:translate(-2%,-1%)} 100%{transform:translate(3%,3%)} }
 /* Image frame cut-outs (MOTION-SPEC "CutFrame"; ref R2) */
 .cut-step { clip-path: polygon(0 8%, 12% 8%, 12% 0, 100% 0, 100% 92%, 88% 92%, 88% 100%, 0 100%); }
-.cut-arch { clip-path: inset(0 round 50% 50% 0 0 / 30% 30% 0 0); }
+.cut-arch { clip-path: inset(0% 0% 0% 0% round 45% 45% 0% 0%); }
 .cut-diag { clip-path: polygon(0 0, 100% 0, 100% 86%, 82% 100%, 0 100%); }
 /* Skeleton shimmer (gold) */
 .shimmer { background: linear-gradient(100deg, var(--color-ink-2) 30%, rgb(212 166 74 / .12) 50%, var(--color-ink-2) 70%) 0 0 / 300% 100%; animation: shimmer 1.6s linear infinite; }
