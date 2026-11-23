@@ -15,6 +15,7 @@
 - Logo placement per garment exactly as the spec table.
 - Paid media: `simulate_cost` first, one test, user OK, then batch. Clips: 5 max, 3–5 s, 720p (+480p).
 - Site palette: black, gold `#d4a64a`, purple surfaces only, crimson rare. Fonts via Fontshare API only.
+- **Motion contract: `docs/MOTION-SPEC.md`.** Every row there is built by the task that owns the element and checked in the browser; reduced-motion row checked too.
 - No fake reviews/people/brands; demo disclaimers stay. Commit on `ccr-7a56163f-n0juph`, no PR unless asked.
 
 ## Review Focus
@@ -46,11 +47,19 @@
 - [ ] `video_models_list`; simulate_cost for one image-to-video clip; generate the gate clip with a camera move matching its `dir`; `video_view_frames`; user OK; then the other 4.
 - [ ] Encode with every frame a keyframe (`-g 1`) for smooth seeking: mp4 x264 crf 26 + webm vp9 crf 36 at 720p, mp4 at 480p; each ≤ 4 MB. Commit.
 
+### Task 4a: Motion foundation
+**Files:** Modify `src/lib/motion.tsx`, `src/index.css`, `src/components/Layout.tsx`, `Header.tsx`, `Marquee.tsx`; create `src/lib/beat.ts`, `src/lib/useVelocity.ts`, `src/components/{Cursor,Grain,PageTransition,Loader}.tsx`.
+**Interfaces:** `beatPhase(tMs: number, bpm = 128): number` (0..1); `useBeat(): MotionValue<number>`; `useScrollVelocity(): MotionValue<number>` (−1..1, clamped); tokens per MOTION-SPEC "Tokens".
+- [ ] Tests: `beatPhase(0)===0`, `beatPhase(234.375)` ≈ 0.5, `beatPhase(468.75)` ≈ 0 (wraps); velocity clamp unit test on the pure mapper `mapVelocity(px_per_s: number): number` (0→0, 4000→1, −9000→−1).
+- [ ] Implement global layer rows of MOTION-SPEC (loader, page transition, grain, cursor, header, marquee, links, buttons, headings, numbers, logo idle) with reduced-motion branches.
+- [ ] Browser: each row checked desktop + reduced motion; no layout shift; commit.
+
 ### Task 4: Journey engine + component
 **Files:** Create `src/lib/journey.ts`, `src/lib/journey.test.ts`, `src/components/Journey.tsx`; modify `src/pages/Home.tsx` (replace hero + ModelViewer; remove `@google/model-viewer` and `ModelViewer.tsx` if unused).
 **Interfaces:** `segmentAt(progress: number, n: number): { index: number; local: number }` (clamped); `transformFor(dir: Dir, local: number): { x: string; y: string; scale: number }` — down: y `-(local*10)%`; side: x `-(local*30)%`; zoom-in: scale `1 + local*0.6`; zoom-out: scale `1.6 - local*0.6`.
 - [ ] Tests: `segmentAt(0,5)`→`{0,0}`, `(0.5,5)`→`{2,0.5}`, `(1,5)`→`{4,1}`, `(-1,5)`→`{0,0}`, `(2,5)`→`{4,1}`; `transformFor('zoom-in',1).scale===1.6`, `('zoom-out',1).scale===1`, `('side',0.5).x==='-15%'`.
 - [ ] Run → FAIL; implement; → PASS.
+- [ ] Implement every "Journey" row of MOTION-SPEC (breathing clip, particles, lasers, titles, progress HUD, tags with leader lines, gate arc, detail callouts, tent finale).
 - [ ] Component: section height `n*150vh`, sticky 100svh stage with `overflow:hidden`; current + next video preloaded; rAF sets `currentTime = local*duration`; 250 ms crossfade between scenes; cards as `<Link>`s (wristband tag: name + price), focusable; reduced motion / no video → posters + cards stacked, no pin.
 - [ ] Browser: desktop, 375 px, reduced motion, Slow 4G throttle, keyboard tab through cards; no console errors; mobile Lighthouse perf ≥ 70. Commit.
 
