@@ -15,8 +15,8 @@ export function AccordionItem({ title, children, defaultOpen = false }: { title:
       <AnimatePresence initial={false}>
         {open && (
           <motion.div id={id} role="region" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.6, ease: EASE }} className="overflow-hidden">
-            <div className="pb-8 text-ivory-dim leading-relaxed max-w-2xl">{children}</div>
+            transition={{ type: 'spring', stiffness: 260, damping: 32 }} className="overflow-hidden">
+            <motion.div className="pb-8 text-ivory-dim leading-relaxed max-w-2xl" initial={{ y: 8 }} animate={{ y: 0 }} transition={{ duration: 0.48, ease: EASE }}>{children}</motion.div>
           </motion.div>
         )}
       </AnimatePresence>

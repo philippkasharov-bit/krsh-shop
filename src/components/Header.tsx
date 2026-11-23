@@ -47,7 +47,7 @@ export default function Header() {
             {links.slice(3).map((l) => <NavItem key={l.to} {...l} />)}
           </nav>
           <Link to="/wishlist" className="eyebrow !text-ivory hidden sm:block py-4" aria-label={`Wishlist, ${wish.length} saved`}>Saved{wish.length ? ` (${wish.length})` : ''}</Link>
-          <button className="eyebrow !text-ivory py-4 pl-3" onClick={() => setDrawer(true)} aria-label={`Open bag, ${count} items`}>
+          <button data-bag-target className="eyebrow !text-ivory py-4 pl-3" onClick={() => setDrawer(true)} aria-label={`Open bag, ${count} items`}>
             Bag <span className="text-gold inline-flex overflow-hidden align-bottom">(<AnimatePresence mode="popLayout" initial={false}><motion.span key={count} className="inline-block" initial={{ y: '-100%', rotateX: 90 }} animate={{ y: 0, rotateX: 0 }} exit={{ y: '100%', opacity: 0 }} transition={{ duration: 0.24, ease: [0.34, 1.56, 0.64, 1] }}>{count}</motion.span></AnimatePresence>)</span>
           </button>
         </div>
