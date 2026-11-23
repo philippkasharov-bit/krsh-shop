@@ -1,5 +1,5 @@
 import { AccordionItem } from '../components/Accordion'
-import { SplitReveal } from '../lib/motion'
+import { SplitReveal, TypeIn } from '../lib/motion'
 import { useTitle } from '../lib/seo'
 
 const groups: [string, [string, string][]][] = [
@@ -25,12 +25,12 @@ export default function Faq() {
   useTitle('Care & FAQ')
   return (
     <div className="wrap pt-40">
-      <p className="eyebrow mb-4">Care & FAQ</p>
+      <TypeIn text="Care & FAQ" className="eyebrow mb-4" />
       <SplitReveal className="display t-1" text="Good questions." />
       <div className="mt-24 space-y-24">
         {groups.map(([g, items]) => (
           <section key={g} className="grid gap-8 lg:grid-cols-[1fr_2fr]" aria-labelledby={g}>
-            <h2 id={g} className="eyebrow !text-gold lg:pt-8">{g}</h2>
+            <h2 id={g} className="eyebrow !text-gold lg:pt-8"><TypeIn as="span" text={g} /></h2>
             <div className="border-t border-line">{items.map(([q, a], i) => <AccordionItem key={q} title={q} defaultOpen={i === 0 && g === groups[0][0]}><p>{a}</p></AccordionItem>)}</div>
           </section>
         ))}

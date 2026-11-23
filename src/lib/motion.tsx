@@ -58,8 +58,8 @@ export function CountUp({ value, className = '' }: { value: string; className?: 
 }
 
 /** Mono label types itself in (18 ms per character) on entering the viewport. */
-export function TypeIn({ text, className = '' }: { text: string; className?: string }) {
-  const ref = useRef<HTMLParagraphElement>(null)
+export function TypeIn({ text, className = '', as = 'p' }: { text: string; className?: string; as?: 'p' | 'span' }) {
+  const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true })
   const reduce = useReducedMotion()
   const [n, setN] = useState(reduce ? text.length : 0)
@@ -69,7 +69,8 @@ export function TypeIn({ text, className = '' }: { text: string; className?: str
     const t = setInterval(() => { i++; setN(i); if (i >= text.length) clearInterval(t) }, 18)
     return () => clearInterval(t)
   }, [inView, reduce, text])
-  return <p ref={ref} className={className} aria-label={text}><span aria-hidden>{text.slice(0, n)}<span className="opacity-0">{text.slice(n)}</span></span></p>
+  const Tag = as
+  return <Tag ref={ref as never} className={className} aria-label={text}><span aria-hidden>{text.slice(0, n)}<span className="opacity-0">{text.slice(n)}</span></span></Tag>
 }
 
 /** Number/text that rolls up when it grows and down when it shrinks (240 ms). */

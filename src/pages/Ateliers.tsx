@@ -1,5 +1,7 @@
 import { useState, type FormEvent } from 'react'
-import { Fade, SplitReveal } from '../lib/motion'
+import { AnimatePresence, motion, useTransform } from 'motion/react'
+import { EASE_SNAP, Fade, SplitReveal } from '../lib/motion'
+import { useBeat } from '../lib/beat'
 import { useTitle } from '../lib/seo'
 
 const stores = [
@@ -14,6 +16,9 @@ const stores = [
 export default function Ateliers() {
   useTitle('Pop-ups')
   const [sel, setSel] = useState(0)
+  const beat = useBeat()
+  const ripple = useTransform(beat, [0, 1], [3.2, 1])
+  const rippleO = useTransform(beat, [0, 1], [0, 0.9])
   const [sent, setSent] = useState(false)
   const [e, setE] = useState('')
   const submit = (ev: FormEvent) => { ev.preventDefault(); if (/^\S+@\S+\.\S+$/.test(e)) setSent(true) }
@@ -30,15 +35,17 @@ export default function Ateliers() {
 
             </svg>
             {stores.map((s, i) => (
-              <button key={s.n} onClick={() => setSel(i)} aria-label={`${s.n} pop-up`} aria-pressed={sel === i}
-                className="absolute -translate-x-1/2 -translate-y-1/2 grid h-10 w-10 place-items-center" style={{ left: `${s.x}%`, top: `${s.y * 1.6}%` }}>
+              <motion.button key={s.n} onClick={() => setSel(i)} aria-label={`${s.n} pop-up`} aria-pressed={sel === i} data-cursor="Pin"
+                initial={{ y: -40, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.48, ease: EASE_SNAP, delay: i * 0.08 }}
+                className="absolute -ml-5 -mt-5 grid h-10 w-10 place-items-center" style={{ left: `${s.x}%`, top: `${s.y * 1.6}%` }}>
+                {sel === i && <motion.span aria-hidden className="absolute h-4 w-4 rounded-full border border-gold" style={{ scale: ripple, opacity: rippleO }} />}
                 <span className={`block rounded-full transition-all duration-500 ${sel === i ? 'h-4 w-4 bg-gold shadow-[0_0_0_8px_rgb(212_166_74/0.2)]' : 'h-2.5 w-2.5 bg-ivory/70'}`} />
-              </button>
+              </motion.button>
             ))}
-            <div className="absolute bottom-0 left-0 bg-ink/90 backdrop-blur p-6 max-w-xs">
+            <AnimatePresence mode="wait"><motion.div key={sel} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.24 }} className="absolute bottom-0 left-0 bg-ink/90 backdrop-blur p-6 max-w-xs">
               <p className="display text-3xl">{stores[sel].n}</p>
               <p className="text-sm text-ivory-dim mt-2">{stores[sel].a}</p><p className="eyebrow mt-3">{stores[sel].h}</p>
-            </div>
+            </motion.div></AnimatePresence>
           </div>
         </Fade>
         <ul className="border-t border-line flex flex-col">

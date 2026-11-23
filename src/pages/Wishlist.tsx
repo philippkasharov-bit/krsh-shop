@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { AnimatePresence } from 'motion/react'
 import { products } from '../lib/products'
 import { useStore } from '../lib/store'
 import ProductCard from '../components/ProductCard'
@@ -19,7 +20,7 @@ export default function Wishlist() {
           <Link to="/shop" className="btn btn-gold mt-10">Browse the collection</Link>
         </div>
       ) : (
-        <div className="mt-16 grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">{list.map((p, i) => <ProductCard key={p.id} p={p} index={i} />)}</div>
+        <div className="mt-16 grid gap-x-8 gap-y-20 sm:grid-cols-2 lg:grid-cols-3"><AnimatePresence mode="popLayout">{list.map((p, i) => <ProductCard key={p.id} p={p} index={i} />)}</AnimatePresence></div>
       )}
     </div>
   )
